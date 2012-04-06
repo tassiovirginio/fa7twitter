@@ -1,0 +1,34 @@
+<wicket:extend>
+	<BR><BR><BR><BR><BR><BR><BR>
+<TABLE style="width: 30%;">
+<TBODY>
+	<TR>
+		<TH>Principal</TH>
+	</TR>
+	<TR>
+		<TD>
+			Enviar Mensagem:<br>
+			<form wicket:id="form" action="#">
+				<textarea wicket:id="taMsg" rows="3" cols="60"></textarea><br>
+				<input type="submit" />
+			</form>
+		</TD>
+	</TR>
+</TBODY>
+</TABLE>
+<br>
+<TABLE style="width: 60%;">
+<TBODY>
+	<TR>
+		<TH>Mensagens: <span wicket:id="lbSize">0</span> </TH>
+	</TR>
+	<TR>
+		<TD>
+		<span wicket:id="lvMsg"> 
+		-> <span wicket:id="msg">label</span><br/>
+		</span>
+		</TD>
+	</TR>
+</TBODY>
+</TABLE>
+</wicket:extend>

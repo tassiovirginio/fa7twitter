@@ -1,0 +1,152 @@
+body {
+	font-family: Verdana, Arial !important;
+	font-size: 9pt !important;
+	line-height: 150% !important;
+	margin: 0px !important;
+	background-color: white !important;
+	margin-top: 0px !important;
+}
+
+
+#status_div {
+	font-weight: bold;
+	font-size: 11px;
+	*border: 2px solid #ffffff;
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+	left: 0%;
+	position: absolute;
+	bottom: 0;
+	position: fixed;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+
+
+
+#menu_div {
+	font-weight: bold;
+	font-size: 11px;
+	width: 100%;
+	text-align: left;
+	margin: 0 auto;
+	left: 0%;
+	margin-left: 0px;
+	position: fixed;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+
+
+a:link,a:visited,a:active {
+	border-radius: 4px;
+	text-decoration: underline;
+	color: #000000;
+	border: solid 0px;
+}
+
+a.menu:link,a.menu:visited,a.menu:active {
+	text-decoration: none;
+	color: #000000;
+	background-color: #FFFFFF;
+	font-weight: bolder;
+	border: solid 1px #ffffff;
+}
+
+a.menu:hover {
+	color: #FFFFFF;
+	background-color: #0033FF;
+	font-weight: bolder;
+}
+
+
+.bg {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -5000;
+}
+
+table {
+	border: 2px #00468E outset;
+	vertical-align: center;
+	background-color: #FFFFFF;
+	margin: auto;
+	border-color: black;
+	border-radius: 10px;
+}
+
+td{
+	color: #000000;
+	font-weight: bold;
+	font-size: 10px;
+	padding: 5px;
+	border: 0px #00468E solid;
+	height: 25px;
+	border-collapse: collapse;
+}
+
+th {
+	border-radius: 10px;
+	background-color: #0066CC;
+	color: white;
+	font-weight: bold;
+	font-size: 11px;
+	padding: 5px;
+	border: 0px solid #000000;
+	height: 25px;
+}
+
+input[type=submit] {
+	border-radius: 10px;
+	font-family: Verdana;
+	font-size: 8pt;
+	color: #000000;
+	font-weight: bold;
+	border: 1px solid black margin :   auto;
+	-webkit-box-align: center;
+}
+
+textarea:focus {
+	border: 2px solid #000000;
+	background-color: #99CCFF;
+}
+
+input[type=password]:focus {
+	border: 2px solid #000000;
+	background-color: #99CCFF;
+}
+
+input[type=text]:focus {
+	border: 2px solid #000000;
+	background-color: #99CCFF;
+}
+
+
+input,textarea,select,option {
+	font-family: Verdana;
+	font-size: 8pt;
+	color: #000000;
+	font-weight: bold;
+	border: 1px solid black
+}
+
+input:hover,textarea:hover,select:hover,option:hover {
+	color: #000000;
+	background: #99CCFF;
+	font-weight: bolder;
+	background-color: #99CCFF;
+}
+
+
+input,textarea,select {
+	background-color: #FFFFFF;
+}
+
+.feedbackPanelERROR {
+	color: #FF0000;
+	*background: #FFFFFF;
+}

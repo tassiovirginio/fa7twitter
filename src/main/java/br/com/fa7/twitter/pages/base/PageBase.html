@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>FA7 Twitter</title>
+		<link rel="shortcut icon" href="favicon.png" />
+		<link rel="stylesheet" href="css/base.css" type="text/css" media="screen" title="Stylesheet" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" />
+		
+	</head>
+	<body>
+	<img src="imagens/wallpaper.jpg" class="bg" />
+	
+	
+	<div id="menu_div">&nbsp;
+		<img alt="" src="favicon.png" width="15px" height="15px" />
+		<font color="000000">&nbsp; FA7 Twitter &nbsp</font>
+		<font size="1" color="CC0000">0.0.1 beta&nbsp;&nbsp;</font>
+		<font size="1" color="000000">|&nbsp;</font>
+		<A class="menu" href="http://127.0.0.1:8080/ponto/pages/lista_usuarios.jsp">&nbsp;menu1 </A>
+		<A class="menu" href="http://127.0.0.1:8080/ponto/pages/lista_usuarios.jsp">&nbsp;menu2 </A>
+		<A class="menu" wicket:id="lkManager" href="http://127.0.0.1:8080/ponto/pages/relatorioPeriodo_.jsp">&nbsp;menu3 </A>
+		<A class="menu" wicket:id="lkKanban" href="http://127.0.0.1:8080/ponto/pages/relatorioDia_.jsp">&nbsp;menu4 </A>
+		<A class="menu" href="http://127.0.0.1:8080/ponto/pages/relatorioDia_.jsp">&nbsp;menu5&nbsp;</A>
+		<A class="menu" wicket:id="lkNewActivity" href="">&nbsp;menu6&nbsp;</A>
+		<A class="menu" wicket:id="lkSobre" href="">&nbsp;menu7&nbsp;</A>
+	</div>
+	
+	<div id="status_div">
+		<span class="labelusuario" ></span>
+		<A class="menu"  href="http://127.0.0.1:8080/ponto/pages/sair.jsp">&nbsp;Sair&nbsp;</A>
+	</div>
+	
+	<wicket:child/>
+	
+	</body>
+</html>
