@@ -15,7 +15,7 @@ import br.com.fa7.twitter.pages.UserMessagePage;
 public class PageBase extends WebPage {
 	private static final long serialVersionUID = 1L;
 	
-	private User user;
+	protected User loggedUser;
 	
 	@SpringBean
 	private UserBusiness userBusiness;
@@ -23,9 +23,9 @@ public class PageBase extends WebPage {
 	@SuppressWarnings({ "rawtypes", "serial" })
 	public PageBase() {
 		
-		this.user = userBusiness.findById(1l);
+		this.loggedUser = userBusiness.findById(1l);
 		
-		setDefaultModel(new CompoundPropertyModel(user));
+		setDefaultModel(new CompoundPropertyModel(loggedUser));
 		
 		add(new Label("name"));
 
