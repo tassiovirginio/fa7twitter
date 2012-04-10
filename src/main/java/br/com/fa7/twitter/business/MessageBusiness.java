@@ -30,7 +30,7 @@ public class MessageBusiness {
 		return messageDAO.listAll();
 	}
 
-	public List<Message> loadByUserId(User user) {
+	public List<Message> loadByUser(User user) {
 		return messageDAO.findByCriteria(Restrictions.eq("user", user));
 	}
 

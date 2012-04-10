@@ -6,7 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class TestMessageBusiness {
 	@Test
 	public void testLoadUserMessages() {
 		messageBusiness.save(new Message("test3", user));
-		List<Message> result = messageBusiness.loadByUserId(user);
+		List<Message> result = messageBusiness.loadByUser(user);
 		Assert.assertEquals(1, result.size());
 		Assert.assertEquals("test3", result.get(0).getMsg());
 	}

@@ -5,7 +5,9 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.business.UserBusiness;
+import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.PrincipalPage;
 
@@ -17,6 +19,9 @@ public class WicketApplication extends WebApplication{
 	
 	@Autowired
 	private UserBusiness userBusiness;
+	
+	@Autowired
+	private MessageBusiness messageBusiness;
 	
 	@Override
 	public Class<PrincipalPage> getHomePage(){
@@ -40,8 +45,14 @@ public class WicketApplication extends WebApplication{
 	
 	
 	private void populationDB(){
-		userBusiness.save(new User("Tassio","tassio","123","tassio@fa7.org"));
-		userBusiness.save(new User("Tiago","tiago","123","tiago@fa7.org"));
-		
+		User tassio = new User("Tassio","tassio","123","tassio@fa7.org");
+		userBusiness.save(tassio);
+		User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
+		userBusiness.save(tiago);
+
+		messageBusiness.save(new Message("Olá do Tássio", tassio));
+		messageBusiness.save(new Message("Agora estou aqui", tassio));
+
+		messageBusiness.save(new Message("Olá do Tiago", tiago));
 	}
 }

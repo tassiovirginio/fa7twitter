@@ -53,6 +53,7 @@ public class PrincipalPage extends PageBase {
 				
 //				item.setModel(new CompoundPropertyModel(message));
 				
+				item.add(new Label("userName", message.getUser().getName()));
 				item.add(new Label("msg", message.getMsg()));
 			}
 			

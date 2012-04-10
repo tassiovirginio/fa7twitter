@@ -3,12 +3,8 @@ package br.com.fa7.twitter.pages;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.MessageBusiness;
@@ -22,14 +18,12 @@ public class UserMessagePage extends PageBase {
 	@SpringBean
 	private MessageBusiness messageBusiness;
 	
-	private String msg;
-	
 	public UserMessagePage() {
-		
-		Label lbSize = new Label("lbSize",  messageBusiness.size()+"");
+		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
+		Label lbSize = new Label("lbSize",  String.valueOf(listMessage.size()));
 		add(lbSize);
-		
-		List<Message> listMessage = messageBusiness.listAll();
+		Label lbUserName = new Label("lbUserName",  loggedUser.getName());
+		add(lbUserName);
 		
 		ListView<Message> listView = new ListView<Message>("lvListMsg",listMessage) {
 			@Override
