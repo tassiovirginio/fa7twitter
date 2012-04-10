@@ -1,20 +1,37 @@
 <wicket:extend>
 	<BR><BR><BR><BR><BR><BR><BR>
-<TABLE style="width: 30%;">
+<br>
+
+<TABLE style="width: 10%;">
 <TBODY>
 	<TR>
-		<TH>Principal</TH>
+		<TH>Busca </TH>
 	</TR>
 	<TR>
 		<TD>
-			Buscar usuário:<br>
 			<form wicket:id="form" action="#">
-				<select wicket:id=></select>
+				<input wicket:id="tfBusca" type="text" /><br>
 				<input type="submit" />
 			</form>
 		</TD>
 	</TR>
 </TBODY>
 </TABLE>
-<br>
+
+<br><br>
+
+<TABLE style="width: 30%;">
+<TBODY>
+	<TR>
+		<TH>Usuarios: <span wicket:id="lbSize">0</span></TH>
+	</TR>
+	<TR>
+		<TD>
+		<span wicket:id="lvListUsers">
+		-> <a wicket:id="lkname"><span wicket:id="name">0</span></a><br/>
+		</span>
+		</TD>
+	</TR>
+</TBODY>
+</TABLE>
 </wicket:extend>
