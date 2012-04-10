@@ -8,7 +8,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.entities.User;
+import br.com.fa7.twitter.pages.FindUserPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
+import br.com.fa7.twitter.pages.UserMessagePage;
 
 public class PageBase extends WebPage {
 	private static final long serialVersionUID = 1L;
@@ -26,6 +28,32 @@ public class PageBase extends WebPage {
 		setDefaultModel(new CompoundPropertyModel(user));
 		
 		add(new Label("name"));
+
+		Link lkFindUser = new Link("lkFindUser") {
+			@Override
+			public void onClick() {
+				setResponsePage(new FindUserPage());
+			}
+		};
+		
+		add(lkFindUser);
+		
+		Link lkUserMessage = new Link("lkUserMessage") {
+			@Override
+			public void onClick() {
+				setResponsePage(new UserMessagePage());
+			}
+		};
+		
+		add(lkUserMessage);
+		
+		Link lkHome = new Link("lkHome") {
+			@Override
+			public void onClick() {
+				setResponsePage(new PrincipalPage());
+			}
+		};
+		add(lkHome);
 		
 		Link lkSobre = new Link("lkSobre") {
 			@Override
