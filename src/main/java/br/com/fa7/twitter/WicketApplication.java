@@ -50,9 +50,9 @@ public class WicketApplication extends WebApplication{
 		User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
 		userBusiness.save(tiago);
 
-		messageBusiness.save(new Message("Ol· do T·ssio", tassio));
+		messageBusiness.save(new Message("Ol√° do T√°ssio", tassio));
 		messageBusiness.save(new Message("Agora estou aqui", tassio));
 
-		messageBusiness.save(new Message("Ol· do Tiago", tiago));
+		messageBusiness.save(new Message("Ol√° do Tiago", tiago));
 	}
 }
