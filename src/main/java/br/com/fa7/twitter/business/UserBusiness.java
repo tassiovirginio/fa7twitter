@@ -2,6 +2,7 @@ package br.com.fa7.twitter.business;
 
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,10 @@ public class UserBusiness {
 	
 	public User findById(Long id){
 		return userDAO.findById(id);
+	}
+
+	public List<User> findByName(String search) {
+		return userDAO.findByCriteria(Restrictions.like("name", "%"+search+"%"));
 	}
 
 }
