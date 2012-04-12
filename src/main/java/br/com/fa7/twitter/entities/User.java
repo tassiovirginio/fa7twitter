@@ -9,10 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class User implements Serializable{
-	
+public class User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public User(String name, String login, String password, String email) {
 		super();
 		this.name = name;
@@ -20,7 +20,7 @@ public class User implements Serializable{
 		this.password = password;
 		this.email = email;
 	}
-	
+
 	public User() {
 	}
 
@@ -29,18 +29,18 @@ public class User implements Serializable{
 	private Long id;
 
 	private String name;
-	
+
 	private String login;
-	
+
 	private String password;
-	
+
 	private String email;
-	
-	//Seguidores
+
+	// Seguidores
 	@OneToMany
 	private Set<User> listFollower;
-	
-	//Seguidos
+
+	// Seguidos
 	@OneToMany
 	private Set<User> listFollowed;
 
@@ -124,5 +124,11 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", login=" + login
+				+ ", password=" + password + ", email=" + email + "]";
+	}
+
 }

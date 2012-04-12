@@ -7,7 +7,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -44,7 +43,7 @@ public class PrincipalPage extends PageBase {
 		add(lbSize);
 		
 		List<Message> listMessage = messageBusiness.listAll();
-		
+
 		ListView<Message> listView = new ListView<Message>("lvMsg",listMessage) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {

@@ -4,6 +4,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.business.UserBusiness;
@@ -43,16 +44,16 @@ public class WicketApplication extends WebApplication{
 		populationDB();
 	}
 	
-	
+	@Transactional
 	private void populationDB(){
 		User tassio = new User("Tassio","tassio","123","tassio@fa7.org");
 		userBusiness.save(tassio);
 		User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
 		userBusiness.save(tiago);
 
-		messageBusiness.save(new Message("Oi do Tassio", tassio));
+		messageBusiness.save(new Message("Olá do Tássio", tassio));
 		messageBusiness.save(new Message("Agora estou aqui", tassio));
 
-		messageBusiness.save(new Message("Oi do Tiago", tiago));
+		messageBusiness.save(new Message("Olá do Tiago", tiago));
 	}
 }

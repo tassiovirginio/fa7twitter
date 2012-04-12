@@ -12,7 +12,7 @@ import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 
 @Component
-@Transactional 
+@Transactional
 public class MessageBusiness {
 	
 	@Autowired
