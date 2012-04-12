@@ -1,19 +1,40 @@
 <wicket:extend>
-	<BR><BR><BR><BR><BR><BR><BR>
-<br>
-<TABLE style="width: 90%;">
-<TBODY>
-	<TR>
-		<TH><span wicket:id="lbSize">0</span> mensagens de <span wicket:id="lbUserName">nome</span> </TH>
-	</TR>
-	<TR>
-		<TD>
-		<span wicket:id="lvListMsg">
-		<input type="submit" />		
-		-> <span wicket:id="msg"/><br/>
-		</span>
-		</TD>
-	</TR>
-</TBODY>
-</TABLE>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<TABLE>
+		<TBODY>
+			<TR> 
+				<TD><span wicket:id="lbUserNameHeader" > nome </span> </TD>
+				<TD>nao esta seguindo niguem</TD> 
+			</TR>
+			<TR>
+				<TD colspan="2">
+					<form wicket:id="form" action="#">
+						<span wicket:id="lbFolowing" />
+						<input type="submit" value="Seguir" />
+					</form>
+				</TD>
+			</TR> 
+		</TBODY>
+	</TABLE>
+	<TABLE style="width: 90%;">
+		<TBODY>
+			<TR>
+				<TH>
+					<span wicket:id="lbSize">0</span> mensagens de <span wicket:id="lbUserName">nome</span>
+					</TH>
+			</TR>
+			<TR>
+				<TD><span wicket:id="lvListMsg"> <input type="submit" />
+						-> <span wicket:id="msg" /><br />
+				</span></TD>
+			</TR>
+		</TBODY>
+	</TABLE>
 </wicket:extend>

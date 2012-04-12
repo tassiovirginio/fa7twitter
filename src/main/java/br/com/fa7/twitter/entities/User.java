@@ -1,12 +1,18 @@
 package br.com.fa7.twitter.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class User implements Serializable {
@@ -35,14 +41,14 @@ public class User implements Serializable {
 	private String password;
 
 	private String email;
-
-	// Seguidores
-	@OneToMany
+	
+	//Seguidores
+	@ManyToMany(fetch=FetchType.EAGER)
 	private Set<User> listFollower;
-
-	// Seguidos
-	@OneToMany
-	private Set<User> listFollowed;
+	
+	//Seguidos
+//	@ManyToMany
+//	private Set<User> listFollowed;
 
 	public Long getId() {
 		return id;
@@ -85,6 +91,9 @@ public class User implements Serializable {
 	}
 
 	public Set<User> getListFollower() {
+		if (listFollower == null) {
+			listFollower = new HashSet<User>();
+		}
 		return listFollower;
 	}
 
@@ -92,13 +101,13 @@ public class User implements Serializable {
 		this.listFollower = listFollower;
 	}
 
-	public Set<User> getListFollowed() {
-		return listFollowed;
-	}
-
-	public void setListFollowed(Set<User> listFollowed) {
-		this.listFollowed = listFollowed;
-	}
+//	public Set<User> getListFollowed() {
+//		return listFollowed;
+//	}
+//
+//	public void setListFollowed(Set<User> listFollowed) {
+//		this.listFollowed = listFollowed;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -124,7 +133,7 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", login=" + login
