@@ -9,6 +9,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.entities.Message;
+import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
 
 public class UserMessagePage extends PageBase {
@@ -18,11 +19,24 @@ public class UserMessagePage extends PageBase {
 	@SpringBean
 	private MessageBusiness messageBusiness;
 	
+	private User user;
+	
 	public UserMessagePage() {
-		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
+		this(null);
+	}
+	
+	public UserMessagePage(User followedUser) {
+		
+		user = followedUser;
+		
+		if (user == null){
+			user = loggedUser;
+		}
+		
+		List<Message> listMessage = messageBusiness.loadByUser(user);
 		Label lbSize = new Label("lbSize",  String.valueOf(listMessage.size()));
 		add(lbSize);
-		Label lbUserName = new Label("lbUserName",  loggedUser.getName());
+		Label lbUserName = new Label("lbUserName",  user.getName());
 		add(lbUserName);
 		
 		ListView<Message> listView = new ListView<Message>("lvListMsg",listMessage) {

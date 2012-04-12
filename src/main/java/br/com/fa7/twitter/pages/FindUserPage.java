@@ -51,10 +51,13 @@ public class FindUserPage extends PageBase {
 				final User user = (User)item.getModelObject();
 				
 //				item.setModel(new CompoundPropertyModel(message));
-				Link lkUserMessage = new Link("lkname") {
+				Link<User> lkUserMessage = new Link<User>("lkname") {
 					public void onClick() {
+//						User user = getModelObject();
+						setResponsePage(new UserMessagePage(user));
 					}
 				};
+//				lkUserMessage.setModelObject(user);
 				lkUserMessage.add(new Label("name", user.getName()));
 				item.add(lkUserMessage);
 			}
