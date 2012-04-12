@@ -1,5 +1,6 @@
 package br.com.fa7.twitter.pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -24,20 +25,22 @@ public class FindUserPage extends PageBase {
 	
 	private String busca;
 	
-	public FindUserPage() {
+	private List<User> users = new ArrayList<User>();
+	
+	public FindUserPage(List<User> userList) {
 		
+		users = userList;
 		
 		Form form = new Form("form"){
-			protected void onSubmit() {
-				System.out.println(busca);
+			protected void onSubmit() {				
+				users = userBusiness.findByName(busca);
+				setResponsePage(new FindUserPage(users));
 			};
 		};
 		
 		form.add(new TextField<String>("tfBusca",new PropertyModel(this,"busca")));
 		
 		add(form);
-		
-		List<User> users = userBusiness.listAll();
 		
 		add(new Label("lbSize",users.size()+""));
 		

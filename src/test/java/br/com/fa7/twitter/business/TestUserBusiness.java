@@ -30,8 +30,8 @@ public class TestUserBusiness {
 		
 		User user = new User("NomeDeTeste", "login", "password", "email");
 		userBusiness.save(user);
-		List<User> userTeste = userBusiness.findByName("Teste");
-		Assert.assertTrue(userTeste.contains(user));
+		List<User> users = userBusiness.findByName("Teste");
+		Assert.assertTrue(users.contains(user));
 		
 	}
 
@@ -40,8 +40,8 @@ public class TestUserBusiness {
 		
 		User user = new User("NomeDeTeste", "login", "password", "email");
 		userBusiness.save(user);
-		List<User> userTeste = userBusiness.findByName("NomeInexistente");
-		boolean userReturn = userTeste.contains(user);
+		List<User> users = userBusiness.findByName("NomeInexistente");
+		boolean userReturn = users.contains(user);
 		Assert.assertFalse(userReturn);
 		
 	}

@@ -1,5 +1,7 @@
 package br.com.fa7.twitter.pages.base;
 
+import java.util.ArrayList;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -32,7 +34,7 @@ public class PageBase extends WebPage {
 		Link lkFindUser = new Link("lkFindUser") {
 			@Override
 			public void onClick() {
-				setResponsePage(new FindUserPage());
+				setResponsePage(new FindUserPage(new ArrayList<User>()));
 			}
 		};
 		
