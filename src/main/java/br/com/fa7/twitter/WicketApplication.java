@@ -48,15 +48,12 @@ public class WicketApplication extends WebApplication{
 	private void populationDB(){
 		User tassio = new User("Tassio","tassio","123","tassio@fa7.org");
 		userBusiness.save(tassio);
-		tassio = userBusiness.findById(tassio.getId());
+		User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
+		userBusiness.save(tiago);
 		
 		messageBusiness.save(new Message("Olá do Tássio", tassio));
 		messageBusiness.save(new Message("Agora estou aqui", tassio));
 
-		User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
-		userBusiness.save(tiago);
-		tiago = userBusiness.findById(tiago.getId());
-		
 		messageBusiness.save(new Message("Olá do Tiago", tiago));
 	}
 }
