@@ -3,6 +3,7 @@ package br.com.fa7.twitter.pages;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -26,54 +27,63 @@ public class UserMessagePage extends PageBase {
 	
 	private User caraDessaPagina;
 	
-	public UserMessagePage() {
-		
-		caraDessaPagina = userBusiness.findById(2l);
-		
-		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
-		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
-		add(lbSize);
-		Label lbUserName = new Label("lbUserName", loggedUser.getName());
-		add(lbUserName);
-		Label lbUserNameHeader = new Label("lbUserNameHeader", loggedUser.getName());
+	public UserMessagePage(User donoDaPagina) {
+		this.caraDessaPagina = donoDaPagina;
+		this.initializeComponents();
+	}
+	
+	private void initializeComponents(){
+		Label lbUserNameHeader = new Label("lbUserNameHeader", caraDessaPagina.getName());
 		add(lbUserNameHeader);
 		
-		Form form = new Form("form"){
-			protected void onSubmit() {
-				loggedUser.getListFollower().add(caraDessaPagina);
+		Label lbSeguindoCount = new Label("lbSeguindoCount", caraDessaPagina.getListFollowing().size() + "");
+		add(lbSeguindoCount);
+		
+		Form form = new Form("form");
+		
+		Button btnSeguir = new Button("btnSeguir") {
+			public void onSubmit() {
+				loggedUser.getListFollowing().add(caraDessaPagina);
 				userBusiness.save(loggedUser);
-				//setResponsePage(new UserMessagePage());
-			};
-		};		
+				setResponsePage(new UserMessagePage(caraDessaPagina));
+			}
+		};
+		form.add(btnSeguir);
+		
+		Button btnAbandonar = new Button("btnAbandonar"){
+			public void onSubmit() {
+				loggedUser.getListFollowing().remove(caraDessaPagina);
+				userBusiness.save(loggedUser);
+				setResponsePage(new UserMessagePage(caraDessaPagina));
+			}
+		};
+		form.add(btnAbandonar);
+		
 		add(form);
 		
-		String folowingMsg = "Segue aew!";
-		
-		if ((loggedUser.getListFollower() != null) && (loggedUser.getListFollower().contains(caraDessaPagina))) {
-			folowingMsg = "Tá seguindo";
+		if ((loggedUser.getListFollowing() != null) && (loggedUser.getListFollowing().contains(caraDessaPagina))) {
+			btnAbandonar.setVisible(true);
+			btnSeguir.setVisible(false);
+		} else {
+			btnSeguir.setVisible(true);
+			btnAbandonar.setVisible(false);
 		}
-		Label lbFolowing = new Label("lbFolowing", folowingMsg);
-		form.add(lbFolowing);
-		
-//		Button btnSeguir = new Button("btnSeguir");
-//		btnSeguir.setVisible(!loggedUser.isFollow());
-//		add(btnSeguir);
+
+		List<Message> listMessage = messageBusiness.loadByUser(caraDessaPagina);
+		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
+		add(lbSize);
+		Label lbUserName = new Label("lbUserName", caraDessaPagina.getName());
+		add(lbUserName);		
 		
 		ListView<Message> listView = new ListView<Message>("lvListMsg",listMessage) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
-				
 				final Message message = (Message)item.getModelObject();
-				
 //				item.setModel(new CompoundPropertyModel(message));
-				
 				item.add(new Label("msg", message.getMsg()));
 			}
-			
 		};
 		
 		add(listView);
-		
 	}
-
 }

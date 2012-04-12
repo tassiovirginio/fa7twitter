@@ -43,7 +43,8 @@ public class PageBase extends WebPage {
 		Link lkUserMessage = new Link("lkUserMessage") {
 			@Override
 			public void onClick() {
-				setResponsePage(new UserMessagePage());
+				User tassio = userBusiness.findById(1l);
+				setResponsePage(new UserMessagePage(tassio));
 			}
 		};
 		
@@ -65,6 +66,13 @@ public class PageBase extends WebPage {
 		};
 		add(lkSobre);
 		
+		Link lkTiago = new Link("lkTiago") {
+			@Override
+			public void onClick() {
+				User tiago = userBusiness.findById(2l);
+				setResponsePage(new UserMessagePage(tiago));
+			}
+		};
+		add(lkTiago);
 	}
-	
 }

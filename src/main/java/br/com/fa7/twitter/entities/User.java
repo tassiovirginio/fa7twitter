@@ -43,12 +43,12 @@ public class User implements Serializable {
 	private String email;
 	
 	//Seguidores
-	@ManyToMany(fetch=FetchType.EAGER)
-	private Set<User> listFollower;
+//	@ManyToMany(fetch=FetchType.EAGER)
+//	private Set<User> listFollower;
 	
 	//Seguidos
-//	@ManyToMany
-//	private Set<User> listFollowed;
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<User> listFollowing;
 
 	public Long getId() {
 		return id;
@@ -90,24 +90,27 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public Set<User> getListFollower() {
-		if (listFollower == null) {
-			listFollower = new HashSet<User>();
-		}
-		return listFollower;
-	}
-
-	public void setListFollower(Set<User> listFollower) {
-		this.listFollower = listFollower;
-	}
-
-//	public Set<User> getListFollowed() {
-//		return listFollowed;
+//	public Set<User> getListFollower() {
+//		if (listFollower == null) {
+//			listFollower = new HashSet<User>();
+//		}
+//		return listFollower;
 //	}
 //
-//	public void setListFollowed(Set<User> listFollowed) {
-//		this.listFollowed = listFollowed;
+//	public void setListFollower(Set<User> listFollower) {
+//		this.listFollower = listFollower;
 //	}
+
+	public Set<User> getListFollowing() {
+		if (listFollowing == null) {
+			listFollowing = new HashSet<User>();
+		}
+		return listFollowing;
+	}
+
+	public void setListFollowing(Set<User> listFollowing) {
+		this.listFollowing = listFollowing;
+	}
 
 	@Override
 	public int hashCode() {
@@ -133,7 +136,7 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", login=" + login

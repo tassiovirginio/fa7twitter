@@ -24,7 +24,6 @@ public class PrincipalPage extends PageBase {
 	private String msg;
 	
 	public PrincipalPage() {
-		
 		Form form = new Form("form"){
 			protected void onSubmit() {
 				System.out.println("Mensagem -> " + msg);
@@ -47,19 +46,12 @@ public class PrincipalPage extends PageBase {
 		ListView<Message> listView = new ListView<Message>("lvMsg",listMessage) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
-				
 				final Message message = (Message)item.getModelObject();
-				
 //				item.setModel(new CompoundPropertyModel(message));
-				
 				item.add(new Label("userName", message.getUser().getName()));
 				item.add(new Label("msg", message.getMsg()));
 			}
-			
 		};
-		
 		add(listView);
-		
 	}
-
 }
