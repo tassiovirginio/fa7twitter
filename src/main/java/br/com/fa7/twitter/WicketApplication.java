@@ -46,7 +46,7 @@ public class WicketApplication extends WebApplication{
 	
 	@Transactional
 	private void populationDB(){
-		User tassio = new User("Tassio","tassio","123","tassio@fa7.org");
+		User tassio = new User("T√°ssio","tassio","123","tassio@fa7.org");
 		userBusiness.save(tassio);
 		User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
 		userBusiness.save(tiago);
@@ -55,8 +55,8 @@ public class WicketApplication extends WebApplication{
 		User juliana = new User("Juliana","juliana","123","juliana@fa7.org");
 		userBusiness.save(juliana);
 
-		messageBusiness.save(new Message("Ol· do T·ssio", tassio));
+		messageBusiness.save(new Message("Ol√° do T√°ssio", tassio));
 		messageBusiness.save(new Message("Agora estou aqui", tassio));
-		messageBusiness.save(new Message("Ol· do Tiago", tiago));
+		messageBusiness.save(new Message("Ol√° do Tiago", tiago));
 	} 
 }
