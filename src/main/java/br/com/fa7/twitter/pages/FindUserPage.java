@@ -6,10 +6,12 @@ import java.util.List;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
@@ -27,10 +29,16 @@ public class FindUserPage extends PageBase {
 	
 	private List<User> users = new ArrayList<User>();
 	
+	public FindUserPage() {
+		initComponents();
+	}
+
 	public FindUserPage(List<User> userList) {
-		
 		users = userList;
-		
+		initComponents();
+	}
+
+	private void initComponents() {
 		Form form = new Form("form"){
 			protected void onSubmit() {				
 				users = userBusiness.findByName(busca);
@@ -39,33 +47,26 @@ public class FindUserPage extends PageBase {
 		};
 		
 		form.add(new TextField<String>("tfBusca",new PropertyModel(this,"busca")));
-		
 		add(form);
-		
 		add(new Label("lbSize",users.size()+""));
 		
 		ListView<User> listView = new ListView<User>("lvListUsers",users) {
 			@Override
 			protected void populateItem(ListItem<User> item) {
-				
 				final User user = (User)item.getModelObject();
-				
-//				item.setModel(new CompoundPropertyModel(message));
-				Link<User> lkUserMessage = new Link<User>("lkname") {
-					public void onClick() {
-//						User user = getModelObject();
-						setResponsePage(new UserMessagePage(user));
-					}
-				};
-//				lkUserMessage.setModelObject(user);
-				lkUserMessage.add(new Label("name", user.getName()));
-				item.add(lkUserMessage);
+				Link<Void> lkUser = UserMessagePage.link("lkname", user);
+		        add(lkUser);
+		        lkUser.add(new Label("name", user.getName()));
+				item.add(lkUser);
 			}
 			
 		};
-		
 		add(listView);
-		
+	}
+
+	public static Link<Void> link(String id) {
+		Link<Void> result = new BookmarkablePageLink<Void>(id, FindUserPage.class);
+		return result;
 	}
 
 }

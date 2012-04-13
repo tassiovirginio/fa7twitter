@@ -24,55 +24,20 @@ public class PageBase extends WebPage {
 
 	@SuppressWarnings({ "rawtypes", "serial" })
 	public PageBase() {
-		
 		this.loggedUser = userBusiness.findById(1l);
-		
-		setDefaultModel(new CompoundPropertyModel(loggedUser));
-		
-		add(new Label("name"));
 
-		Link lkFindUser = new Link("lkFindUser") {
-			@Override
-			public void onClick() {
-				setResponsePage(new FindUserPage(new ArrayList<User>()));
-			}
-		};
-		
+		setDefaultModel(new CompoundPropertyModel(loggedUser));
+		add(new Label("name"));
+		Link lkFindUser = FindUserPage.link("lkFindUser");
 		add(lkFindUser);
 		
-		Link lkUserMessage = new Link("lkUserMessage") {
-			@Override
-			public void onClick() {
-				User tassio = userBusiness.findById(1l);
-				setResponsePage(new UserMessagePage(tassio));
-			}
-		};
-		
+		Link lkUserMessage = UserMessagePage.link("lkUserMessage", loggedUser);
 		add(lkUserMessage);
 		
-		Link lkHome = new Link("lkHome") {
-			@Override
-			public void onClick() {
-				setResponsePage(new PrincipalPage());
-			}
-		};
+		Link lkHome = PrincipalPage.link("lkHome");
 		add(lkHome);
 		
-		Link lkSobre = new Link("lkSobre") {
-			@Override
-			public void onClick() {
-				setResponsePage(new PrincipalPage());
-			}
-		};
+		Link lkSobre = PrincipalPage.link("lkSobre");
 		add(lkSobre);
-		
-		Link lkTiago = new Link("lkTiago") {
-			@Override
-			public void onClick() {
-				User tiago = userBusiness.findById(2l);
-				setResponsePage(new UserMessagePage(tiago));
-			}
-		};
-		add(lkTiago);
 	}
 }

@@ -10,7 +10,9 @@ import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
+import br.com.fa7.twitter.pages.FindUserPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
+import br.com.fa7.twitter.pages.UserMessagePage;
 
 import com.google.code.jqwicket.JQComponentOnBeforeRenderListener;
 import com.google.code.jqwicket.JQContributionConfig;
@@ -41,6 +43,9 @@ public class WicketApplication extends WebApplication{
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		getDebugSettings().setAjaxDebugModeEnabled(true);
 		
+		mountPage("/home", PrincipalPage.class);
+		mountPage("/user/${login}", UserMessagePage.class);
+		mountPage("/find", FindUserPage.class);
 		populationDB();
 	}
 	

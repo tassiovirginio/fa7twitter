@@ -5,8 +5,11 @@ import java.util.List;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.MessageBusiness;
@@ -29,6 +32,19 @@ public class UserMessagePage extends PageBase {
 
 	private boolean isPaginaPessoal;
 	
+	public UserMessagePage(PageParameters parameters) {
+		String donoDaPagina = parameters.get("login").toString();
+		this.caraDessaPagina = userBusiness.findByLogin(donoDaPagina);
+		isPaginaPessoal = (caraDessaPagina.equals(loggedUser));
+		this.initializeComponents();
+	}
+
+	public UserMessagePage(String donoDaPagina) {
+		this.caraDessaPagina = userBusiness.findByLogin(donoDaPagina);
+		isPaginaPessoal = (caraDessaPagina.equals(loggedUser));
+		this.initializeComponents();
+	}
+
 	public UserMessagePage(User donoDaPagina) {
 		isPaginaPessoal = (donoDaPagina.equals(loggedUser));
 		this.caraDessaPagina = donoDaPagina;
@@ -83,7 +99,7 @@ public class UserMessagePage extends PageBase {
 		Label lbUserName = new Label("lbUserName", caraDessaPagina.getName());
 		add(lbUserName);		
 		
-		ListView<Message> listView = new ListView<Message>("lvListMsg",listMessage) {
+		ListView<Message> listView = new ListView<Message>("lvListMsg", listMessage) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
@@ -93,5 +109,12 @@ public class UserMessagePage extends PageBase {
 		};
 		
 		add(listView);
+	}
+
+	public static Link<Void> link(String id, final User user) {
+		PageParameters params = new PageParameters();
+		params.set("login", user.getLogin());
+		Link<Void> result = new BookmarkablePageLink<Void>(id, UserMessagePage.class, params);
+		return result;
 	}
 }
