@@ -26,8 +26,11 @@ public class UserMessagePage extends PageBase {
 	private UserBusiness userBusiness;
 	
 	private User caraDessaPagina;
+
+	private boolean isPaginaPessoal;
 	
 	public UserMessagePage(User donoDaPagina) {
+		isPaginaPessoal = (donoDaPagina.equals(loggedUser));
 		this.caraDessaPagina = donoDaPagina;
 		this.initializeComponents();
 	}
@@ -61,12 +64,17 @@ public class UserMessagePage extends PageBase {
 		
 		add(form);
 		
-		if ((loggedUser.getListFollowing() != null) && (loggedUser.getListFollowing().contains(caraDessaPagina))) {
-			btnAbandonar.setVisible(true);
+		if (isPaginaPessoal) {
 			btnSeguir.setVisible(false);
-		} else {
-			btnSeguir.setVisible(true);
 			btnAbandonar.setVisible(false);
+		} else {
+			if ((loggedUser.getListFollowing() != null) && (loggedUser.getListFollowing().contains(caraDessaPagina))) {
+				btnAbandonar.setVisible(true);
+				btnSeguir.setVisible(false);
+			} else {
+				btnSeguir.setVisible(true);
+				btnAbandonar.setVisible(false);
+			}
 		}
 
 		List<Message> listMessage = messageBusiness.loadByUser(caraDessaPagina);
