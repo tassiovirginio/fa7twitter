@@ -7,13 +7,10 @@
 	<BR>
 	<BR>
 	<BR>
-	<TABLE>
+	<TABLE style="width: 20%;">
 		<TBODY>
 			<TR> 
-				<TD><span wicket:id="lbUserNameHeader" > nome 
-					</span></TD>
-				<TD><span wicket:id="lbSeguindoCount" > nao esta seguindo niguem
-					</span></TD> 
+				<TH><span wicket:id="lbUserNameHeader"/></TH>
 			</TR>
 			<TR>
 				<TD colspan="2">
@@ -25,17 +22,42 @@
 			</TR> 
 		</TBODY>
 	</TABLE>
-	<TABLE style="width: 90%;">
+	
+	<TABLE style="width: 50%;">
 		<TBODY>
 			<TR>
 				<TH>
-					<span wicket:id="lbSize">0</span> mensagens de <span wicket:id="lbUserName">nome</span>
-					</TH>
+					<span wicket:id="lbUserName"/> tem 
+					<span wicket:id="lbSize">0</span> mensagens:
+				</TH>
 			</TR>
 			<TR>
-				<TD><span wicket:id="lvListMsg"> 
-						-> <span wicket:id="msg" /><br />
-				</span></TD>
+				<TD>
+					<span wicket:id="lvListMsg"> 
+						<span wicket:id="userMsg"/> <span wicket:id="login"/>:<br/>
+						<span wicket:id="msg"/>
+						<hr/>
+					</span>
+				</TD>
+			</TR>
+		</TBODY>
+	</TABLE>
+	
+	<BR/><BR/>
+	
+	<TABLE style="width: 50%;">
+		<TBODY>
+			<TR>
+				<TH>
+					<span wicket:id="lbUser"/> segue <span wicket:id="lbFollowingCount"> 0 </span> pessoas:
+				</TH>
+			</TR>
+			<TR>
+				<TD>
+					<span wicket:id="lvListFollowing">
+						-> <span wicket:id="name"/><br/> 
+					</span>
+				</TD>
 			</TR>
 		</TBODY>
 	</TABLE>

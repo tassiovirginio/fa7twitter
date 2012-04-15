@@ -1,7 +1,9 @@
 package br.com.fa7.twitter.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -44,11 +46,11 @@ public class User implements Serializable {
 	
 	//Seguidores
 //	@ManyToMany(fetch=FetchType.EAGER)
-//	private Set<User> listFollower;
+//	private List<User> listFollower;
 	
 	//Seguidos
 	@ManyToMany(fetch=FetchType.EAGER)
-	private Set<User> listFollowing;
+	private List<User> listFollowing;
 
 	public Long getId() {
 		return id;
@@ -101,14 +103,14 @@ public class User implements Serializable {
 //		this.listFollower = listFollower;
 //	}
 
-	public Set<User> getListFollowing() {
+	public List<User> getListFollowing() {
 		if (listFollowing == null) {
-			listFollowing = new HashSet<User>();
+			listFollowing = new ArrayList<User>();
 		}
 		return listFollowing;
 	}
 
-	public void setListFollowing(Set<User> listFollowing) {
+	public void setListFollowing(List<User> listFollowing) {
 		this.listFollowing = listFollowing;
 	}
 

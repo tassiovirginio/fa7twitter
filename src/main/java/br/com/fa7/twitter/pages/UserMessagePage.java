@@ -1,5 +1,6 @@
 package br.com.fa7.twitter.pages;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -55,9 +56,6 @@ public class UserMessagePage extends PageBase {
 		Label lbUserNameHeader = new Label("lbUserNameHeader", caraDessaPagina.getName());
 		add(lbUserNameHeader);
 		
-		Label lbSeguindoCount = new Label("lbSeguindoCount", caraDessaPagina.getListFollowing().size() + "");
-		add(lbSeguindoCount);
-		
 		Form form = new Form("form");
 		
 		Button btnSeguir = new Button("btnSeguir") {
@@ -93,7 +91,31 @@ public class UserMessagePage extends PageBase {
 			}
 		}
 
+		List<User> listFollowing = caraDessaPagina.getListFollowing();
+		Label lbFollowingCount = new Label("lbFollowingCount", listFollowing.size() + "");
+		add(lbFollowingCount);				
+		Label lbUser = new Label("lbUser", caraDessaPagina.getName());
+		add(lbUser);				
+		
+		ListView<User> listViewFollowing = new ListView<User>("lvListFollowing", listFollowing) {
+			@Override
+			protected void populateItem(ListItem<User> item) {
+				final User userFollowing = (User)item.getModelObject();
+				item.add(new Label("name", userFollowing.getName()));
+			}
+		};
+		
+		add(listViewFollowing);
+		
+		// lista de mensagens do proprio usuario
 		List<Message> listMessage = messageBusiness.loadByUser(caraDessaPagina);
+		
+		// lista de mensagens de quem ele segue
+		for (Iterator iterator = listFollowing.iterator(); iterator.hasNext();) {
+			User following = (User) iterator.next();
+			listMessage.addAll(messageBusiness.loadByUser(following));
+		}		
+		
 		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
 		add(lbSize);
 		Label lbUserName = new Label("lbUserName", caraDessaPagina.getName());
@@ -105,10 +127,13 @@ public class UserMessagePage extends PageBase {
 				final Message message = (Message)item.getModelObject();
 //				item.setModel(new CompoundPropertyModel(message));
 				item.add(new Label("msg", message.getMsg()));
+				item.add(new Label("userMsg", message.getUser().getName()));
+				item.add(new Label("login", "@" + message.getUser().getLogin()));
 			}
 		};
 		
 		add(listView);
+		
 	}
 
 	public static Link<Void> link(String id, final User user) {

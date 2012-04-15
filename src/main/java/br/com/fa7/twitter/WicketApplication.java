@@ -61,7 +61,10 @@ public class WicketApplication extends WebApplication{
 		userBusiness.save(juliana);
 
 		messageBusiness.save(new Message("Olá do Tássio", tassio));
-		messageBusiness.save(new Message("Agora estou aqui", tassio));
+		messageBusiness.save(new Message("Mensagem do Tássio", tassio));
 		messageBusiness.save(new Message("Olá do Tiago", tiago));
+		messageBusiness.save(new Message("Tudo ok", tiago));
+		messageBusiness.save(new Message("Tudo certinho?", luana));
+		messageBusiness.save(new Message("Funciona?", juliana));
 	} 
 }
