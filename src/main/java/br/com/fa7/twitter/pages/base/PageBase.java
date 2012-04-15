@@ -37,7 +37,7 @@ public class PageBase extends WebPage {
 		Link lkHome = PrincipalPage.link("lkHome");
 		add(lkHome);
 		
-		Link lkSobre = PrincipalPage.link("lkSobre");
-		add(lkSobre);
+		/*Link lkSobre = PrincipalPage.link("lkSobre");
+		add(lkSobre);*/
 	}
 }
