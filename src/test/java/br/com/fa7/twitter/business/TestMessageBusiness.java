@@ -57,7 +57,6 @@ public class TestMessageBusiness {
 	
 	@After
 	public void finalize(){
-		System.out.println("size -> " + messageBusiness.size());
 		messageBusiness.clearAll();
 	}
 

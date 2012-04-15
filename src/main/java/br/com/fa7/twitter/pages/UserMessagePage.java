@@ -1,5 +1,6 @@
 package br.com.fa7.twitter.pages;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class UserMessagePage extends PageBase {
 	}
 	
 	private void initializeComponents(){
+
 		Label lbUserNameHeader = new Label("lbUserNameHeader", caraDessaPagina.getName());
 		add(lbUserNameHeader);
 		
@@ -60,9 +62,16 @@ public class UserMessagePage extends PageBase {
 		
 		Button btnSeguir = new Button("btnSeguir") {
 			public void onSubmit() {
+
 				loggedUser.getListFollowing().add(caraDessaPagina);
+				
+				System.out.println("[BEFORE SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
+				
 				userBusiness.save(loggedUser);
-				setResponsePage(new UserMessagePage(caraDessaPagina));
+				
+				System.out.println("[AFTER SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
+
+				setResponsePage(new UserMessagePage(loggedUser));
 			}
 		};
 		form.add(btnSeguir);
@@ -71,7 +80,7 @@ public class UserMessagePage extends PageBase {
 			public void onSubmit() {
 				loggedUser.getListFollowing().remove(caraDessaPagina);
 				userBusiness.save(loggedUser);
-				setResponsePage(new UserMessagePage(caraDessaPagina));
+				setResponsePage(new UserMessagePage(loggedUser));
 			}
 		};
 		form.add(btnAbandonar);
@@ -107,7 +116,6 @@ public class UserMessagePage extends PageBase {
 		
 		add(listViewFollowing);
 		
-		// lista de mensagens do proprio usuario
 		List<Message> listMessage = messageBusiness.loadByUser(caraDessaPagina);
 		
 		// lista de mensagens de quem ele segue
