@@ -1,5 +1,6 @@
 package br.com.fa7.twitter.pages;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -42,21 +43,33 @@ public class PrincipalPage extends PageBase {
 		TextArea<String> taMsg = new TextArea<String>("taMsg", new PropertyModel(this,"msg"));
 		form.add(taMsg);
 		
-		Label lbSize = new Label("lbSize",  messageBusiness.size()+"");
+		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
+		
+		// lista de mensagens de quem ele segue
+		List<User> listFollowing = loggedUser.getListFollowing();
+		for (Iterator iterator = listFollowing.iterator(); iterator.hasNext();) {
+			User following = (User) iterator.next();
+			listMessage.addAll(messageBusiness.loadByUser(following));
+		}		
+		
+		Label lbUserName = new Label("lbUserName", loggedUser.getName());
+		add(lbUserName);		
+
+		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
 		add(lbSize);
 		
-		List<Message> listMessage = messageBusiness.listAll();
-
-		ListView<Message> listView = new ListView<Message>("lvMsg",listMessage) {
+		ListView<Message> listView = new ListView<Message>("lvMsg", listMessage) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-//				item.setModel(new CompoundPropertyModel(message));
-				item.add(new Label("userName", message.getUser().getName()));
 				item.add(new Label("msg", message.getMsg()));
+				item.add(new Label("userMsg", message.getUser().getName()));
+				item.add(new Label("login", "@" + message.getUser().getLogin()));
 			}
 		};
+		
 		add(listView);
+		
 	}
 
 	public static Link<Void> link(String id) {

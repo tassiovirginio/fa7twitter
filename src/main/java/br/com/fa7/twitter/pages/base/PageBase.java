@@ -25,17 +25,15 @@ public class PageBase extends WebPage {
 		this.loggedUser = userBusiness.findById(1l);
 
 		setDefaultModel(new CompoundPropertyModel(loggedUser));
-		add(new Label("name"));
-		Link lkFindUser = FindUserPage.link("lkFindUser");
-		add(lkFindUser);
 		
 		Link lkUserMessage = UserMessagePage.link("lkUserMessage", loggedUser);
-		add(lkUserMessage);
+		add(lkUserMessage.add(new Label("name")));
 		
 		Link lkHome = PrincipalPage.link("lkHome");
 		add(lkHome);
 		
-		/*Link lkSobre = PrincipalPage.link("lkSobre");
-		add(lkSobre);*/
+		Link lkFindUser = FindUserPage.link("lkFindUser");
+		add(lkFindUser);
+		
 	}
 }

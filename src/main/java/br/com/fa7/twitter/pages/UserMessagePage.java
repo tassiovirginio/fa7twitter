@@ -71,7 +71,7 @@ public class UserMessagePage extends PageBase {
 				
 				System.out.println("[AFTER SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
 
-				setResponsePage(new UserMessagePage(loggedUser));
+				setResponsePage(new UserMessagePage(caraDessaPagina));
 			}
 		};
 		form.add(btnSeguir);
@@ -118,12 +118,6 @@ public class UserMessagePage extends PageBase {
 		
 		List<Message> listMessage = messageBusiness.loadByUser(caraDessaPagina);
 		
-		// lista de mensagens de quem ele segue
-		for (Iterator iterator = listFollowing.iterator(); iterator.hasNext();) {
-			User following = (User) iterator.next();
-			listMessage.addAll(messageBusiness.loadByUser(following));
-		}		
-		
 		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
 		add(lbSize);
 		Label lbUserName = new Label("lbUserName", caraDessaPagina.getName());
@@ -133,10 +127,7 @@ public class UserMessagePage extends PageBase {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-//				item.setModel(new CompoundPropertyModel(message));
 				item.add(new Label("msg", message.getMsg()));
-				item.add(new Label("userMsg", message.getUser().getName()));
-				item.add(new Label("login", "@" + message.getUser().getLogin()));
 			}
 		};
 		
