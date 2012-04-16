@@ -30,10 +30,8 @@ public class PrincipalPage extends PageBase {
 	public PrincipalPage() {
 		Form form = new Form("form"){
 			protected void onSubmit() {
-				System.out.println("Mensagem -> " + msg);
 				Message message = new Message(msg, loggedUser);
 				messageBusiness.save(message);
-				System.out.println("Size -> " + messageBusiness.size()); 
 				setResponsePage(new PrincipalPage());
 			};
 		};
