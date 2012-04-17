@@ -61,8 +61,6 @@ public class TestUserBusiness {
 		Message message = new Message("Mensagem do usuario logado", loggedUser);
 		messageBusiness.save(message);
 		
-		messageBusiness.loadByUser(loggedUser).add(message);
-		
 		try{
 			
 			loggedUser.getListFollowing().add(createUserFollowing());
@@ -79,26 +77,22 @@ public class TestUserBusiness {
 		
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void testAddTwoFollowingSuccess() {
-		
 		User loggedUser = new User("NomeUsuarioLogado", "login", "password", "email");
 		userBusiness.save(loggedUser);
 		
 		Message message = new Message("Mensagem do usuario logado", loggedUser);
 		messageBusiness.save(message);
 		
-		messageBusiness.loadByUser(loggedUser).add(message);
-		
 		try{
-			
+			//Primeiro Following
 			loggedUser.getListFollowing().add(createUserFollowing());
-			
 			userBusiness.save(loggedUser);
 			
+			//Segundo Following
 			loggedUser.getListFollowing().add(createUserFollowing());
-			
 			userBusiness.save(loggedUser);
 			
 			List<Message> messages = messageBusiness.loadByUser(loggedUser);
@@ -108,7 +102,6 @@ public class TestUserBusiness {
 		} catch (Exception e) {
 			Assert.fail("A quantidade de mensagens do usuario logado deveria ser = 1 ao inves de " + messageBusiness.loadByUser(loggedUser).size());
 		}
-		
 	}
 	
 	private User createUserFollowing(){

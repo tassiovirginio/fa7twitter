@@ -31,7 +31,9 @@ public class MessageBusiness {
 	}
 
 	public List<Message> loadByUser(User user) {
-		return messageDAO.findByCriteria(Restrictions.eq("user", user));
+		//List<Message> retorno = messageDAO.findByCriteria(Restrictions.eq("user", user));
+		List<Message> retorno = messageDAO.findAllFromUserViaHQL(user);
+		return retorno;
 	}
 
 	public void clearAll() {
