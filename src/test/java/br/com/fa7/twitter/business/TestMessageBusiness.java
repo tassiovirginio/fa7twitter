@@ -16,48 +16,51 @@ import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"/applicationContext.xml"})
+@ContextConfiguration(locations = { "/applicationContext.xml" })
 public class TestMessageBusiness {
-	
+
 	@Autowired
 	private MessageBusiness messageBusiness;
-	
+
 	@Autowired
 	private UserBusiness userBusiness;
-	
+
 	static User user;
-	
+
 	@Before
 	public void setUp() {
-		if (user == null) {
-			user = new User("name", "login", "password", "email");
-			userBusiness.save(user);
-		}
+		messageBusiness.clearAll();
+		userBusiness.clearAll();
 	}
 
 	@Test
 	public void testInsertOneMessage() {
+		User user = new User("name", "login", "password", "email");
+		userBusiness.save(user);
 		messageBusiness.save(new Message("test1", user));
-		Assert.assertEquals(1,messageBusiness.size());
+		Assert.assertEquals(1, messageBusiness.size());
 	}
-	
+
 	@Test
 	public void testInsertOneMessageReturntest1() {
+		User user = new User("name", "login", "password", "email");
+		userBusiness.save(user);
 		messageBusiness.save(new Message("test1", user));
-		Assert.assertEquals("test1",messageBusiness.listAll().get(0).getMsg());
+		Assert.assertEquals("test1", messageBusiness.listAll().get(0).getMsg());
 	}
 
 	@Test
 	public void testLoadUserMessages() {
+		User user = new User("name", "login", "password", "email");
+		userBusiness.save(user);
 		messageBusiness.save(new Message("test3", user));
 		List<Message> result = messageBusiness.loadByUser(user);
 		Assert.assertEquals(1, result.size());
 		Assert.assertEquals("test3", result.get(0).getMsg());
 	}
-	
+
 	@After
-	public void finalize(){
-		messageBusiness.clearAll();
+	public void finalize() {
 	}
 
 }

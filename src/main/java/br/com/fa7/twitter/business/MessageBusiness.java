@@ -37,7 +37,8 @@ public class MessageBusiness {
 	}
 
 	public void clearAll() {
-		for (Message m : listAll()) {
+		List<Message> list = listAll();
+		for (Message m : list) {
 			messageDAO.delete(m);
 		}
 	}

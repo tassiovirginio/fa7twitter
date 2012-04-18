@@ -28,6 +28,7 @@ public class TestUserBusiness {
 		
 	@Before
 	public void setUp() {
+		messageBusiness.clearAll();
 		userBusiness.clearAll();
 	}
 
@@ -176,7 +177,6 @@ public class TestUserBusiness {
 
 	@After
 	public void finalize(){
-		messageBusiness.clearAll();
 	}
 
 }
