@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,9 @@ public class TestUserBusiness {
 		
 	static Message message;
 		
-//	@Before
+	@Before
 	public void setUp() {
-		
+		userBusiness.clearAll();
 	}
 
 	@Test
@@ -117,6 +117,62 @@ public class TestUserBusiness {
 		return userFollowing;
 		
 	}
+	
+	
+	@Test
+	public void testFindAllUsers() {
+		User user = new User("NomeDeTeste", "login", "password", "email");
+		userBusiness.save(user);
+		List<User> users = userBusiness.listAll();
+		Assert.assertTrue(users.size() == 1);
+		
+	}
+	
+	@Test
+	public void testFindAllTwoUsers() {
+		User user = new User("NomeDeTeste", "login", "password", "email");
+		userBusiness.save(user);
+		User user2 = new User("NomeDeTeste", "login", "password", "email");
+		userBusiness.save(user2);
+		List<User> users = userBusiness.listAll();
+		Assert.assertTrue(users.size() == 2);
+		
+	}
+	
+	
+	@Test
+	public void testSizeListUsers() {
+		User user = new User("NomeDeTeste", "login", "password", "email");
+		userBusiness.save(user);
+		int size = userBusiness.size();
+		Assert.assertTrue(size == 1);
+		
+	}
+	
+	
+	@Test
+	public void testFindUsersById() {
+		User user = new User("NomeDeTeste", "login", "password", "email");
+		userBusiness.save(user);
+		User user2 = userBusiness.findById(user.getId());
+		Assert.assertTrue(user.equals(user2));
+	}
+	
+	@Test
+	public void testFindUsersByLogin() {
+		User user = new User("NomeDeTeste", "login", "password", "email");
+		userBusiness.save(user);
+		User user2 = userBusiness.findByLogin(user.getLogin());
+		Assert.assertTrue(user.equals(user2));
+	}
+	
+	
+	@Test
+	public void testFindUsersByLoginErro() {
+		User user = userBusiness.findByLogin("");
+		Assert.assertNull(user);
+	}
+	
 
 	@After
 	public void finalize(){

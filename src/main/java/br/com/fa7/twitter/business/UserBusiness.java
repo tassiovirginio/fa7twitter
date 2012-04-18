@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fa7.twitter.business.dao.UserDAO;
+import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 
 @Component
@@ -42,6 +43,13 @@ public class UserBusiness {
 
 	public List<User> findByName(String search) {
 		return userDAO.findByCriteria(Restrictions.like("name", "%"+search+"%"));
+	}
+	
+	public void clearAll() {
+		List<User> list = listAll();
+		for (User u : list) {
+			userDAO.delete(u);
+		}
 	}
 
 }
