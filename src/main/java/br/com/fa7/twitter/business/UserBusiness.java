@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fa7.twitter.business.dao.UserDAO;
-import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 
 @Component
