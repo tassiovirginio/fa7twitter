@@ -9,6 +9,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
+import br.com.fa7.twitter.pages.LoginPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
 import br.com.fa7.twitter.pages.UserMessagePage;
 
@@ -34,6 +35,9 @@ public class PageBase extends WebPage {
 		
 		Link lkFindUser = FindUserPage.link("lkFindUser");
 		add(lkFindUser);
+		
+		Link lkLogin = LoginPage.link("lkLogin");
+		add(lkLogin);
 		
 	}
 }
