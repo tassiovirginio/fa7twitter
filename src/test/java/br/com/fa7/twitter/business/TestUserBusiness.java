@@ -193,7 +193,7 @@ public class TestUserBusiness {
 		User user = new User("NomeDeTeste", "login", "password", "email@.com");
 		userBusiness.save(user);
 		try {
-			User userLogged = userBusiness.login("login","pass");
+			userBusiness.login("login","pass");
 			Assert.fail("Senha errada, deve disparar excecao");
 		} catch (Exception expected) {
 			Assert.assertEquals("Usuario e senha invalidos", expected.getMessage()) ;
@@ -204,7 +204,7 @@ public class TestUserBusiness {
 	public void testLoginNotFoundFail() {
 		
 		try {
-			User userLogged = userBusiness.login("login","pass");
+			userBusiness.login("login","pass");
 			Assert.fail("Login nao cadastrado, deve disparar excecao");
 		} catch (Exception expected) {
 			Assert.assertEquals("Login nao cadastrado", expected.getMessage()) ;
