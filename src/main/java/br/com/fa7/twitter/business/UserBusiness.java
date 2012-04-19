@@ -52,4 +52,14 @@ public class UserBusiness {
 		}
 	}
 
+	public User login(String login, String password) throws Exception {
+		User user = this.findByLogin(login);
+		if (user == null)
+			throw new Exception("Login nao cadastrado");
+		if (password.equals(user.getPassword()))
+			return user;
+		else 
+			throw new Exception("Usuario e senha invalidos");
+	}
+
 }

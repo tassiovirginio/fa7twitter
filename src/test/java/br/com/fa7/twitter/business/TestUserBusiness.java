@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -78,7 +79,6 @@ public class TestUserBusiness {
 		
 	}
 	
-	//@Ignore
 	@Test
 	public void testAddTwoFollowingSuccess() {
 		User loggedUser = new User("NomeUsuarioLogado", "login", "password", "email");
@@ -172,6 +172,44 @@ public class TestUserBusiness {
 	public void testFindUsersByLoginErro() {
 		User user = userBusiness.findByLogin("");
 		Assert.assertNull(user);
+	}
+	
+	@Test
+	public void testLoginSuccess() throws Exception {
+		
+		User user = new User("NomeDeTeste", "login", "password", "email@.com");
+		userBusiness.save(user);
+		User userLogged = userBusiness.login("login", "password");
+		Assert.assertNotNull("Usuario nao recuperado", userLogged);
+		Assert.assertEquals(userLogged.getLogin(), "login");
+		Assert.assertEquals(userLogged.getName(), "NomeDeTeste");
+		Assert.assertEquals(userLogged.getPassword(), "password");
+		Assert.assertEquals(userLogged.getEmail(), "email@.com");	
+	
+	}
+	
+	@Test
+	public void testLoginWrongPasswordFail() {
+		
+		User user = new User("NomeDeTeste", "login", "password", "email@.com");
+		userBusiness.save(user);
+		try {
+			User userLogged = userBusiness.login("login","pass");
+			Assert.fail("Senha errada, deve disparar excecao");
+		} catch (Exception expected) {
+			Assert.assertEquals("Usuario e senha invalidos", expected.getMessage()) ;
+		}	
+	}
+	
+	@Test
+	public void testLoginNotFoundFail() {
+		
+		try {
+			User userLogged = userBusiness.login("login","pass");
+			Assert.fail("Login nao cadastrado, deve disparar excecao");
+		} catch (Exception expected) {
+			Assert.assertEquals("Login nao cadastrado", expected.getMessage()) ;
+		}	
 	}
 	
 
