@@ -1,6 +1,8 @@
 package br.com.fa7.twitter.business;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -216,6 +218,28 @@ public class TestUserBusiness {
 		
 		userBusiness.follow(follower, user);
 		Assert.assertEquals(1, user.getListFollower().size());
+	}
+	
+	@Test
+	public void testFollowAUserAndListByManyToMany() {
+		User userToFollow = new User("Following", "following", "password", "email@.com");
+		userBusiness.save(userToFollow);
+		User follower = new User("Follower", "follower", "password", "email@.com");
+		userBusiness.save(follower);
+		
+		Set<User> follow = new HashSet<User>();
+		follow.add(userToFollow);
+		follower.setListFollowing(follow);
+		
+		userBusiness.save(follower);
+		
+		userBusiness.follow(follower, userToFollow);
+		
+		User followerDB = userBusiness.findById(follower.getId());
+		Assert.assertEquals(1, followerDB.getListFollowing().size());
+		
+		User userToFollowDB = userBusiness.findById(userToFollow.getId());
+		Assert.assertEquals(1, userToFollowDB.getListFollower().size());
 	}
 	
 	@After

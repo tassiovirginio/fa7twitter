@@ -76,14 +76,11 @@ public class UserBusiness {
 		else 
 			throw new Exception("Usuario e senha invalidos");
 	}
-
+	
 	public void follow(User follower, User userToFollow) {
-		UserFollow uf = new UserFollow();
-		uf.setUser(follower);
-		uf.setFollow(userToFollow);
-		userFollowDAO.save(uf);
+		follower.getListFollowing().add(userToFollow);
+		userDAO.save(follower);
 	}
-
 	
 //	public void unfollow(User follower, User userToUnfollow) {
 //		List<UserFollow> ufList = userFollowDAO.findByCriteria(

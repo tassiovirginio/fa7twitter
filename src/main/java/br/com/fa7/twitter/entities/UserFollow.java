@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-@Entity
+//@Entity
 public class UserFollow implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
