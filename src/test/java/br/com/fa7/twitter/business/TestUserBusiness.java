@@ -209,17 +209,6 @@ public class TestUserBusiness {
 		Assert.assertEquals(1, userFromDB.getFollowers().size());
 	}
 	
-	@Test @Ignore
-	public void testFollowAUserAndListHimFollowers() {
-		User user = new User("User", "user", "password", "email@.com");
-		userBusiness.save(user);
-		User follower = new User("Follower", "follower", "password", "email@.com");
-		userBusiness.save(follower);
-		
-		userBusiness.follow(follower, user);
-		Assert.assertEquals(1, user.getFollowers().size());
-	}
-	
 	@Test
 	public void testFollowAUserAndListByManyToMany() {
 		User userToFollow = new User("Following", "following", "password", "email@.com");
