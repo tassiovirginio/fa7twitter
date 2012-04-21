@@ -4,11 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.fa7.twitter.business.dao.UserFollowDAO;
 
 @Entity
 public class User implements Serializable {
@@ -40,11 +47,35 @@ public class User implements Serializable {
 	
 	//Seguidores
 //	@ManyToMany(fetch=FetchType.EAGER)
-//	private List<User> listFollower;
+	@Transient
+	private List<User> listFollower;
 	
 	//Seguidos
-	@ManyToMany(fetch=FetchType.EAGER)
+	//@ManyToMany(fetch=FetchType.EAGER)
+	@Transient
 	private List<User> listFollowing;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	private List<UserFollow> listUserFolowing;
+	
+	@OneToMany(mappedBy="follow", fetch=FetchType.EAGER)
+	private List<UserFollow> listFolowingUser;
+
+	public List<UserFollow> getListUserFolowing() {
+		return listUserFolowing;
+	}
+
+	public void setListUserFolowing(List<UserFollow> listUserFolowing) {
+		this.listUserFolowing = listUserFolowing;
+	}
+	
+	public List<UserFollow> getListFolowingUser() {
+		return listFolowingUser;
+	}
+
+	public void setListFolowingUser(List<UserFollow> listFolowingUser) {
+		this.listFolowingUser = listFolowingUser;
+	}
 
 	public Long getId() {
 		return id;
@@ -86,24 +117,32 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-//	public Set<User> getListFollower() {
-//		if (listFollower == null) {
-//			listFollower = new HashSet<User>();
-//		}
-//		return listFollower;
-//	}
-//
-//	public void setListFollower(Set<User> listFollower) {
-//		this.listFollower = listFollower;
-//	}
+	/**
+	 * Lista de usuarios que seguem este usuario
+	 */
+	public List<User> getListFollower() {
+		listFollower  = new ArrayList<User>();
+		for (UserFollow uf : listFolowingUser) {
+			listFollower.add(uf.getFollow());
+		}
+		return listFollower;
+	}
 
+	public void setListFollower(List<User> listFollower) {
+		this.listFollower = listFollower;
+	}
+
+	/**
+	 * Lista de usuarios que este usuario segue
+	 */
 	public List<User> getListFollowing() {
-		if (listFollowing == null) {
-			listFollowing = new ArrayList<User>();
+		listFollowing = new ArrayList<User>();
+		for (UserFollow uf : listUserFolowing) {
+			listFollowing.add(uf.getFollow());
 		}
 		return listFollowing;
 	}
-
+	
 	public void setListFollowing(List<User> listFollowing) {
 		this.listFollowing = listFollowing;
 	}
@@ -140,3 +179,5 @@ public class User implements Serializable {
 	}
 
 }
+
+

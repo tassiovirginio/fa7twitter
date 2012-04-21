@@ -1,5 +1,6 @@
 package br.com.fa7.twitter.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.Restrictions;
@@ -8,14 +9,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fa7.twitter.business.dao.UserDAO;
+import br.com.fa7.twitter.business.dao.UserFollowDAO;
 import br.com.fa7.twitter.entities.User;
+import br.com.fa7.twitter.entities.UserFollow;
 
 @Component
 @Transactional 
 public class UserBusiness {
 	
 	@Autowired
-	private UserDAO userDAO; 
+	private UserDAO userDAO;
+	
+	@Autowired
+	private UserFollowDAO userFollowDAO;
 	
 	public int size(){
 		return userDAO.listAll().size();
@@ -29,8 +35,12 @@ public class UserBusiness {
 		return userDAO.listAll();
 	}
 	
+	public void delete(User user){
+		userDAO.delete(user);
+	}
+	
 	public User findById(Long id){
-		return userDAO.findById(id);
+		return userDAO.findById(id); 
 	}
 
 	public User findByLogin(String login) {
@@ -51,6 +61,13 @@ public class UserBusiness {
 		}
 	}
 
+	public void clearAllFollows() {
+		List<UserFollow> list = userFollowDAO.listAll();
+		for (UserFollow uf : list) {
+			userFollowDAO.delete(uf);
+		}
+	}
+
 	public User login(String login, String password) throws Exception {
 		User user = this.findByLogin(login);
 		if (user == null)
@@ -61,4 +78,22 @@ public class UserBusiness {
 			throw new Exception("Usuario e senha invalidos");
 	}
 
+	public void follow(User follower, User userToFollow) {
+		UserFollow uf = new UserFollow();
+		uf.setUser(follower);
+		uf.setFollow(userToFollow);
+		userFollowDAO.save(uf);
+	}
+
+	
+//	public void unfollow(User follower, User userToUnfollow) {
+//		List<UserFollow> ufList = userFollowDAO.findByCriteria(
+//				Restrictions.and(
+//						Restrictions.eq("user", follower), 
+//						Restrictions.eq("follow", userToUnfollow)
+//						));
+//		UserFollow uf = ufList.get(0);
+//		userFollowDAO.delete(uf);
+//	}
+	
 }
