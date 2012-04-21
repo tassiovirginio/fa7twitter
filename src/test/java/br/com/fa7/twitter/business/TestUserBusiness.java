@@ -193,7 +193,7 @@ public class TestUserBusiness {
 		userBusiness.follow(follower, user);
 		
 		User followerFromDB = userBusiness.findByLogin("follower");
-		Assert.assertEquals(1, followerFromDB.getListFollowing().size());
+		Assert.assertEquals(1, followerFromDB.getFollowing().size());
 	}
 	
 	@Test
@@ -206,7 +206,7 @@ public class TestUserBusiness {
 		userBusiness.follow(follower, user);
 		
 		User userFromDB = userBusiness.findByLogin("following");
-		Assert.assertEquals(1, userFromDB.getListFollower().size());
+		Assert.assertEquals(1, userFromDB.getFollowers().size());
 	}
 	
 	@Test @Ignore
@@ -217,7 +217,7 @@ public class TestUserBusiness {
 		userBusiness.save(follower);
 		
 		userBusiness.follow(follower, user);
-		Assert.assertEquals(1, user.getListFollower().size());
+		Assert.assertEquals(1, user.getFollowers().size());
 	}
 	
 	@Test
@@ -229,17 +229,17 @@ public class TestUserBusiness {
 		
 		Set<User> follow = new HashSet<User>();
 		follow.add(userToFollow);
-		follower.setListFollowing(follow);
+		follower.setFollowing(follow);
 		
 		userBusiness.save(follower);
 		
 		userBusiness.follow(follower, userToFollow);
 		
 		User followerDB = userBusiness.findById(follower.getId());
-		Assert.assertEquals(1, followerDB.getListFollowing().size());
+		Assert.assertEquals(1, followerDB.getFollowing().size());
 		
 		User userToFollowDB = userBusiness.findById(userToFollow.getId());
-		Assert.assertEquals(1, userToFollowDB.getListFollower().size());
+		Assert.assertEquals(1, userToFollowDB.getFollowers().size());
 	}
 	
 	@After

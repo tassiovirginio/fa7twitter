@@ -2,6 +2,7 @@ package br.com.fa7.twitter.pages;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -44,10 +45,9 @@ public class PrincipalPage extends PageBase {
 		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
 		
 		// lista de mensagens de quem ele segue
-		List<User> listFollowing = loggedUser.getListFollowing();
-		for (Iterator iterator = listFollowing.iterator(); iterator.hasNext();) {
-			User following = (User) iterator.next();
-			listMessage.addAll(messageBusiness.loadByUser(following));
+		Set<User> following = loggedUser.getFollowing();
+		for (User user : following) {
+			listMessage.addAll(messageBusiness.loadByUser(user));
 		}		
 		
 		Label lbUserName = new Label("lbUserName", loggedUser.getName());

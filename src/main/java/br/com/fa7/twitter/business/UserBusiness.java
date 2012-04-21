@@ -78,7 +78,7 @@ public class UserBusiness {
 	}
 	
 	public void follow(User follower, User userToFollow) {
-		follower.getListFollowing().add(userToFollow);
+		follower.getFollowing().add(userToFollow);
 		userDAO.save(follower);
 	}
 	

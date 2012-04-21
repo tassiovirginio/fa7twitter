@@ -3,6 +3,7 @@ package br.com.fa7.twitter.pages;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -63,7 +64,7 @@ public class UserMessagePage extends PageBase {
 		Button btnSeguir = new Button("btnSeguir") {
 			public void onSubmit() {
 
-				loggedUser.getListFollowing().add(caraDessaPagina);
+				loggedUser.getFollowing().add(caraDessaPagina);
 				
 				System.out.println("[BEFORE SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
 				
@@ -78,7 +79,7 @@ public class UserMessagePage extends PageBase {
 		
 		Button btnAbandonar = new Button("btnAbandonar"){
 			public void onSubmit() {
-				loggedUser.getListFollowing().remove(caraDessaPagina);
+				loggedUser.getFollowing().remove(caraDessaPagina);
 				userBusiness.save(loggedUser);
 				setResponsePage(new UserMessagePage(loggedUser));
 			}
@@ -91,7 +92,7 @@ public class UserMessagePage extends PageBase {
 			btnSeguir.setVisible(false);
 			btnAbandonar.setVisible(false);
 		} else {
-			if ((loggedUser.getListFollowing() != null) && (loggedUser.getListFollowing().contains(caraDessaPagina))) {
+			if ((loggedUser.getFollowing() != null) && (loggedUser.getFollowing().contains(caraDessaPagina))) {
 				btnAbandonar.setVisible(true);
 				btnSeguir.setVisible(false);
 			} else {
@@ -100,13 +101,14 @@ public class UserMessagePage extends PageBase {
 			}
 		}
 
-		List<User> listFollowing = caraDessaPagina.getListFollowing();
-		Label lbFollowingCount = new Label("lbFollowingCount", listFollowing.size() + "");
+		Set<User> following = caraDessaPagina.getFollowing();
+		Label lbFollowingCount = new Label("lbFollowingCount", following.size() + "");
 		add(lbFollowingCount);				
 		Label lbUser = new Label("lbUser", caraDessaPagina.getName());
 		add(lbUser);				
 		
-		ListView<User> listViewFollowing = new ListView<User>("lvListFollowing", listFollowing) {
+		List<User> listaItens = new ArrayList<User>(following);
+		ListView<User> listViewFollowing = new ListView<User>("lvListFollowing", listaItens) {
 			@Override
 			protected void populateItem(ListItem<User> item) {
 				final User userFollowing = (User)item.getModelObject();

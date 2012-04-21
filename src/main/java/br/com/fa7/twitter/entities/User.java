@@ -97,23 +97,23 @@ public class User implements Serializable {
 	/**
 	 * Lista de usuarios que seguem este usuario
 	 */
-	public Set<User> getListFollower() {
+	public Set<User> getFollowers() {
 		return followers;
 	}
 
-	public void setListFollower(Set<User> listFollower) {
-		this.followers = listFollower;
+	public void setFollowers(Set<User> followers) {
+		this.followers = followers;
 	}
 
 	/**
 	 * Lista de usuarios que este usuario segue
 	 */
-	public Set<User> getListFollowing() {
+	public Set<User> getFollowing() {
 		return following;
 	}
 	
-	public void setListFollowing(Set<User> listFollowing) {
-		this.following = listFollowing;
+	public void setFollowing(Set<User> following) {
+		this.following = following;
 	}
 
 	@Override
