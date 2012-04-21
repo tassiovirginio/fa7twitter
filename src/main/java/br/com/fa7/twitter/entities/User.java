@@ -4,18 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import br.com.fa7.twitter.business.dao.UserFollowDAO;
 
 @Entity
 public class User implements Serializable {
