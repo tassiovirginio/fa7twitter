@@ -32,7 +32,6 @@ public class TestUserBusiness {
 	@Before
 	public void setUp() {
 		messageBusiness.clearAll();
-		userBusiness.clearAllFollows();
 		userBusiness.clearAll();
 	}
 

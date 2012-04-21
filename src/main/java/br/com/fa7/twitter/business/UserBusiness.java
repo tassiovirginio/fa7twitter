@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fa7.twitter.business.dao.UserDAO;
-import br.com.fa7.twitter.business.dao.UserFollowDAO;
 import br.com.fa7.twitter.entities.User;
-import br.com.fa7.twitter.entities.UserFollow;
 
 @Component
 @Transactional 
@@ -18,9 +16,6 @@ public class UserBusiness {
 	
 	@Autowired
 	private UserDAO userDAO;
-	
-	@Autowired
-	private UserFollowDAO userFollowDAO;
 	
 	public int size(){
 		return userDAO.listAll().size();
@@ -57,13 +52,6 @@ public class UserBusiness {
 		List<User> list = listAll();
 		for (User u : list) {
 			userDAO.delete(u);
-		}
-	}
-
-	public void clearAllFollows() {
-		List<UserFollow> list = userFollowDAO.listAll();
-		for (UserFollow uf : list) {
-			userFollowDAO.delete(uf);
 		}
 	}
 

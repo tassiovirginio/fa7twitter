@@ -50,7 +50,7 @@ public class User implements Serializable {
 		)
 	private Set<User> following = new HashSet<User>();
 	
-	//Ssuarios seguidores
+	//Usuarios seguidores
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy="following")
 	private Set<User> followers = new HashSet<User>();
 
