@@ -105,10 +105,14 @@ public class UserMessagePage extends PageBase {
 		}
 
 		Set<User> following = userPage.getFollowing();
+		Set<User> followers = userPage.getFollowers();
+		
 		Label lbFollowingCount = new Label("lbFollowingCount", following.size() + "");
 		add(lbFollowingCount);
 		Label lbFollowingCount2 = new Label("lbFollowingCount2", following.size() + "");
 		add(lbFollowingCount2);
+		Label lbFollowersCount2 = new Label("lbFollowersCount2", followers.size() + "");
+		add(lbFollowersCount2);
 		Label lbUser = new Label("lbUser", userPage.getName());
 		add(lbUser);				
 		

@@ -61,7 +61,7 @@ public class PrincipalPage extends PageBase {
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
 				item.add(new Label("msg", message.getMsg()));
-				item.add(new Label("userMsg", message.getUser().getName()));
+//				item.add(new Label("userMsg", message.getUser().getName()));
 				item.add(new Label("login", "@" + message.getUser().getLogin()));
 			}
 		};

@@ -28,7 +28,7 @@ public class PageBase extends WebPage {
 		setDefaultModel(new CompoundPropertyModel(loggedUser));
 		
 		Link lkUserMessage = UserMessagePage.link("lkUserMessage", loggedUser);
-		add(lkUserMessage.add(new Label("name")));
+		add(lkUserMessage.add(new Label("login")));
 		
 		Link lkHome = PrincipalPage.link("lkHome");
 		add(lkHome);

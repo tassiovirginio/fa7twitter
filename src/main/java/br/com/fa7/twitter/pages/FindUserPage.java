@@ -56,7 +56,7 @@ public class FindUserPage extends PageBase {
 				final User user = (User)item.getModelObject();
 				Link<Void> lkUser = UserMessagePage.link("lkname", user);
 		        add(lkUser);
-		        lkUser.add(new Label("name", user.getName()));
+		        lkUser.add(new Label("login", user.getLogin()));
 				item.add(lkUser);
 			}
 			
