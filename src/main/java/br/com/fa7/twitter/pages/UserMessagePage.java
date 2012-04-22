@@ -31,32 +31,35 @@ public class UserMessagePage extends PageBase {
 	@SpringBean
 	private UserBusiness userBusiness;
 	
-	private User caraDessaPagina;
+	private User userPage;
 
 	private boolean isPaginaPessoal;
 	
 	public UserMessagePage(PageParameters parameters) {
 		String donoDaPagina = parameters.get("login").toString();
-		this.caraDessaPagina = userBusiness.findByLogin(donoDaPagina);
-		isPaginaPessoal = (caraDessaPagina.equals(loggedUser));
+		this.userPage = userBusiness.findByLogin(donoDaPagina);
+		isPaginaPessoal = (userPage.equals(loggedUser));
 		this.initializeComponents();
 	}
 
-	public UserMessagePage(String donoDaPagina) {
-		this.caraDessaPagina = userBusiness.findByLogin(donoDaPagina);
-		isPaginaPessoal = (caraDessaPagina.equals(loggedUser));
-		this.initializeComponents();
-	}
+//	public UserMessagePage(String userLogin) {
+//		this.userPage = userBusiness.findByLogin(userLogin);
+//		isPaginaPessoal = (userPage.equals(loggedUser));
+//		this.initializeComponents();
+//	}
 
-	public UserMessagePage(User donoDaPagina) {
-		isPaginaPessoal = (donoDaPagina.equals(loggedUser));
-		this.caraDessaPagina = donoDaPagina;
+	public UserMessagePage(User user) {
+		if(loggedUser == null){
+			loggedUser = user;
+		}
+		isPaginaPessoal = (user.equals(loggedUser));
+		this.userPage = user;
 		this.initializeComponents();
 	}
 	
 	private void initializeComponents(){
 
-		Label lbUserNameHeader = new Label("lbUserNameHeader", caraDessaPagina.getName());
+		Label lbUserNameHeader = new Label("lbUserNameHeader", userPage.getName());
 		add(lbUserNameHeader);
 		
 		Form form = new Form("form");
@@ -64,7 +67,7 @@ public class UserMessagePage extends PageBase {
 		Button btnSeguir = new Button("btnSeguir") {
 			public void onSubmit() {
 
-				loggedUser.getFollowing().add(caraDessaPagina);
+				loggedUser.getFollowing().add(userPage);
 				
 				System.out.println("[BEFORE SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
 				
@@ -72,14 +75,14 @@ public class UserMessagePage extends PageBase {
 				
 				System.out.println("[AFTER SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
 
-				setResponsePage(new UserMessagePage(caraDessaPagina));
+				setResponsePage(new UserMessagePage(userPage));
 			}
 		};
 		form.add(btnSeguir);
 		
 		Button btnAbandonar = new Button("btnAbandonar"){
 			public void onSubmit() {
-				loggedUser.getFollowing().remove(caraDessaPagina);
+				loggedUser.getFollowing().remove(userPage);
 				userBusiness.save(loggedUser);
 				setResponsePage(new UserMessagePage(loggedUser));
 			}
@@ -92,7 +95,7 @@ public class UserMessagePage extends PageBase {
 			btnSeguir.setVisible(false);
 			btnAbandonar.setVisible(false);
 		} else {
-			if ((loggedUser.getFollowing() != null) && (loggedUser.getFollowing().contains(caraDessaPagina))) {
+			if ((loggedUser.getFollowing() != null) && (loggedUser.getFollowing().contains(userPage))) {
 				btnAbandonar.setVisible(true);
 				btnSeguir.setVisible(false);
 			} else {
@@ -101,10 +104,12 @@ public class UserMessagePage extends PageBase {
 			}
 		}
 
-		Set<User> following = caraDessaPagina.getFollowing();
+		Set<User> following = userPage.getFollowing();
 		Label lbFollowingCount = new Label("lbFollowingCount", following.size() + "");
-		add(lbFollowingCount);				
-		Label lbUser = new Label("lbUser", caraDessaPagina.getName());
+		add(lbFollowingCount);
+		Label lbFollowingCount2 = new Label("lbFollowingCount2", following.size() + "");
+		add(lbFollowingCount2);
+		Label lbUser = new Label("lbUser", userPage.getName());
 		add(lbUser);				
 		
 		List<User> listaItens = new ArrayList<User>(following);
@@ -118,11 +123,11 @@ public class UserMessagePage extends PageBase {
 		
 		add(listViewFollowing);
 		
-		List<Message> listMessage = messageBusiness.loadByUser(caraDessaPagina);
+		List<Message> listMessage = messageBusiness.loadByUser(userPage);
 		
 		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
 		add(lbSize);
-		Label lbUserName = new Label("lbUserName", caraDessaPagina.getName());
+		Label lbUserName = new Label("lbUserName", userPage.getName());
 		add(lbUserName);		
 		
 		ListView<Message> listView = new ListView<Message>("lvListMsg", listMessage) {

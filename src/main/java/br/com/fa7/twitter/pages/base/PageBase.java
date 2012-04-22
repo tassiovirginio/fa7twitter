@@ -36,8 +36,6 @@ public class PageBase extends WebPage {
 		Link lkFindUser = FindUserPage.link("lkFindUser");
 		add(lkFindUser);
 		
-		Link lkLogin = LoginPage.link("lkLogin");
-		add(lkLogin);
 		
 	}
 }

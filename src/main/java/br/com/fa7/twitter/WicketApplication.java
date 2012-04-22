@@ -11,6 +11,7 @@ import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
+import br.com.fa7.twitter.pages.LoginPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
 import br.com.fa7.twitter.pages.UserMessagePage;
 
@@ -27,8 +28,8 @@ public class WicketApplication extends WebApplication{
 	private MessageBusiness messageBusiness;
 	
 	@Override
-	public Class<PrincipalPage> getHomePage(){
-		return PrincipalPage.class;
+	public Class<LoginPage> getHomePage(){
+		return LoginPage.class;
 	}
 
 	@Override
@@ -46,6 +47,7 @@ public class WicketApplication extends WebApplication{
 		mountPage("/home", PrincipalPage.class);
 		mountPage("/user/${login}", UserMessagePage.class);
 		mountPage("/find", FindUserPage.class);
+		
 		populationDB();
 	}
 	

@@ -1,8 +1,16 @@
+<wicket:head>
+	<script type="text/javascript">
+			function setFocus()
+			{
+			     document.getElementById("buscar").focus();
+			}
+		</script>
+</wicket:head>
 <wicket:extend>
 	<BR><BR><BR><BR><BR><BR><BR>
 <br>
 
-<TABLE style="width: 10%;">
+<TABLE style="width: 10%;" >
 <TBODY>
 	<TR>
 		<TH>Busca </TH>
@@ -10,7 +18,7 @@
 	<TR>
 		<TD>
 			<form wicket:id="form" action="#">
-				<input wicket:id="tfBusca" type="text" /><br>
+				<input wicket:id="tfBusca" type="text" id="buscar"/><br>
 				<input type="submit" />
 			</form>
 		</TD>

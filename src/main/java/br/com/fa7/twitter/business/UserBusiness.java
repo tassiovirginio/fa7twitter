@@ -43,6 +43,13 @@ public class UserBusiness {
 		  return null;
 		return result.get(0);
 	}
+	
+	public User validateLogin(String login, String password) {
+		List<User> result = userDAO.findByCriteria(Restrictions.like("login", login),Restrictions.like("password", password));
+		if (result.isEmpty())
+		  return null;
+		return result.get(0);
+	}
 
 	public List<User> findByName(String search) {
 		return userDAO.findByCriteria(Restrictions.like("name", "%"+search+"%"));

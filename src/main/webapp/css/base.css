@@ -26,7 +26,16 @@ body {
 	box-shadow: 0 5px 15px hsla(0, 0%, 0%, .8);
 }
 
-
+#pessoal_div {
+	font-weight: bold;
+	font-size: 11px;
+	width: 10%;
+	text-align: left;
+	margin: 0 auto;
+	left: 2%;
+	margin-left: 0px;
+	position: fixed;
+}
 
 #menu_div {
 	font-weight: bold;
@@ -47,9 +56,13 @@ body {
 
 a:link,a:visited,a:active {
 	border-radius: 4px;
-	text-decoration: underline;
-	color: #000000;
+	text-decoration: none;
+	color: #0066CC;
 	border: solid 0px;
+}
+a:hover {
+	color: #000000;
+	font-weight: bolder;
 }
 
 a.menu:link,a.menu:visited,a.menu:active {
@@ -59,8 +72,19 @@ a.menu:link,a.menu:visited,a.menu:active {
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#404040),to(#000000) );
 	background-image: -moz-linear-gradient(100% 100% 90deg, #404040, #000000);
 }
-
 a.menu:hover {
+	color: #0066CC;
+	font-weight: bolder;
+}
+
+a.status:link,a.status:visited,a.status:active {
+	text-decoration: none;
+	color: #0066CC;
+	font-weight: bolder;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#404040),to(#000000) );
+	background-image: -moz-linear-gradient(100% 100% 90deg, #404040, #000000);
+}
+a.status:hover {
 	color: #0066CC;
 	font-weight: bolder;
 }

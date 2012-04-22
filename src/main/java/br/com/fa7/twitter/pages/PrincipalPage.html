@@ -1,5 +1,5 @@
 <wicket:extend>
-	<BR><BR><BR><BR><BR><BR><BR>
+	<BR><BR><BR><BR>
 <TABLE style="width: 30%;">
 <TBODY>
 	<TR>
@@ -9,7 +9,7 @@
 		<TD>
 			Enviar Mensagem:<br>
 			<form wicket:id="form" action="#">
-				<textarea wicket:id="taMsg" rows="3" cols="60"/><br>
+				<textarea wicket:id="taMsg" rows="3" cols="57"/><br>
 				<input type="submit" />
 			</form>
 		</TD>
@@ -17,7 +17,7 @@
 </TBODY>
 </TABLE>
 <br>
-<TABLE style="width: 50%;">
+<TABLE style="width: 30%;">
 <TBODY>
 	<TR>
 		<TH>
@@ -26,12 +26,14 @@
 		</TH>
 	</TR>
 	<TR>
-		<TD>
+		<TD height="100px">
+		<div style="width:400px;height:250px;overflow: auto;">
 		<span wicket:id="lvMsg"> 
 			<span wicket:id="userMsg"/> <span wicket:id="login"/>:<br/>
 			<span wicket:id="msg"/>
 			<hr/>
 		</span>
+		</div>
 		</TD>
 	</TR>
 </TBODY>

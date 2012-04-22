@@ -1,19 +1,16 @@
 <wicket:extend>
 	<BR>
 	<BR>
-	<BR>
-	<BR>
-	<BR>
-	<BR>
-	<BR>
-	<BR>
-	<TABLE style="width: 20%;">
+<div id="pessoal_div" >
+	<TABLE style="width: 100%;">
 		<TBODY>
 			<TR> 
 				<TH><span wicket:id="lbUserNameHeader"/></TH>
 			</TR>
 			<TR>
 				<TD colspan="2">
+					Seguidos: <span wicket:id="lbFollowingCount2"> 0 </span><br>
+					Seguidores: 12 <br><br>
 					<form wicket:id="form" action="#">
 						<input wicket:id="btnSeguir" type="submit" value="Seguir" />
 						<input wicket:id="btnAbandonar" type="submit" value="Abandonar" />
@@ -22,7 +19,13 @@
 			</TR> 
 		</TBODY>
 	</TABLE>
-	
+	</div>
+
+	<BR>
+	<BR>
+	<BR>
+	<BR>
+	<br>
 	<TABLE style="width: 50%;">
 		<TBODY>
 			<TR>
