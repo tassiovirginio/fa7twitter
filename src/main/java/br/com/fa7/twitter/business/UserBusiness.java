@@ -58,7 +58,7 @@ public class UserBusiness {
 	public void clearAll() {
 		List<User> list = listAll();
 		for (User u : list) {
-			userDAO.delete(u);
+			delete(u);
 		}
 	}
 
@@ -74,12 +74,12 @@ public class UserBusiness {
 	
 	public void follow(User follower, User userToFollow) {
 		follower.getFollowing().add(userToFollow);
-		userDAO.save(follower);
+		save(follower);
 	}
 	
 	public void unfollow(User follower, User userToUnfollow) {
 		follower.getFollowing().remove(userToUnfollow);
-		userDAO.save(follower);
+		save(follower);
 	}
 	
 }
