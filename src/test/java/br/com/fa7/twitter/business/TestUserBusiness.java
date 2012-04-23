@@ -7,7 +7,6 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,6 +235,21 @@ public class TestUserBusiness {
 		
 		User userToFollowDB = userBusiness.findById(userToFollow.getId());
 		Assert.assertEquals(1, userToFollowDB.getFollowers().size());
+	}
+	
+	@Test
+	public void testUnfollowAUserAndList(){
+		User userThatHeFollow = new User("Follower", "follower", "password", "email@.com");
+		userBusiness.save(userThatHeFollow);
+		User user = new User("Following", "following", "password", "email@.com");
+		user.getFollowing().add(userThatHeFollow);
+		userBusiness.save(user);
+		Assert.assertEquals(1, user.getFollowing().size());
+		
+		userBusiness.unfollow(user, userThatHeFollow);
+		Assert.assertEquals(0, user.getFollowing().size());
+		User userDB = userBusiness.findById(user.getId());
+		Assert.assertEquals(0, userDB.getFollowing().size());
 	}
 	
 	@After

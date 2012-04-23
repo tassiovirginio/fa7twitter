@@ -77,14 +77,9 @@ public class UserBusiness {
 		userDAO.save(follower);
 	}
 	
-//	public void unfollow(User follower, User userToUnfollow) {
-//		List<UserFollow> ufList = userFollowDAO.findByCriteria(
-//				Restrictions.and(
-//						Restrictions.eq("user", follower), 
-//						Restrictions.eq("follow", userToUnfollow)
-//						));
-//		UserFollow uf = ufList.get(0);
-//		userFollowDAO.delete(uf);
-//	}
+	public void unfollow(User follower, User userToUnfollow) {
+		follower.getFollowing().remove(userToUnfollow);
+		userDAO.save(follower);
+	}
 	
 }

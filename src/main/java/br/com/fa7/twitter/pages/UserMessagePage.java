@@ -66,25 +66,16 @@ public class UserMessagePage extends PageBase {
 		
 		Button btnSeguir = new Button("btnSeguir") {
 			public void onSubmit() {
-
 				userBusiness.follow(loggedUser, userPage);
-				
-				System.out.println("[BEFORE SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
-				
-				userBusiness.save(loggedUser);
-				
-				System.out.println("[AFTER SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
-
-				setResponsePage(new UserMessagePage(userPage));
+				setResponsePage(new UserMessagePage(userBusiness.findById(userPage.getId())));
 			}
 		};
 		form.add(btnSeguir);
 		
 		Button btnAbandonar = new Button("btnAbandonar"){
 			public void onSubmit() {
-				loggedUser.getFollowing().remove(userPage);
-				userBusiness.save(loggedUser);
-				setResponsePage(new UserMessagePage(loggedUser));
+				userBusiness.unfollow(loggedUser, userPage);
+				setResponsePage(new UserMessagePage(userBusiness.findById(userPage.getId())));
 			}
 		};
 		form.add(btnAbandonar);
