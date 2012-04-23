@@ -109,23 +109,12 @@ public class UserMessagePage extends PageBase {
 		
 		Label lbFollowingCount = new Label("lbFollowingCount", following.size() + "");
 		add(lbFollowingCount);
-		Label lbFollowingCount2 = new Label("lbFollowingCount2", following.size() + "");
-		add(lbFollowingCount2);
-		Label lbFollowersCount2 = new Label("lbFollowersCount2", followers.size() + "");
-		add(lbFollowersCount2);
-		Label lbUser = new Label("lbUser", userPage.getName());
-		add(lbUser);				
-		
-		List<User> listaItens = new ArrayList<User>(following);
-		ListView<User> listViewFollowing = new ListView<User>("lvListFollowing", listaItens) {
-			@Override
-			protected void populateItem(ListItem<User> item) {
-				final User userFollowing = (User)item.getModelObject();
-				item.add(new Label("name", userFollowing.getName()));
-			}
-		};
-		
-		add(listViewFollowing);
+		Label lbFollowingCountHeader = new Label("lbFollowingCountHeader", following.size() + "");
+		add(lbFollowingCountHeader);
+		Label lbFollowersCount = new Label("lbFollowersCount", followers.size() + "");
+		add(lbFollowersCount);
+		Label lbFollowersCountHeader = new Label("lbFollowersCountHeader", followers.size() + "");
+		add(lbFollowersCountHeader);
 		
 		List<Message> listMessage = messageBusiness.loadByUser(userPage);
 		
@@ -134,6 +123,7 @@ public class UserMessagePage extends PageBase {
 		Label lbUserName = new Label("lbUserName", userPage.getName());
 		add(lbUserName);		
 		
+		//Mensagens
 		ListView<Message> listView = new ListView<Message>("lvListMsg", listMessage) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
@@ -141,8 +131,33 @@ public class UserMessagePage extends PageBase {
 				item.add(new Label("msg", message.getMsg()));
 			}
 		};
-		
 		add(listView);
+		
+		//Following
+		Label lbUserNameFollowing = new Label("lbUserNameFollowing", userPage.getName());
+		add(lbUserNameFollowing);
+		List<User> listaItensFollowing = new ArrayList<User>(following);
+		ListView<User> listViewFollowing = new ListView<User>("lvListFollowing", listaItensFollowing) {
+			@Override
+			protected void populateItem(ListItem<User> item) {
+				final User userFollowing = (User)item.getModelObject();
+				item.add(new Label("name", userFollowing.getName()));
+			}
+		};
+		add(listViewFollowing);
+
+		//Followers
+		Label lbUserNameFollowers = new Label("lbUserNameFollowers", userPage.getName());
+		add(lbUserNameFollowers);
+		List<User> listaItensFollowers = new ArrayList<User>(followers);
+		ListView<User> listViewFollowers = new ListView<User>("lvListFollowers", listaItensFollowers) {
+			@Override
+			protected void populateItem(ListItem<User> item) {
+				final User userFollowing = (User)item.getModelObject();
+				item.add(new Label("name", userFollowing.getName()));
+			}
+		};
+		add(listViewFollowers);
 		
 	}
 

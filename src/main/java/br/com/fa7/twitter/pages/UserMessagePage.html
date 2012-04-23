@@ -9,8 +9,8 @@
 			</TR>
 			<TR>
 				<TD colspan="2">
-					Seguidos: <span wicket:id="lbFollowingCount2"> 0 </span><br>
-					Seguidores: <span wicket:id="lbFollowersCount2"> 0 </span><br><br>
+					Seguidos: <span wicket:id="lbFollowingCountHeader"> 0 </span><br>
+					Seguidores: <span wicket:id="lbFollowersCountHeader"> 0 </span><br><br>
 					<form wicket:id="form" action="#">
 						<input wicket:id="btnSeguir" type="submit" value="Seguir" />
 						<input wicket:id="btnAbandonar" type="submit" value="Abandonar" />
@@ -51,12 +51,31 @@
 		<TBODY>
 			<TR>
 				<TH>
-					<span wicket:id="lbUser"/> segue <span wicket:id="lbFollowingCount"> 0 </span> pessoas:
+					<span wicket:id="lbUserNameFollowing"/> segue <span wicket:id="lbFollowingCount"> 0 </span> pessoas:
 				</TH>
 			</TR>
 			<TR>
 				<TD>
 					<span wicket:id="lvListFollowing">
+						-> <span wicket:id="name"/><br/> 
+					</span>
+				</TD>
+			</TR>
+		</TBODY>
+	</TABLE>
+	
+	<BR/><BR/>
+	
+	<TABLE style="width: 50%;">
+		<TBODY>
+			<TR>
+				<TH>
+					<span wicket:id="lbUserNameFollowers"/> é seguido(a) por <span wicket:id="lbFollowersCount"> 0 </span> pessoas:
+				</TH>
+			</TR>
+			<TR>
+				<TD>
+					<span wicket:id="lvListFollowers">
 						-> <span wicket:id="name"/><br/> 
 					</span>
 				</TD>
