@@ -67,7 +67,7 @@ public class UserMessagePage extends PageBase {
 		Button btnSeguir = new Button("btnSeguir") {
 			public void onSubmit() {
 
-				loggedUser.getFollowing().add(userPage);
+				userBusiness.follow(loggedUser, userPage);
 				
 				System.out.println("[BEFORE SAVE] " + loggedUser.getName() +" tem :"+ messageBusiness.loadByUser(loggedUser).size() + " mensagens.");
 				
