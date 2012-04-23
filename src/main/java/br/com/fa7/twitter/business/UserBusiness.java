@@ -52,7 +52,7 @@ public class UserBusiness {
 	}
 
 	public List<User> findByName(String search) {
-		return userDAO.findByCriteria(Restrictions.like("name", "%"+search+"%"));
+		return userDAO.findByCriteria(Restrictions.ilike("name", "%"+search+"%"));
 	}
 	
 	public void clearAll() {

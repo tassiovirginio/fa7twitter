@@ -42,6 +42,14 @@ public class TestUserBusiness {
 		List<User> users = userBusiness.findByName("Teste");
 		Assert.assertTrue(users.contains(user));
 	}
+	
+	@Test
+	public void testFindUsersByNameSuccessIgnoreCase() {
+		User user = new User("NomeDeTeste", "login", "password", "email@.com");
+		userBusiness.save(user);
+		List<User> users = userBusiness.findByName("teste");
+		Assert.assertTrue(users.contains(user));
+	}
 
 	@Test
 	public void testFindUsersByNameError() {
