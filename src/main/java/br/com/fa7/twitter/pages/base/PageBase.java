@@ -23,8 +23,15 @@ public class PageBase extends WebPage {
 
 	@SuppressWarnings({ "rawtypes", "serial" })
 	public PageBase() {
-		this.loggedUser = userBusiness.findById(1l);
-
+		
+		Object obj = getSession().getAttribute("loggedUser");
+		if(obj == null)
+			setResponsePage(new LoginPage());
+		
+		this.loggedUser = (User)obj;
+		if(this.loggedUser == null)
+			setResponsePage(new LoginPage());
+		
 		setDefaultModel(new CompoundPropertyModel(loggedUser));
 		
 		Link lkUserMessage = UserMessagePage.link("lkUserMessage", loggedUser);
@@ -36,6 +43,13 @@ public class PageBase extends WebPage {
 		Link lkFindUser = FindUserPage.link("lkFindUser");
 		add(lkFindUser);
 		
+		Link lkLogoff = new Link("lkLogoff"){
+			public void onClick() {
+				getSession().setAttribute("loggedUser", null);
+				setResponsePage(new LoginPage());
+			}
+		};
+		add(lkLogoff);
 		
 	}
 }

@@ -33,6 +33,7 @@ public class LoginPage extends WebPage {
 			protected void onSubmit() {
 				User user = userBusiness.validateLogin(login, senha);
 				if(user != null){
+					getSession().setAttribute("loggedUser", user);
 					setResponsePage(new UserMessagePage(user));
 				}else{
 					
