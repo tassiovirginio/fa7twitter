@@ -2,9 +2,11 @@ package br.com.fa7.twitter.pages;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -23,8 +25,11 @@ public class LoginPage extends WebPage {
 	
 	public LoginPage() {
 		
-		TextArea<String> tLogin = new TextArea<String>("tLogin", new PropertyModel(this,"login"));
-		TextArea<String> tSenha = new TextArea<String>("tSenha", new PropertyModel(this,"senha"));
+		TextField<String> tLogin = new TextField<String>("login", new PropertyModel(this,"login"));
+		tLogin.setRequired(true);
+		
+		PasswordTextField tSenha = new PasswordTextField("senha", new PropertyModel(this,"senha"));
+		tSenha.setRequired(true);
 		
 		Form form = new Form("form"){
 			
@@ -48,6 +53,8 @@ public class LoginPage extends WebPage {
 		
 		Link lkCadastro = RegisterPage.link("lkCadastro");
 		add(lkCadastro);
+		
+		form.add(new FeedbackPanel("feedback"));
 	}
 	
 	public static Link<Void> link(String id) {

@@ -2,14 +2,15 @@ package br.com.fa7.twitter.pages;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
-import br.com.fa7.twitter.entities.User;
 
 public class RegisterPage extends WebPage {
 	
@@ -25,10 +26,15 @@ public class RegisterPage extends WebPage {
 	
 	public RegisterPage() {
 		
-		TextArea<String> tLogin = new TextArea<String>("tLogin", new PropertyModel(this,"login"));
-		TextArea<String> tSenha = new TextArea<String>("tSenha", new PropertyModel(this,"senha"));
-		TextArea<String> tEmail = new TextArea<String>("tEmail", new PropertyModel(this,"email"));
-		TextArea<String> tNome = new TextArea<String>("tNome", new PropertyModel(this,"nome"));
+		TextField tLogin = new TextField("tLogin", new PropertyModel(this,"login"));
+		tLogin.setRequired(true);
+		PasswordTextField tSenha = new PasswordTextField("tSenha", new PropertyModel(this,"senha"));
+		tSenha.setRequired(true);
+		TextField<String> tEmail = new TextField<String>("tEmail", new PropertyModel(this,"email"));
+		tEmail.setRequired(true);
+		TextField<String> tNome = new TextField<String>("tNome", new PropertyModel(this,"nome"));
+		tNome.setRequired(true);
+		
 		Form form = new Form("form"){
 			
 			//Fazer validação
@@ -44,6 +50,8 @@ public class RegisterPage extends WebPage {
 		form.add(tSenha);
 		form.add(tEmail);
 		form.add(tNome);
+		
+		form.add(new FeedbackPanel("feedback"));
 		
 	}
 	
