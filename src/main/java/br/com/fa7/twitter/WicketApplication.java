@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.business.UserBusiness;
+import br.com.fa7.twitter.business.exception.BusinessException;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
@@ -52,21 +53,25 @@ public class WicketApplication extends WebApplication{
 	}
 	
 	@Transactional
-	private void populationDB(){
-		User tassio = new User("Tássio","tassio","123","tassio@fa7.org");
-		userBusiness.save(tassio);
-		User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
-		userBusiness.save(tiago);
-		User luana = new User("Luana","luana","123","luana@fa7.org");
-		userBusiness.save(luana);
-		User juliana = new User("Juliana","juliana","123","juliana@fa7.org");
-		userBusiness.save(juliana);
-
-		messageBusiness.save(new Message("Olá do Tássio", tassio));
-		messageBusiness.save(new Message("Mensagem do Tássio", tassio));
-		messageBusiness.save(new Message("Olá do Tiago", tiago));
-		messageBusiness.save(new Message("Tudo ok", tiago));
-		messageBusiness.save(new Message("Tudo certinho?", luana));
-		messageBusiness.save(new Message("Funciona?", juliana));
+	private void populationDB() {
+		try {
+			User tassio = new User("Tássio","tassio","123","tassio@fa7.org");
+			userBusiness.newUser(tassio);
+			User tiago = new User("Tiago","tiago","123","tiago@fa7.org");
+			userBusiness.newUser(tiago);
+			User luana = new User("Luana","luana","123","luana@fa7.org");
+			userBusiness.newUser(luana);
+			User juliana = new User("Juliana","juliana","123","juliana@fa7.org");
+			userBusiness.newUser(juliana);
+	
+			messageBusiness.save(new Message("Olá do Tássio", tassio));
+			messageBusiness.save(new Message("Mensagem do Tássio", tassio));
+			messageBusiness.save(new Message("Olá do Tiago", tiago));
+			messageBusiness.save(new Message("Tudo ok", tiago));
+			messageBusiness.save(new Message("Tudo certinho?", luana));
+			messageBusiness.save(new Message("Funciona?", juliana));
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
 	} 
 }

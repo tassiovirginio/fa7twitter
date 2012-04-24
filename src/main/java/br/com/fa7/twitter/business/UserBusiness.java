@@ -2,63 +2,83 @@ package br.com.fa7.twitter.business;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.EmailValidator;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fa7.twitter.business.dao.UserDAO;
+import br.com.fa7.twitter.business.exception.BusinessException;
 import br.com.fa7.twitter.entities.User;
 
 @Component
-@Transactional 
+@Transactional
 public class UserBusiness {
-	
+
 	@Autowired
 	private UserDAO userDAO;
-	
-	public int size(){
+
+	public int size() {
 		return userDAO.listAll().size();
 	}
+
+	public void newUser(User user) throws BusinessException {
+		validarDadosNovoUsuario(user);
+		save(user);
+	}
 	
-	public void save(User user){
+	private void save(User user) {
 		userDAO.save(user);
 	}
-	
-	public List<User> listAll(){
+
+	public List<User> listAll() {
 		return userDAO.listAll();
 	}
-	
-	public void delete(User user){
+
+	public void delete(User user) {
 		userDAO.delete(user);
 	}
+
+	public User findById(Long id) {
+		return userDAO.findById(id);
+	}
 	
-	public User findById(Long id){
-		return userDAO.findById(id); 
+	public User findByEmail(String email) {
+		List<User> result = userDAO.findByCriteria(Restrictions.eq("email",
+				email));
+		if (result.isEmpty())
+			return null;
+		return result.get(0);
 	}
 
 	public User findByLogin(String login) {
-		List<User> result = userDAO.findByCriteria(Restrictions.like("login", login));
+		List<User> result = userDAO.findByCriteria(Restrictions.like("login",
+				login));
 		if (result.isEmpty())
-		  return null;
+			return null;
 		return result.get(0);
 	}
-	
+
 	public User validateLogin(String login, String password) {
-		List<User> result = userDAO.findByCriteria(Restrictions.like("login", login),Restrictions.like("password", password));
+		List<User> result = userDAO.findByCriteria(
+				Restrictions.like("login", login),
+				Restrictions.like("password", password));
 		if (result.isEmpty())
-		  return null;
+			return null;
 		return result.get(0);
 	}
 
 	public List<User> findByName(String search) {
-		return userDAO.findByCriteria(Restrictions.ilike("name", "%"+search+"%"));
+		return userDAO.findByCriteria(Restrictions.ilike("name", "%" + search
+				+ "%"));
 	}
-	
+
 	public void clearAll() {
 		List<User> list = listAll();
 		for (User u : list) {
-			userDAO.delete(u);
+			delete(u);
 		}
 	}
 
@@ -68,18 +88,44 @@ public class UserBusiness {
 			throw new Exception("Login nao cadastrado");
 		if (password.equals(user.getPassword()))
 			return user;
-		else 
+		else
 			throw new Exception("Usuario e senha invalidos");
 	}
-	
+
 	public void follow(User follower, User userToFollow) {
 		follower.getFollowing().add(userToFollow);
-		userDAO.save(follower);
+		save(follower);
 	}
-	
+
 	public void unfollow(User follower, User userToUnfollow) {
 		follower.getFollowing().remove(userToUnfollow);
-		userDAO.save(follower);
+		save(follower);
 	}
-	
+
+	public void validarDadosNovoUsuario(User user) throws BusinessException {
+		user.setEmail(user.getEmail().toLowerCase());
+		user.setLogin(user.getLogin().toLowerCase());
+		if (StringUtils.isEmpty(user.getName())) {
+			throw new BusinessException("Nome obrigatório.");
+		}
+		if (StringUtils.isEmpty(user.getLogin())) {
+			throw new BusinessException("Login obrigatório.");
+		}
+		if (StringUtils.isEmpty(user.getPassword())) {
+			throw new BusinessException("Senha obrigatória.");
+		}
+		if (!EmailValidator.getInstance().isValid(user.getEmail())) {
+			throw new BusinessException("Email '" + user.getEmail()
+					+ "' inválido.");
+		}
+		if (this.findByLogin(user.getLogin()) != null) {
+			throw new BusinessException("Login '" + user.getLogin()
+					+ "' indisponível.");
+		}
+		if (this.findByEmail(user.getEmail()) != null) {
+			throw new BusinessException("Email '" + user.getEmail()
+					+ "' já cadastrado.");
+		}
+	}
+
 }
