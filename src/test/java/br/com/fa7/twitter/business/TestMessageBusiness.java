@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import br.com.fa7.twitter.business.exception.BusinessException;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 
@@ -34,25 +35,28 @@ public class TestMessageBusiness {
 	}
 
 	@Test
-	public void testInsertOneMessage() {
-		User user = new User("name", "login", "password", "email");
-		userBusiness.save(user);
+	public void testInsertOneMessage() throws BusinessException {
+		User user = createUser();
 		messageBusiness.save(new Message("test1", user));
 		Assert.assertEquals(1, messageBusiness.size());
 	}
 
+	private User createUser() throws BusinessException {
+		User user = new User("name", "login", "password", "email@dominio.com");
+		userBusiness.newUser(user);
+		return user;
+	}
+
 	@Test
-	public void testInsertOneMessageReturntest1() {
-		User user = new User("name", "login", "password", "email");
-		userBusiness.save(user);
+	public void testInsertOneMessageReturntest1() throws BusinessException {
+		User user = createUser();
 		messageBusiness.save(new Message("test1", user));
 		Assert.assertEquals("test1", messageBusiness.listAll().get(0).getMsg());
 	}
 
 	@Test
-	public void testLoadUserMessages() {
-		User user = new User("name", "login", "password", "email");
-		userBusiness.save(user);
+	public void testLoadUserMessages() throws BusinessException {
+		User user = createUser();
 		messageBusiness.save(new Message("test3", user));
 		List<Message> result = messageBusiness.loadByUser(user);
 		Assert.assertEquals(1, result.size());
