@@ -11,32 +11,30 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.entities.User;
 
-public class LoginPage extends WebPage {
+public class RegisterPage extends WebPage {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private String login;
 	private String senha;
+	private String email;
+	private String nome;
 	
 	@SpringBean
 	private UserBusiness userBusiness;
 	
-	public LoginPage() {
+	public RegisterPage() {
 		
 		TextArea<String> tLogin = new TextArea<String>("tLogin", new PropertyModel(this,"login"));
 		TextArea<String> tSenha = new TextArea<String>("tSenha", new PropertyModel(this,"senha"));
-		
+		TextArea<String> tEmail = new TextArea<String>("tEmail", new PropertyModel(this,"email"));
+		TextArea<String> tNome = new TextArea<String>("tNome", new PropertyModel(this,"nome"));
 		Form form = new Form("form"){
 			
 			//Fazer validação
 			
 			protected void onSubmit() {
-				User user = userBusiness.validateLogin(login, senha);
-				if(user != null){
-					setResponsePage(new UserMessagePage(user));
-				}else{
-					
-				}
+				setResponsePage(new LoginPage());
 			};
 		};
 		add(form);
@@ -44,13 +42,13 @@ public class LoginPage extends WebPage {
 		
 		form.add(tLogin);
 		form.add(tSenha);
+		form.add(tEmail);
+		form.add(tNome);
 		
-		Link lkCadastro = RegisterPage.link("lkCadastro");
-		add(lkCadastro);
 	}
 	
 	public static Link<Void> link(String id) {
-		Link<Void> result = new BookmarkablePageLink<Void>(id, LoginPage.class);
+		Link<Void> result = new BookmarkablePageLink<Void>(id, RegisterPage.class);
 		return result;
 	}
 }
