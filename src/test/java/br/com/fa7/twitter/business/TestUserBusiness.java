@@ -171,8 +171,8 @@ public class TestUserBusiness {
 		try {
 			userBusiness.login("login","pass");
 			Assert.fail("Senha errada, deve disparar excecao");
-		} catch (Exception expected) {
-			Assert.assertEquals("Usuario e senha invalidos", expected.getMessage()) ;
+		} catch (BusinessException expected) {
+			Assert.assertEquals("O login ou a senha inserido está incorreto.", expected.getMessage()) ;
 		}
 	}
 	
@@ -181,8 +181,8 @@ public class TestUserBusiness {
 		try {
 			userBusiness.login("login","pass");
 			Assert.fail("Login nao cadastrado, deve disparar excecao");
-		} catch (Exception expected) {
-			Assert.assertEquals("Login nao cadastrado", expected.getMessage()) ;
+		} catch (BusinessException expected) {
+			Assert.assertEquals("O login ou a senha inserido está incorreto.", expected.getMessage()) ;
 		}
 	}
 	

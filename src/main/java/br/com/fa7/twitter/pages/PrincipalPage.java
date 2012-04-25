@@ -1,9 +1,9 @@
 package br.com.fa7.twitter.pages;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -12,7 +12,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.MessageBusiness;
@@ -30,13 +29,9 @@ public class PrincipalPage extends PageBase {
 	private String msg;
 	
 	public PrincipalPage() {
-		
-		Object obj = getSession().getAttribute("loggedUser");
-		if(obj == null){
-			setResponsePage(new LoginPage());
-			return;
+		if (loggedUser == null) {
+			throw new RestartResponseAtInterceptPageException(LoginPage.class);
 		}
-		
 		Form form = new Form("form"){
 			
 			protected void onSubmit() {
@@ -49,7 +44,8 @@ public class PrincipalPage extends PageBase {
 		};
 		add(form);
 		
-		TextArea<String> taMsg = new TextArea<String>("taMsg", new PropertyModel(this,"msg"));
+		TextArea<String> taMsg = new TextArea<String>("taMsg");
+		taMsg.setModel(new PropertyModel(this,"msg"));
 		form.add(taMsg);
 		
 		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);

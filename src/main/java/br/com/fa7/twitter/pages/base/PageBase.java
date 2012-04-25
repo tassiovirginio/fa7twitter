@@ -25,11 +25,6 @@ public class PageBase extends WebPage {
 	public PageBase() {
 		
 		Object obj = getSession().getAttribute("loggedUser");
-		if(obj == null){
-			setResponsePage(new LoginPage());
-			return;
-		}
-		
 		this.loggedUser = (User)obj;
 		
 		setDefaultModel(new CompoundPropertyModel(loggedUser));
@@ -45,11 +40,10 @@ public class PageBase extends WebPage {
 		
 		Link lkLogoff = new Link("lkLogoff"){
 			public void onClick() {
-				getSession().setAttribute("loggedUser", null);
+				getSession().invalidateNow();
 				setResponsePage(new LoginPage());
 			}
 		};
 		add(lkLogoff);
-		
 	}
 }

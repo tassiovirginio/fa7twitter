@@ -11,6 +11,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
+import br.com.fa7.twitter.business.exception.BusinessException;
 import br.com.fa7.twitter.entities.User;
 
 public class LoginPage extends WebPage {
@@ -36,12 +37,13 @@ public class LoginPage extends WebPage {
 			//Fazer validação
 			
 			protected void onSubmit() {
-				User user = userBusiness.validateLogin(login, senha);
-				if(user != null){
+				User user;
+				try {
+					user = userBusiness.login(login, senha);
 					getSession().setAttribute("loggedUser", user);
 					setResponsePage(new UserMessagePage(user));
-				}else{
-					
+				} catch (BusinessException e) {
+					warn(e.getMessage());
 				}
 			};
 		};

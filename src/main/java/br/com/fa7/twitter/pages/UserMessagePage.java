@@ -78,6 +78,9 @@ public class UserMessagePage extends PageBase {
 		if (isPaginaPessoal) {
 			btnSeguir.setVisible(false);
 			btnAbandonar.setVisible(false);
+		} else if (loggedUser == null) {
+			btnAbandonar.setVisible(false);
+			btnSeguir.setVisible(false);
 		} else {
 			if ((loggedUser.getFollowing() != null) && (loggedUser.getFollowing().contains(userPage))) {
 				btnAbandonar.setVisible(true);
@@ -147,8 +150,11 @@ public class UserMessagePage extends PageBase {
 
 	public static Link<Void> link(String id, final User user) {
 		PageParameters params = new PageParameters();
-		params.set("login", user.getLogin());
+		if (user != null)
+			params.set("login", user.getLogin());
 		Link<Void> result = new BookmarkablePageLink<Void>(id, UserMessagePage.class, params);
+		if (user == null)
+			result.setVisible(false);
 		return result;
 	}
 }
