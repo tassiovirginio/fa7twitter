@@ -14,6 +14,7 @@ import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
 import br.com.fa7.twitter.pages.LoginPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
+import br.com.fa7.twitter.pages.RegisterPage;
 import br.com.fa7.twitter.pages.UserMessagePage;
 
 import com.google.code.jqwicket.JQComponentOnBeforeRenderListener;
@@ -48,6 +49,7 @@ public class WicketApplication extends WebApplication{
 		mountPage("/home", PrincipalPage.class);
 		mountPage("/user/${login}", UserMessagePage.class);
 		mountPage("/find", FindUserPage.class);
+		mountPage("/register", RegisterPage.class);
 		
 		populationDB();
 	}

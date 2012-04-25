@@ -30,11 +30,21 @@ public class PrincipalPage extends PageBase {
 	private String msg;
 	
 	public PrincipalPage() {
+		
+		Object obj = getSession().getAttribute("loggedUser");
+		if(obj == null){
+			setResponsePage(new LoginPage());
+			return;
+		}
+		
 		Form form = new Form("form"){
+			
 			protected void onSubmit() {
+				
 				Message message = new Message(msg, loggedUser);
 				messageBusiness.save(message);
 				setResponsePage(new PrincipalPage());
+				
 			};
 		};
 		add(form);

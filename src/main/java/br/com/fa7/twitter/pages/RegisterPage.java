@@ -7,51 +7,62 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
+import br.com.fa7.twitter.business.exception.BusinessException;
+import br.com.fa7.twitter.entities.User;
 
 public class RegisterPage extends WebPage {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String login;
-	private String senha;
-	private String email;
-	private String nome;
+	private User newUser;
 	
 	@SpringBean
 	private UserBusiness userBusiness;
 	
 	public RegisterPage() {
+		this(new User());
+	}
+	
+	public RegisterPage(User user) {
 		
-		TextField tLogin = new TextField("tLogin", new PropertyModel(this,"login"));
-		tLogin.setRequired(true);
-		PasswordTextField tSenha = new PasswordTextField("tSenha", new PropertyModel(this,"senha"));
-		tSenha.setRequired(true);
-		TextField<String> tEmail = new TextField<String>("tEmail", new PropertyModel(this,"email"));
-		tEmail.setRequired(true);
-		TextField<String> tNome = new TextField<String>("tNome", new PropertyModel(this,"nome"));
-		tNome.setRequired(true);
+		newUser = user;
 		
 		Form form = new Form("form"){
 			
-			//Fazer validação
-			
 			protected void onSubmit() {
-				setResponsePage(new LoginPage());
+				try {
+					userBusiness.newUser(newUser);
+					info("Usuario Criado Com Sucesso.");
+					setResponsePage(new LoginPage());
+				} catch (BusinessException e) {
+					error(e.getMessage());
+					setResponsePage(new RegisterPage(newUser));
+				}
 			};
 		};
 		add(form);
 		
+		form.add(new TextField<String>("login").setRequired(true));
+		form.add(new PasswordTextField("password").setRequired(true));
+		form.add(new TextField<String>("email").setRequired(true));
+		form.add(new TextField<String>("name").setRequired(true));
 		
-		form.add(tLogin);
-		form.add(tSenha);
-		form.add(tEmail);
-		form.add(tNome);
+		form.setDefaultModel(new CompoundPropertyModel(newUser));
 		
 		form.add(new FeedbackPanel("feedback"));
+		
+		Link link = new Link("lkLogin") {
+			@Override
+			public void onClick() {
+				setResponsePage(new LoginPage());
+			}
+		};
+		add(link);
 		
 	}
 	

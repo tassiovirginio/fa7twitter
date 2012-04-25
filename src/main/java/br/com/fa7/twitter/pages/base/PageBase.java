@@ -25,12 +25,12 @@ public class PageBase extends WebPage {
 	public PageBase() {
 		
 		Object obj = getSession().getAttribute("loggedUser");
-		if(obj == null)
+		if(obj == null){
 			setResponsePage(new LoginPage());
+			return;
+		}
 		
 		this.loggedUser = (User)obj;
-		if(this.loggedUser == null)
-			setResponsePage(new LoginPage());
 		
 		setDefaultModel(new CompoundPropertyModel(loggedUser));
 		
