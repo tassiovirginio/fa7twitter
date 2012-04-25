@@ -8,7 +8,6 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
@@ -19,8 +18,6 @@ public class RegisterPage extends WebPage {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private User newUser;
-	
 	@SpringBean
 	private UserBusiness userBusiness;
 	
@@ -28,12 +25,12 @@ public class RegisterPage extends WebPage {
 		this(new User());
 	}
 	
-	public RegisterPage(User user) {
+	@SuppressWarnings("rawtypes")
+	public RegisterPage(final User newUser) {
 		
-		newUser = user;
-		
-		Form form = new Form("form"){
-			
+		Form<User> form = new Form<User>("form"){
+			private static final long serialVersionUID = 1L;
+
 			protected void onSubmit() {
 				try {
 					userBusiness.newUser(newUser);
@@ -45,29 +42,28 @@ public class RegisterPage extends WebPage {
 				}
 			};
 		};
-		add(form);
 		
-		form.add(new TextField<String>("login").setRequired(true));
-		form.add(new PasswordTextField("password").setRequired(true));
-		form.add(new TextField<String>("email").setRequired(true));
-		form.add(new TextField<String>("name").setRequired(true));
 		
-		form.setDefaultModel(new CompoundPropertyModel(newUser));
+		add(
+			form
+				.add(new TextField<String>("login").setRequired(true))
+				.add(new PasswordTextField("password").setRequired(true))
+				.add(new TextField<String>("email").setRequired(true))
+				.add(new TextField<String>("name").setRequired(true))
+				.setDefaultModel(new CompoundPropertyModel<User>(newUser))
+				.add(new FeedbackPanel("feedback"))
+	    );
 		
-		form.add(new FeedbackPanel("feedback"));
-		
-		Link link = new Link("lkLogin") {
-			@Override
+		add(new Link("lkLogin") {
+			private static final long serialVersionUID = 1L;
 			public void onClick() {
 				setResponsePage(new LoginPage());
 			}
-		};
-		add(link);
+		});
 		
 	}
 	
 	public static Link<Void> link(String id) {
-		Link<Void> result = new BookmarkablePageLink<Void>(id, RegisterPage.class);
-		return result;
+		return new BookmarkablePageLink<Void>(id, RegisterPage.class);
 	}
 }
