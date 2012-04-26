@@ -20,7 +20,7 @@ import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
 
-public class UserMessagePage extends PageBase {
+public class ProfilePage extends PageBase {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -30,59 +30,53 @@ public class UserMessagePage extends PageBase {
 	@SpringBean
 	private UserBusiness userBusiness;
 	
-	private User userPage;
+	private User viewingUser;
 
 	private boolean isPaginaPessoal;
 	
-	public UserMessagePage(PageParameters parameters) {
+	public ProfilePage(PageParameters parameters) {
 		String donoDaPagina = parameters.get("login").toString();
-		this.userPage = userBusiness.findByLogin(donoDaPagina);
-		isPaginaPessoal = (userPage.equals(loggedUser));
-		this.initializeComponents();
-	}
-
-	public UserMessagePage(User user) {
-		if(loggedUser == null){
-			loggedUser = user;
-		}
-		isPaginaPessoal = (user.equals(loggedUser));
-		this.userPage = user;
+		this.viewingUser = userBusiness.findByLogin(donoDaPagina);
+		isPaginaPessoal = (viewingUser.equals(loggedUser));
 		this.initializeComponents();
 	}
 	
-	private void initializeComponents(){
+	public ProfilePage(User user) {
+		isPaginaPessoal = (user.equals(loggedUser));
+		this.viewingUser = user;
+		this.initializeComponents();
+	}	
 
-		Label lbUserNameHeader = new Label("lbUserNameHeader", userPage.getName());
+	private void initializeComponents() {
+
+		Label lbUserNameHeader = new Label("lbUserNameHeader", viewingUser.getName());
 		add(lbUserNameHeader);
 		
 		Form form = new Form("form");
 		
 		Button btnSeguir = new Button("btnSeguir") {
 			public void onSubmit() {
-				userBusiness.follow(loggedUser, userPage);
-				setResponsePage(new UserMessagePage(userBusiness.findById(userPage.getId())));
+				userBusiness.follow(loggedUser, viewingUser);
+				setResponsePage(new ProfilePage(userBusiness.findById(viewingUser.getId())));
 			}
 		};
 		form.add(btnSeguir);
 		
 		Button btnAbandonar = new Button("btnAbandonar"){
 			public void onSubmit() {
-				userBusiness.unfollow(loggedUser, userPage);
-				setResponsePage(new UserMessagePage(userBusiness.findById(userPage.getId())));
+				userBusiness.unfollow(loggedUser, viewingUser);
+				setResponsePage(new ProfilePage(userBusiness.findById(viewingUser.getId())));
 			}
 		};
 		form.add(btnAbandonar);
 		
 		add(form);
 		
-		if (isPaginaPessoal) {
+		if (isPaginaPessoal || !estaLogado()) {
 			btnSeguir.setVisible(false);
 			btnAbandonar.setVisible(false);
-		} else if (loggedUser == null) {
-			btnAbandonar.setVisible(false);
-			btnSeguir.setVisible(false);
 		} else {
-			if ((loggedUser.getFollowing() != null) && (loggedUser.getFollowing().contains(userPage))) {
+			if ((loggedUser.isFollowing(viewingUser))) {
 				btnAbandonar.setVisible(true);
 				btnSeguir.setVisible(false);
 			} else {
@@ -91,8 +85,8 @@ public class UserMessagePage extends PageBase {
 			}
 		}
 
-		Set<User> following = userPage.getFollowing();
-		Set<User> followers = userPage.getFollowers();
+		Set<User> following = viewingUser.getFollowing();
+		Set<User> followers = viewingUser.getFollowers();
 		
 		Label lbFollowingCount = new Label("lbFollowingCount", following.size() + "");
 		add(lbFollowingCount);
@@ -103,11 +97,11 @@ public class UserMessagePage extends PageBase {
 		Label lbFollowersCountHeader = new Label("lbFollowersCountHeader", followers.size() + "");
 		add(lbFollowersCountHeader);
 		
-		List<Message> listMessage = messageBusiness.loadByUser(userPage);
+		List<Message> listMessage = messageBusiness.loadByUser(viewingUser);
 		
 		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
 		add(lbSize);
-		Label lbUserName = new Label("lbUserName", userPage.getName());
+		Label lbUserName = new Label("lbUserName", viewingUser.getName());
 		add(lbUserName);		
 		
 		//Mensagens
@@ -121,7 +115,7 @@ public class UserMessagePage extends PageBase {
 		add(listView);
 		
 		//Following
-		Label lbUserNameFollowing = new Label("lbUserNameFollowing", userPage.getName());
+		Label lbUserNameFollowing = new Label("lbUserNameFollowing", viewingUser.getName());
 		add(lbUserNameFollowing);
 		List<User> listaItensFollowing = new ArrayList<User>(following);
 		ListView<User> listViewFollowing = new ListView<User>("lvListFollowing", listaItensFollowing) {
@@ -134,7 +128,7 @@ public class UserMessagePage extends PageBase {
 		add(listViewFollowing);
 
 		//Followers
-		Label lbUserNameFollowers = new Label("lbUserNameFollowers", userPage.getName());
+		Label lbUserNameFollowers = new Label("lbUserNameFollowers", viewingUser.getName());
 		add(lbUserNameFollowers);
 		List<User> listaItensFollowers = new ArrayList<User>(followers);
 		ListView<User> listViewFollowers = new ListView<User>("lvListFollowers", listaItensFollowers) {
@@ -152,7 +146,7 @@ public class UserMessagePage extends PageBase {
 		PageParameters params = new PageParameters();
 		if (user != null)
 			params.set("login", user.getLogin());
-		Link<Void> result = new BookmarkablePageLink<Void>(id, UserMessagePage.class, params);
+		Link<Void> result = new BookmarkablePageLink<Void>(id, ProfilePage.class, params);
 		if (user == null)
 			result.setVisible(false);
 		return result;

@@ -11,7 +11,7 @@ import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
 import br.com.fa7.twitter.pages.LoginPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
-import br.com.fa7.twitter.pages.UserMessagePage;
+import br.com.fa7.twitter.pages.ProfilePage;
 
 public class PageBase extends WebPage {
 	private static final long serialVersionUID = 1L;
@@ -29,21 +29,24 @@ public class PageBase extends WebPage {
 		
 		setDefaultModel(new CompoundPropertyModel(loggedUser));
 		
-		Link lkUserMessage = UserMessagePage.link("lkUserMessage", loggedUser);
-		add(lkUserMessage.add(new Label("login")));
+		add(ProfilePage.link("lkUserMessage", loggedUser).add(
+				new Label("login")));
 		
-		Link lkHome = PrincipalPage.link("lkHome");
-		add(lkHome);
+		add(PrincipalPage.link("lkHome").setVisible(estaLogado()));
 		
-		Link lkFindUser = FindUserPage.link("lkFindUser");
-		add(lkFindUser);
+		add(FindUserPage.link("lkFindUser"));
 		
-		Link lkLogoff = new Link("lkLogoff"){
+		add(new Link("lkLogoff") {
 			public void onClick() {
 				getSession().invalidateNow();
 				setResponsePage(new LoginPage());
 			}
-		};
-		add(lkLogoff);
+		}.setVisible(estaLogado()));
+		
+		add(LoginPage.link("lkLogin").setVisible(!estaLogado()));
+	}
+
+	public boolean estaLogado() {
+		return loggedUser != null;
 	}
 }

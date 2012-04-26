@@ -14,8 +14,8 @@ import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
 import br.com.fa7.twitter.pages.LoginPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
+import br.com.fa7.twitter.pages.ProfilePage;
 import br.com.fa7.twitter.pages.RegisterPage;
-import br.com.fa7.twitter.pages.UserMessagePage;
 
 import com.google.code.jqwicket.JQComponentOnBeforeRenderListener;
 import com.google.code.jqwicket.JQContributionConfig;
@@ -30,8 +30,8 @@ public class WicketApplication extends WebApplication{
 	private MessageBusiness messageBusiness;
 	
 	@Override
-	public Class<LoginPage> getHomePage(){
-		return LoginPage.class;
+	public Class<PrincipalPage> getHomePage(){
+		return PrincipalPage.class;
 	}
 
 	@Override
@@ -46,10 +46,10 @@ public class WicketApplication extends WebApplication{
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		getDebugSettings().setAjaxDebugModeEnabled(true);
 		
-		mountPage("/home", PrincipalPage.class);
-		mountPage("/user/${login}", UserMessagePage.class);
+		mountPage("/user/${login}", ProfilePage.class);
 		mountPage("/find", FindUserPage.class);
 		mountPage("/register", RegisterPage.class);
+		mountPage("/login", LoginPage.class);
 		
 		populationDB();
 	}

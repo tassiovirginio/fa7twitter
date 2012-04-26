@@ -101,10 +101,6 @@ public class User implements Serializable {
 		return followers;
 	}
 
-	public void setFollowers(Set<User> followers) {
-		this.followers = followers;
-	}
-
 	/**
 	 * Lista de usuarios que este usuario segue
 	 */
@@ -112,10 +108,6 @@ public class User implements Serializable {
 		return following;
 	}
 	
-	public void setFollowing(Set<User> following) {
-		this.following = following;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -145,6 +137,10 @@ public class User implements Serializable {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", login=" + login
 				+ ", password=" + password + ", email=" + email + "]";
+	}
+
+	public boolean isFollowing(User user) {
+		return this.following.contains(user);
 	}
 }
 

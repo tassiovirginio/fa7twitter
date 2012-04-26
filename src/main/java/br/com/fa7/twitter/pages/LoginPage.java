@@ -1,6 +1,6 @@
 package br.com.fa7.twitter.pages;
 
-import org.apache.wicket.markup.html.WebPage;
+
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
@@ -13,8 +13,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.business.exception.BusinessException;
 import br.com.fa7.twitter.entities.User;
+import br.com.fa7.twitter.pages.base.PageBase;
 
-public class LoginPage extends WebPage {
+public class LoginPage extends PageBase {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -35,15 +36,14 @@ public class LoginPage extends WebPage {
 		Form form = new Form("form"){
 			
 			//Fazer validação
-			
 			protected void onSubmit() {
 				User user;
 				try {
 					user = userBusiness.login(login, senha);
 					getSession().setAttribute("loggedUser", user);
-					setResponsePage(new UserMessagePage(user));
+					setResponsePage(new PrincipalPage());
 				} catch (BusinessException e) {
-					warn(e.getMessage());
+					error(e.getMessage());
 				}
 			};
 		};
