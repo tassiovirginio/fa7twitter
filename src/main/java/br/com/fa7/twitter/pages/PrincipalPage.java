@@ -67,23 +67,10 @@ public class PrincipalPage extends PageBase {
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
 				item.add(new Label("msg", message.getMsg()));
-//				item.add(new Label("userMsg", message.getUser().getName()));
-//				item.add(new Label("login", "@" + message.getUser().getLogin()));
 				
-				
-				Link link = UserMessagePage.link("lkUser", message.getUser());
+				Link link = ProfilePage.link("lkUser", message.getUser());
 				link.add(new Label("login", "@" + message.getUser().getLogin()));
 				item.add(link);
-				
-//				Link link = new Link("lkUser") {
-//					public void onClick() {
-//						//TODO Implementar
-//						System.out.println("Teste");
-//					}
-//				};
-//				link.add(new Label("login", "@" + message.getUser().getLogin()));
-				
-//				item.add(link);
 				
 			}
 		};
@@ -93,8 +80,7 @@ public class PrincipalPage extends PageBase {
 	}
 
 	public static Link<Void> link(String id) {
-		Link<Void> result = new BookmarkablePageLink<Void>(id, PrincipalPage.class);
-		return result;
+		return new BookmarkablePageLink<Void>(id, PrincipalPage.class);
 	}
 
 }
