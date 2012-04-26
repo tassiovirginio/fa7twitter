@@ -41,12 +41,6 @@ public class UserMessagePage extends PageBase {
 		this.initializeComponents();
 	}
 
-//	public UserMessagePage(String userLogin) {
-//		this.userPage = userBusiness.findByLogin(userLogin);
-//		isPaginaPessoal = (userPage.equals(loggedUser));
-//		this.initializeComponents();
-//	}
-
 	public UserMessagePage(User user) {
 		if(loggedUser == null){
 			loggedUser = user;
@@ -158,3 +152,4 @@ public class UserMessagePage extends PageBase {
 		return result;
 	}
 }
+

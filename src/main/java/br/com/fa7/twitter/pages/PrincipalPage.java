@@ -72,7 +72,23 @@ public class PrincipalPage extends PageBase {
 				final Message message = (Message)item.getModelObject();
 				item.add(new Label("msg", message.getMsg()));
 //				item.add(new Label("userMsg", message.getUser().getName()));
-				item.add(new Label("login", "@" + message.getUser().getLogin()));
+//				item.add(new Label("login", "@" + message.getUser().getLogin()));
+				
+				
+				Link link = UserMessagePage.link("lkUser", message.getUser());
+				link.add(new Label("login", "@" + message.getUser().getLogin()));
+				item.add(link);
+				
+//				Link link = new Link("lkUser") {
+//					public void onClick() {
+//						//TODO Implementar
+//						System.out.println("Teste");
+//					}
+//				};
+//				link.add(new Label("login", "@" + message.getUser().getLogin()));
+				
+//				item.add(link);
+				
 			}
 		};
 		
