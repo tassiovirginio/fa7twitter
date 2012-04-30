@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.EmailValidator;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -71,8 +72,7 @@ public class UserBusiness {
 	}
 
 	public List<User> findByName(String search) {
-		return userDAO.findByCriteria(Restrictions.ilike("name", "%" + search
-				+ "%"));
+		return userDAO.findByCriteria(Restrictions.ilike("name", search, MatchMode.ANYWHERE));
 	}
 
 	public void clearAll() {

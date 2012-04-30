@@ -34,11 +34,27 @@ public class TestUserBusiness {
 	}
 
 	@Test
-	public void testFindUsersByNameSuccess() throws BusinessException {
+	public void testFindUsersByStartNameSuccess() throws BusinessException {
+		User user = new User("NomeDeTeste", "login", "password", "email@dominio.com");
+		userBusiness.newUser(user);
+		List<User> users = userBusiness.findByName("Nome");
+		Assert.assertTrue(users.contains(user));
+	}
+	
+	@Test
+	public void testFindUsersByAnywhereNameSuccess() throws BusinessException {
 		User user = new User("NomeDeTeste", "login", "password", "email@dominio.com");
 		userBusiness.newUser(user);
 		List<User> users = userBusiness.findByName("Teste");
 		Assert.assertTrue(users.contains(user));
+	}
+	
+	@Test
+	public void testFindUsersByNameFail() throws BusinessException {
+		User user = new User("NomeDeTeste", "login", "password", "email@dominio.com");
+		userBusiness.newUser(user);
+		List<User> users = userBusiness.findByName("a");
+		Assert.assertTrue(users.isEmpty());
 	}
 
 	@Test
