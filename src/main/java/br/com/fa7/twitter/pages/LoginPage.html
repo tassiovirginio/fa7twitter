@@ -1,65 +1,42 @@
-<!DOCTYPE html>
-<html xmlns:wicket="http://wicket.apache.org">
-	<head>
-		<meta charset="utf-8" />
-		<title>FA7 Twitter</title>
-		<link rel="shortcut icon" href="favicon.png" />
-		<link rel="stylesheet" href="css/base.css" type="text/css" media="screen" title="Stylesheet" />
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" />
-		<script type="text/javascript">
-			function setFocus()
-			{
-			     document.getElementById("login").focus();
-			}
-		</script>
-	</head>
-	<body onload="setFocus()">
-	<img src="imagens/wallpaper.jpg" class="bg" />
-	
-	<div id="menu_div">&nbsp;
-		<img alt="" src="favicon.png" width="15px" height="15px" />
-		<font color="FFFFFF">&nbsp; FA7 Twitter &nbsp</font>
-		<font size="1" color="0066CC">0.0.1 beta&nbsp;&nbsp;</font>
-	</div>
-
+<wicket:extend>
 	<BR><BR><BR><BR><BR><BR><BR>
-	
-			<form wicket:id="form" action="#">
-				<TABLE style="width: 20%;">
-				<TR>
-					<TH colspan="2" >Acesso</TH>
-				</TR>
-				<TR>
-					<TD colspan="2"><span wicket:id="feedback"></span></TD>
-				</TR>
-				<TR>
-					<TD>Login:</TD>
-					<TD>
-						<input type="text" wicket:id="login" id="login"/>
-					</TD>
-				</TR>	
-				<TR>
-					<TD>Senha:</TD>
-					<TD>
-						<input type="password" wicket:id="senha" />
-					</TD>
-				</TR>	
-				<TR>
-					<TD></TD>
-					<TD><input type="submit"/></TD>				
-				</TR>
-				</TABLE>
-			</form>	
-			
-			
+
+	<form wicket:id="form" action="#" method="post">
+		<TABLE style="width: 20%;">
+		<TR>
+			<TH colspan="2" >Acesso</TH>
+		</TR>
+		<TR>
+			<TD colspan="2"><span wicket:id="feedback"></span></TD>
+		</TR>
+		<TR>
+			<TD>Login:</TD>
+			<TD>
+				<input type="text" wicket:id="login" id="login"/>
+			</TD>
+		</TR>	
+		<TR>
+			<TD>Senha:</TD>
+			<TD>
+				<input type="password" wicket:id="senha" id="senha" />
+			</TD>
+		</TR>	
+		<TR>
+			<TD></TD>
+			<TD><input type="submit"/></TD>				
+		</TR>
+		</TABLE>
+	</form>	
+
 	<div id="status_div">
 		<marquee style="width: 77%; height: 7px" direction="left" ><a href="#">~(‾▿‾)~</a></marquee>
 		Se você não possui cadastro <a class="status" wicket:id="lkCadastro">clique aqui</a>
 	</div>		
-			
-			
 
-</body>
-</html>
+	<script type="text/javascript">
+		function setFocus()
+		{
+		     document.getElementById("login").focus();
+		}
+	</script>
+</wicket:extend>

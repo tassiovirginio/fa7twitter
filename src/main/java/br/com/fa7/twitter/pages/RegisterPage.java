@@ -7,56 +7,63 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
+import br.com.fa7.twitter.business.exception.BusinessException;
+import br.com.fa7.twitter.entities.User;
 
 public class RegisterPage extends WebPage {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String login;
-	private String senha;
-	private String email;
-	private String nome;
-	
 	@SpringBean
 	private UserBusiness userBusiness;
 	
 	public RegisterPage() {
+		this(new User());
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public RegisterPage(final User newUser) {
 		
-		TextField tLogin = new TextField("tLogin", new PropertyModel(this,"login"));
-		tLogin.setRequired(true);
-		PasswordTextField tSenha = new PasswordTextField("tSenha", new PropertyModel(this,"senha"));
-		tSenha.setRequired(true);
-		TextField<String> tEmail = new TextField<String>("tEmail", new PropertyModel(this,"email"));
-		tEmail.setRequired(true);
-		TextField<String> tNome = new TextField<String>("tNome", new PropertyModel(this,"nome"));
-		tNome.setRequired(true);
-		
-		Form form = new Form("form"){
-			
-			//Fazer validação
-			
+		Form<User> form = new Form<User>("form"){
+			private static final long serialVersionUID = 1L;
+
 			protected void onSubmit() {
-				setResponsePage(new LoginPage());
+				try {
+					userBusiness.newUser(newUser);
+					info("Usuario Criado Com Sucesso.");
+					setResponsePage(new LoginPage());
+				} catch (BusinessException e) {
+					error(e.getMessage());
+					setResponsePage(new RegisterPage(newUser));
+				}
 			};
 		};
-		add(form);
 		
 		
-		form.add(tLogin);
-		form.add(tSenha);
-		form.add(tEmail);
-		form.add(tNome);
+		add(
+			form
+				.add(new TextField<String>("login").setRequired(true))
+				.add(new PasswordTextField("password").setRequired(true))
+				.add(new TextField<String>("email").setRequired(true))
+				.add(new TextField<String>("name").setRequired(true))
+				.setDefaultModel(new CompoundPropertyModel<User>(newUser))
+				.add(new FeedbackPanel("feedback"))
+	    );
 		
-		form.add(new FeedbackPanel("feedback"));
+		add(new Link("lkLogin") {
+			private static final long serialVersionUID = 1L;
+			public void onClick() {
+				setResponsePage(new LoginPage());
+			}
+		});
 		
 	}
 	
 	public static Link<Void> link(String id) {
-		Link<Void> result = new BookmarkablePageLink<Void>(id, RegisterPage.class);
-		return result;
+		return new BookmarkablePageLink<Void>(id, RegisterPage.class);
 	}
 }

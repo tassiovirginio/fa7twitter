@@ -14,7 +14,7 @@ import br.com.fa7.twitter.entities.User;
 public class MessageDAO extends HibernateDAOGenerico<Message, Long> {
 	public List<Message> findAllFromUserViaHQL(User user){
 		Session s = getSession();
-		Query q = s.createQuery("FROM Message WHERE user = ?");
+		Query q = s.createQuery("FROM Message WHERE user = ? order by id desc");
 		q.setParameter(0, user);
 		List<Message> msgLst = (List<Message>) q.list();
 		return msgLst;

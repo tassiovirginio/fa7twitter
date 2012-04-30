@@ -1,9 +1,9 @@
 package br.com.fa7.twitter.pages;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -12,7 +12,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.MessageBusiness;
@@ -30,16 +29,23 @@ public class PrincipalPage extends PageBase {
 	private String msg;
 	
 	public PrincipalPage() {
+		if (loggedUser == null) {
+			throw new RestartResponseAtInterceptPageException(LoginPage.class);
+		}
 		Form form = new Form("form"){
+			
 			protected void onSubmit() {
+				
 				Message message = new Message(msg, loggedUser);
 				messageBusiness.save(message);
 				setResponsePage(new PrincipalPage());
+				
 			};
 		};
 		add(form);
 		
-		TextArea<String> taMsg = new TextArea<String>("taMsg", new PropertyModel(this,"msg"));
+		TextArea<String> taMsg = new TextArea<String>("taMsg");
+		taMsg.setModel(new PropertyModel(this,"msg"));
 		form.add(taMsg);
 		
 		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
@@ -61,8 +67,11 @@ public class PrincipalPage extends PageBase {
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
 				item.add(new Label("msg", message.getMsg()));
-//				item.add(new Label("userMsg", message.getUser().getName()));
-				item.add(new Label("login", "@" + message.getUser().getLogin()));
+				
+				Link link = ProfilePage.link("lkUser", message.getUser());
+				link.add(new Label("login", "@" + message.getUser().getLogin()));
+				item.add(link);
+				
 			}
 		};
 		
@@ -71,8 +80,7 @@ public class PrincipalPage extends PageBase {
 	}
 
 	public static Link<Void> link(String id) {
-		Link<Void> result = new BookmarkablePageLink<Void>(id, PrincipalPage.class);
-		return result;
+		return new BookmarkablePageLink<Void>(id, PrincipalPage.class);
 	}
 
 }

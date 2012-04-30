@@ -62,15 +62,6 @@ public class UserBusiness {
 		return result.get(0);
 	}
 
-	public User validateLogin(String login, String password) {
-		List<User> result = userDAO.findByCriteria(
-				Restrictions.like("login", login),
-				Restrictions.like("password", password));
-		if (result.isEmpty())
-			return null;
-		return result.get(0);
-	}
-
 	public List<User> findByName(String search) {
 		return userDAO.findByCriteria(Restrictions.ilike("name", search, MatchMode.ANYWHERE));
 	}
@@ -82,14 +73,11 @@ public class UserBusiness {
 		}
 	}
 
-	public User login(String login, String password) throws Exception {
+	public User login(String login, String password) throws BusinessException {
 		User user = this.findByLogin(login);
-		if (user == null)
-			throw new Exception("Login nao cadastrado");
-		if (password.equals(user.getPassword()))
-			return user;
-		else
-			throw new Exception("Usuario e senha invalidos");
+		if (user == null || !password.equals(user.getPassword()))
+			throw new BusinessException("O login ou a senha inserido está incorreto.");
+		return user;
 	}
 
 	public void follow(User follower, User userToFollow) {
