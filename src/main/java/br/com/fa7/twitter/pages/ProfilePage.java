@@ -1,6 +1,5 @@
 package br.com.fa7.twitter.pages;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,7 +9,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -19,7 +17,9 @@ import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
+import br.com.fa7.twitter.pages.components.ListView;
 
+@SuppressWarnings("serial")
 public class ProfilePage extends PageBase {
 	
 	private static final long serialVersionUID = 1L;
@@ -49,10 +49,10 @@ public class ProfilePage extends PageBase {
 
 	private void initializeComponents() {
 
-		Label lbUserNameHeader = new Label("lbUserNameHeader", viewingUser.getName());
-		add(lbUserNameHeader);
+		add(new Label("lbUserNameHeader", viewingUser.getName()));
 		
-		Form form = new Form("form");
+		Form<Void> form = new Form<Void>("form");
+		add(form);
 		
 		Button btnSeguir = new Button("btnSeguir") {
 			public void onSubmit() {
@@ -70,7 +70,6 @@ public class ProfilePage extends PageBase {
 		};
 		form.add(btnAbandonar);
 		
-		add(form);
 		
 		if (isPaginaPessoal || !estaLogado()) {
 			btnSeguir.setVisible(false);
@@ -88,57 +87,48 @@ public class ProfilePage extends PageBase {
 		Set<User> following = viewingUser.getFollowing();
 		Set<User> followers = viewingUser.getFollowers();
 		
-		Label lbFollowingCount = new Label("lbFollowingCount", following.size() + "");
-		add(lbFollowingCount);
-		Label lbFollowingCountHeader = new Label("lbFollowingCountHeader", following.size() + "");
-		add(lbFollowingCountHeader);
-		Label lbFollowersCount = new Label("lbFollowersCount", followers.size() + "");
-		add(lbFollowersCount);
-		Label lbFollowersCountHeader = new Label("lbFollowersCountHeader", followers.size() + "");
-		add(lbFollowersCountHeader);
+		add(new Label("lbFollowingCount", following.size() + ""));
+		
+		add(new Label("lbFollowingCountHeader", following.size() + ""));
+		
+		add(new Label("lbFollowersCount", followers.size() + ""));
+		
+		add(new Label("lbFollowersCountHeader", followers.size() + ""));
+		
+		add(new Label("lbUserName", viewingUser.getName()));
 		
 		List<Message> listMessage = messageBusiness.loadByUser(viewingUser);
 		
-		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
-		add(lbSize);
-		Label lbUserName = new Label("lbUserName", viewingUser.getName());
-		add(lbUserName);		
+		add(new Label("lbSize", String.valueOf(listMessage.size())));
 		
 		//Mensagens
-		ListView<Message> listView = new ListView<Message>("lvListMsg", listMessage) {
-			@Override
+		add(new ListView<Message>("lvListMsg", listMessage) {
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
 				item.add(new Label("msg", message.getMsg()));
 			}
-		};
-		add(listView);
+		});
+		
 		
 		//Following
-		Label lbUserNameFollowing = new Label("lbUserNameFollowing", viewingUser.getName());
-		add(lbUserNameFollowing);
-		List<User> listaItensFollowing = new ArrayList<User>(following);
-		ListView<User> listViewFollowing = new ListView<User>("lvListFollowing", listaItensFollowing) {
-			@Override
+		add(new Label("lbUserNameFollowing", viewingUser.getName()));
+		add(new ListView<User>("lvListFollowing", following) {
 			protected void populateItem(ListItem<User> item) {
 				final User userFollowing = (User)item.getModelObject();
 				item.add(new Label("name", userFollowing.getName()));
 			}
-		};
-		add(listViewFollowing);
+		});
+		
 
 		//Followers
-		Label lbUserNameFollowers = new Label("lbUserNameFollowers", viewingUser.getName());
-		add(lbUserNameFollowers);
-		List<User> listaItensFollowers = new ArrayList<User>(followers);
-		ListView<User> listViewFollowers = new ListView<User>("lvListFollowers", listaItensFollowers) {
-			@Override
+		add(new Label("lbUserNameFollowers", viewingUser.getName()));
+		add(new ListView<User>("lvListFollowers", followers) {
 			protected void populateItem(ListItem<User> item) {
 				final User userFollowing = (User)item.getModelObject();
 				item.add(new Label("name", userFollowing.getName()));
 			}
-		};
-		add(listViewFollowers);
+		});
+		
 		
 	}
 

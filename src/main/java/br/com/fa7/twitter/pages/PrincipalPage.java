@@ -29,52 +29,51 @@ public class PrincipalPage extends PageBase {
 	private String msg;
 	
 	public PrincipalPage() {
+		
 		if (loggedUser == null) {
 			throw new RestartResponseAtInterceptPageException(LoginPage.class);
 		}
-		Form form = new Form("form"){
+		
+		Form<String> form = new Form<String>("form"){
+			private static final long serialVersionUID = 1L;
 			
 			protected void onSubmit() {
-				
-				Message message = new Message(msg, loggedUser);
-				messageBusiness.save(message);
+				if(msg!=null && !msg.isEmpty()){
+					Message message = new Message(msg, loggedUser);
+					messageBusiness.save(message);
+				}
 				setResponsePage(new PrincipalPage());
-				
 			};
 		};
 		add(form);
 		
-		TextArea<String> taMsg = new TextArea<String>("taMsg");
-		taMsg.setModel(new PropertyModel(this,"msg"));
-		form.add(taMsg);
+		form.add(new TextArea<String>("taMsg",new PropertyModel<String>(this,"msg")));
 		
 		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
 		
-		// lista de mensagens de quem ele segue
 		Set<User> following = loggedUser.getFollowing();
+		
 		for (User user : following) {
 			listMessage.addAll(messageBusiness.loadByUser(user));
 		}		
-		
-		Label lbUserName = new Label("lbUserName", loggedUser.getName());
-		add(lbUserName);		
 
-		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
-		add(lbSize);
+		add(new Label("lbUserName", loggedUser.getName()));
+
+		add(new Label("lbSize", String.valueOf(listMessage.size())));
 		
 		ListView<Message> listView = new ListView<Message>("lvMsg", listMessage) {
-			@Override
+			private static final long serialVersionUID = 1L;
+			
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-				item.add(new Label("msg", message.getMsg()));
 				
-				Link link = ProfilePage.link("lkUser", message.getUser());
+				item.add(new Label("msg", message.getMsg()));
+				Link<Void> link = ProfilePage.link("lkUser", message.getUser());
 				link.add(new Label("login", "@" + message.getUser().getLogin()));
 				item.add(link);
 				
 			}
 		};
-		
 		add(listView);
 		
 	}

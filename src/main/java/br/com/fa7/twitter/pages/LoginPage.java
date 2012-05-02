@@ -19,27 +19,18 @@ public class LoginPage extends PageBase {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String login;
-	private String senha;
+	private String login,senha;
 	
 	@SpringBean
 	private UserBusiness userBusiness;
 	
 	public LoginPage() {
 		
-		TextField<String> tLogin = new TextField<String>("login", new PropertyModel(this,"login"));
-		tLogin.setRequired(true);
-		
-		PasswordTextField tSenha = new PasswordTextField("senha", new PropertyModel(this,"senha"));
-		tSenha.setRequired(true);
-		
-		Form form = new Form("form"){
-			
-			//Fazer validação
+		Form<String> form = new Form<String>("form"){
+			private static final long serialVersionUID = -533938191530567861L;
 			protected void onSubmit() {
-				User user;
 				try {
-					user = userBusiness.login(login, senha);
+					User user = userBusiness.login(login, senha);
 					getSession().setAttribute("loggedUser", user);
 					setResponsePage(new PrincipalPage());
 				} catch (BusinessException e) {
@@ -49,18 +40,17 @@ public class LoginPage extends PageBase {
 		};
 		add(form);
 		
+		form.add(new TextField<String>("login", new PropertyModel<String>(this,"login")).setRequired(true));
 		
-		form.add(tLogin);
-		form.add(tSenha);
-		
-		Link lkCadastro = RegisterPage.link("lkCadastro");
-		add(lkCadastro);
+		form.add(new PasswordTextField("senha", new PropertyModel<String>(this,"senha")).setRequired(true));
 		
 		form.add(new FeedbackPanel("feedback"));
+		
+		add(RegisterPage.link("lkCadastro"));
+		
 	}
 	
 	public static Link<Void> link(String id) {
-		Link<Void> result = new BookmarkablePageLink<Void>(id, LoginPage.class);
-		return result;
+		return new BookmarkablePageLink<Void>(id, LoginPage.class);
 	}
 }

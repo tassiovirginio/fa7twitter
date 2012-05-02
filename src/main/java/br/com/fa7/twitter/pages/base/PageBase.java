@@ -27,7 +27,7 @@ public class PageBase extends WebPage {
 		Object obj = getSession().getAttribute("loggedUser");
 		this.loggedUser = (User)obj;
 		
-		setDefaultModel(new CompoundPropertyModel(loggedUser));
+		setDefaultModel(new CompoundPropertyModel<User>(loggedUser));
 		
 		add(ProfilePage.link("lkUserMessage", loggedUser).add(
 				new Label("login")));

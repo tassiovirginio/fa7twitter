@@ -11,7 +11,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import br.com.fa7.twitter.business.UserBusiness;
@@ -39,19 +38,20 @@ public class FindUserPage extends PageBase {
 	}
 
 	private void initComponents() {
-		Form form = new Form("form"){
+		Form<String> form = new Form<String>("form"){
+			private static final long serialVersionUID = 1L;
 			protected void onSubmit() {				
 				users = userBusiness.findByName(busca);
 				setResponsePage(new FindUserPage(users));
 			};
 		};
 		
-		form.add(new TextField<String>("tfBusca",new PropertyModel(this,"busca")));
+		form.add(new TextField<String>("tfBusca",new PropertyModel<String>(this,"busca")));
 		add(form);
 		add(new Label("lbSize",users.size()+""));
 		
 		ListView<User> listView = new ListView<User>("lvListUsers",users) {
-			@Override
+			private static final long serialVersionUID = -6166832786150730908L;
 			protected void populateItem(ListItem<User> item) {
 				final User user = (User)item.getModelObject();
 				Link<Void> lkUser = ProfilePage.link("lkname", user);

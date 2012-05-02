@@ -46,11 +46,11 @@ public class RegisterPage extends WebPage {
 		
 		add(
 			form
+				.setDefaultModel(new CompoundPropertyModel<User>(newUser))
 				.add(new TextField<String>("login").setRequired(true))
 				.add(new PasswordTextField("password").setRequired(true))
 				.add(new TextField<String>("email").setRequired(true))
 				.add(new TextField<String>("name").setRequired(true))
-				.setDefaultModel(new CompoundPropertyModel<User>(newUser))
 				.add(new FeedbackPanel("feedback"))
 	    );
 		
