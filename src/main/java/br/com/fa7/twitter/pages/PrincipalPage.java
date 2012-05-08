@@ -12,12 +12,16 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.web.util.HtmlUtils;
 
 import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
+import br.com.fa7.twitter.util.Util;
 
 public class PrincipalPage extends PageBase {
 	
@@ -29,6 +33,7 @@ public class PrincipalPage extends PageBase {
 	private String msg;
 	
 	public PrincipalPage() {
+		
 		if (loggedUser == null) {
 			throw new RestartResponseAtInterceptPageException(LoginPage.class);
 		}
@@ -36,7 +41,16 @@ public class PrincipalPage extends PageBase {
 			
 			protected void onSubmit() {
 				
-				Message message = new Message(msg, loggedUser);
+				Util util = new Util();
+				
+//				List<String> list = util.searchURL(msg);
+//				for (String s: list) {
+//					String ss = util.shorten(s);
+//					msg.replace(s,ss);
+//				}
+				
+				String msgEscape = HtmlUtils.htmlEscape(msg);
+				Message message = new Message(msgEscape, loggedUser);
 				messageBusiness.save(message);
 				setResponsePage(new PrincipalPage());
 				
@@ -66,7 +80,17 @@ public class PrincipalPage extends PageBase {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-				item.add(new Label("msg", message.getMsg()));
+				
+				String msg_ = message.getMsg();
+				
+				if(msg_ != null)
+				msg_ = msg_.replaceAll("(\\A|\\s)((http|https|ftp|mailto):\\S+)(\\s|\\z)","$1<a href=\"$2\">$2</a>$4");
+				
+				Label lbMsg = new Label("msg", msg_);
+				
+				lbMsg.setEscapeModelStrings(false);
+				
+				item.add(lbMsg);
 				
 				Link link = ProfilePage.link("lkUser", message.getUser());
 				link.add(new Label("login", "@" + message.getUser().getLogin()));
