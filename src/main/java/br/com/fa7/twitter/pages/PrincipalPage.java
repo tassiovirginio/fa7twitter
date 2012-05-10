@@ -3,8 +3,6 @@ package br.com.fa7.twitter.pages;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -14,15 +12,12 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.web.util.HtmlUtils;
 
 import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
-import br.com.fa7.twitter.util.Util;
 
 public class PrincipalPage extends PageBase {
 	
@@ -42,17 +37,17 @@ public class PrincipalPage extends PageBase {
 			
 			protected void onSubmit() {
 				
-				Util util = new Util();
-				
-				List<String> list = util.searchURL(msg);
-				for (String s: list) {
-					String ss = util.shorten(s);
-					msg.replace(s,ss);
-				}
-				
-				String msgEscape = HtmlUtils.htmlEscape(msg);
-				Message message = new Message(msgEscape, loggedUser);
-				messageBusiness.save(message);
+//				Util util = new Util();
+//				
+//				List<String> list = util.searchURL(msg);
+//				for (String s: list) {
+//					String ss = util.shorten(s);
+//					msg.replace(s,ss);
+//				}
+//				
+//				String msgEscape = HtmlUtils.htmlEscape(msg);
+//				Message message = new Message(msgEscape, loggedUser);
+//				messageBusiness.save(message);
 				setResponsePage(new PrincipalPage());
 				
 			};
