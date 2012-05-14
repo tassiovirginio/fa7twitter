@@ -18,6 +18,8 @@ import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
+import br.com.fa7.twitter.util.GoogleURLShortener;
+import br.com.fa7.twitter.util.Util;
 
 public class PrincipalPage extends PageBase {
 	
@@ -34,22 +36,9 @@ public class PrincipalPage extends PageBase {
 			throw new RestartResponseAtInterceptPageException(LoginPage.class);
 		}
 		Form form = new Form("form"){
-			
 			protected void onSubmit() {
-				
-//				Util util = new Util();
-//				
-//				List<String> list = util.searchURL(msg);
-//				for (String s: list) {
-//					String ss = util.shorten(s);
-//					msg.replace(s,ss);
-//				}
-//				
-//				String msgEscape = HtmlUtils.htmlEscape(msg);
-//				Message message = new Message(msgEscape, loggedUser);
-//				messageBusiness.save(message);
+				messageBusiness.postMessage(loggedUser, msg, new GoogleURLShortener());
 				setResponsePage(new PrincipalPage());
-				
 			};
 		};
 		add(form);

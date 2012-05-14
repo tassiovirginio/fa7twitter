@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import br.com.fa7.twitter.business.exception.BusinessException;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
+import br.com.fa7.twitter.util.FakeUrlShortener;
+import br.com.fa7.twitter.util.URLShortener;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/applicationContext.xml" })
@@ -39,7 +41,7 @@ public class TestMessageBusiness {
 	@Test
 	public void testInsertOneMessage() throws BusinessException {
 		User user = createUser();
-		messageBusiness.save(new Message("test1", user));
+		messageBusiness.postMessage(user, "test1", new FakeUrlShortener());
 		Assert.assertEquals(1, messageBusiness.size());
 	}
 
@@ -52,14 +54,14 @@ public class TestMessageBusiness {
 	@Test
 	public void testInsertOneMessageAndReturnIt() throws BusinessException {
 		User user = createUser();
-		messageBusiness.save(new Message("test1", user));
+		messageBusiness.postMessage(user, "test1", new FakeUrlShortener());
 		Assert.assertEquals("test1", messageBusiness.listAll().get(0).getMsg());
 	}
 
 	@Test
 	public void testLoadUserMessages() throws BusinessException {
 		User user = createUser();
-		messageBusiness.save(new Message("test3", user));
+		messageBusiness.postMessage(user, "test3", new FakeUrlShortener());
 		List<Message> result = messageBusiness.loadByUser(user);
 		Assert.assertEquals(1, result.size());
 		Assert.assertEquals("test3", result.get(0).getMsg());
@@ -135,6 +137,17 @@ public class TestMessageBusiness {
 		
 	}
 
+	@Test
+	public void urlNaMensagem() {
+		URLShortener urlShortener = new URLShortener() {
+			@Override
+			public String shorten(String url) {
+				return "http://curta";
+			}
+		};
+		
+		Assert.assertEquals("http://curta", messageBusiness.prepareMessage("http://www.tassiovirginio.com", urlShortener));
+	}
 
 	@After
 	public void finalize() {
