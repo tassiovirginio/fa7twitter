@@ -9,13 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.business.exception.BusinessException;
-import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
 import br.com.fa7.twitter.pages.LoginPage;
 import br.com.fa7.twitter.pages.PrincipalPage;
 import br.com.fa7.twitter.pages.ProfilePage;
 import br.com.fa7.twitter.pages.RegisterPage;
+import br.com.fa7.twitter.util.FakeUrlShortener;
+import br.com.fa7.twitter.util.URLShortener;
 
 import com.google.code.jqwicket.JQComponentOnBeforeRenderListener;
 import com.google.code.jqwicket.JQContributionConfig;
@@ -66,12 +67,13 @@ public class WicketApplication extends WebApplication{
 			User juliana = new User("Juliana","juliana","123","juliana@fa7.org");
 			userBusiness.newUser(juliana);
 	
-			messageBusiness.save(new Message("Olá do Tássio", tassio));
-			messageBusiness.save(new Message("Mensagem do Tássio", tassio));
-			messageBusiness.save(new Message("Olá do Tiago", tiago));
-			messageBusiness.save(new Message("Tudo ok", tiago));
-			messageBusiness.save(new Message("Tudo certinho?", luana));
-			messageBusiness.save(new Message("Funciona?", juliana));
+			URLShortener urlShortener = new FakeUrlShortener();
+			messageBusiness.postMessage(tassio, "Olá do Tássio", urlShortener);
+			messageBusiness.postMessage(tassio, "Mensagem do Tássio", urlShortener);
+			messageBusiness.postMessage(tiago, "Olá do Tiago", urlShortener);
+			messageBusiness.postMessage(tiago, "Tudo ok", urlShortener);
+			messageBusiness.postMessage(luana, "Tudo certinho?", urlShortener);
+			messageBusiness.postMessage(juliana, "Funciona?", urlShortener);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
