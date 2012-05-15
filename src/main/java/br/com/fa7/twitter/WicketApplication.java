@@ -70,8 +70,10 @@ public class WicketApplication extends WebApplication{
 			URLShortener urlShortener = new FakeUrlShortener();
 			messageBusiness.postMessage(tassio, "Olá do Tássio", urlShortener);
 			messageBusiness.postMessage(tassio, "Mensagem do Tássio", urlShortener);
+			messageBusiness.postMessage(tassio, "@tiago Tudo Ok!", urlShortener);
 			messageBusiness.postMessage(tiago, "Olá do Tiago", urlShortener);
 			messageBusiness.postMessage(tiago, "Tudo ok", urlShortener);
+			messageBusiness.postMessage(tiago, "E aew @tassio , tudo bem?", urlShortener);
 			messageBusiness.postMessage(luana, "Tudo certinho?", urlShortener);
 			messageBusiness.postMessage(juliana, "Funciona?", urlShortener);
 		} catch (BusinessException e) {
