@@ -50,12 +50,17 @@ public class MessageBusiness {
 
 	public String toExibition(Message message) {
 		String messageText = addHTMLLinkAtUsers(message.getMsg());
+		messageText = addLinkCode(messageText);
 		return messageText.replace("^", "@");
+	}
+
+	private String addLinkCode(String messageText) {
+		messageText = messageText.replaceAll("(\\A|\\s)((http|https|ftp|mailto):\\S+)(\\s|\\z)","$1<a href=\"$2\">$2</a>$4");
+		return messageText;
 	}
 	
 	private String addHTMLLinkAtUsers(String messageText){
-		final String DOMAIN = "localhost:9999";
-		final String HTML_LINK = "<a href=\"" + DOMAIN + "/user/&/\">^&</a>";
+		final String HTML_LINK = "<a href=\"user/&/\">^&</a>";
 		//Iniciado por arroba e um caracter minusculo, seguido por caracteres minusculos ou numeros   
 		final String REGEX_PATTERN = "@[a-z]+([a-z]|[0-9])*";
 		

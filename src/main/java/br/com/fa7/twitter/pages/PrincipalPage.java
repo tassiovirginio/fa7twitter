@@ -65,27 +65,16 @@ public class PrincipalPage extends PageBase {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-				
-				String msg_ = message.getMsg();
-				
-				if(msg_ != null)
-				msg_ = msg_.replaceAll("(\\A|\\s)((http|https|ftp|mailto):\\S+)(\\s|\\z)","$1<a href=\"$2\">$2</a>$4");
-				
+				String msg_ = messageBusiness.toExibition(message);
 				Label lbMsg = new Label("msg", msg_);
-				
 				lbMsg.setEscapeModelStrings(false);
-				
 				item.add(lbMsg);
-				
 				Link link = ProfilePage.link("lkUser", message.getUser());
 				link.add(new Label("login", "@" + message.getUser().getLogin()));
 				item.add(link);
-				
 			}
 		};
-		
 		add(listView);
-		
 	}
 
 	public static Link<Void> link(String id) {
