@@ -16,9 +16,6 @@ import org.springframework.ui.context.Theme;
 public class Teste {
 
 	private static WebDriver driver;	
-	private static Login pageLogin;
-	private static String janelaPrincipal;
-	
 	
 	@BeforeClass
 	public static void setUp() {
@@ -26,9 +23,7 @@ public class Teste {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.get("http://127.0.0.1:9999");		
-		janelaPrincipal = driver.getWindowHandle();
-		pageLogin = new Login(driver);
-		
+	
 	}
 	
 	@AfterClass
@@ -39,7 +34,6 @@ public class Teste {
 
 	}
 
-//	@Ignore
 	@Test
 	public void loginSucesso() throws InterruptedException{		
 
@@ -64,20 +58,37 @@ public class Teste {
 		queryMsg.submit();
 		
 		Assert.assertTrue(true);
-		Thread.sleep(4000);
 	}
 	
-//	@Test
+	@Test
 	public void navegarNoMenu() throws InterruptedException{		
 
-		WebElement queryHome = driver.findElement(By.name("Home"));
-		queryHome.submit();
+		driver.get("http://127.0.0.1:9999/user/tassio");
+		Thread.sleep(1000);
 		
-		Thread.sleep(3000);
+		driver.findElement(By.id("lkHome")).click();
+		Thread.sleep(1000);
 		
-		WebElement queryBuscar = driver.findElement(By.name("Buscar"));
-		queryBuscar.submit();
-		Thread.sleep(3000);
+		driver.findElement(By.id("lkFindUser")).click();
+		Thread.sleep(1000);
+		
+		driver.findElement(By.id("lkUserMessage")).click();
+		Thread.sleep(1000);
+		
+		Assert.assertTrue(true);
+	}
+	
+	
+	@Test
+	public void buscarPessoa() throws InterruptedException{		
+		
+		driver.findElement(By.id("lkFindUser")).click();
+		Thread.sleep(1000);
+		
+		WebElement queryBuscar = driver.findElement(By.id("buscar"));
+        queryBuscar.sendKeys("lu");
+        queryBuscar.submit();
+		
 		Assert.assertTrue(true);
 	}
 
