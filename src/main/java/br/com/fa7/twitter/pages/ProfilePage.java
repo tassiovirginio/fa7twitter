@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -37,6 +38,9 @@ public class ProfilePage extends PageBase {
 	public ProfilePage(PageParameters parameters) {
 		String donoDaPagina = parameters.get("login").toString();
 		this.viewingUser = userBusiness.findByLogin(donoDaPagina);
+		if (viewingUser == null) {
+			throw new RestartResponseAtInterceptPageException(ErrorPage.class);
+		}
 		isPaginaPessoal = (viewingUser.equals(loggedUser));
 		this.initializeComponents();
 	}
