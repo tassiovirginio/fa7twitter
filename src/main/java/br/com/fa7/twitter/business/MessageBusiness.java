@@ -22,8 +22,6 @@ public class MessageBusiness {
 	@Autowired
 	private MessageDAO messageDAO; 
 	
-	
-	
 	public int size(){
 		return messageDAO.listAll().size();
 	}
@@ -60,7 +58,8 @@ public class MessageBusiness {
 	}
 	
 	private String addHTMLLinkAtUsers(String messageText){
-		final String HTML_LINK = "<a href=\"user/&/\">^&</a>";
+		final String DOMAIN = "http://localhost:9999";
+		final String HTML_LINK = "<a href=\"" + DOMAIN + "/user/&/\">^&</a>";
 		//Iniciado por arroba e um caracter minusculo, seguido por caracteres minusculos ou numeros   
 		final String REGEX_PATTERN = "@[a-z]+([a-z]|[0-9])*";
 		

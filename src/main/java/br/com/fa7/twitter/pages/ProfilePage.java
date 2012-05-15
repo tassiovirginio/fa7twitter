@@ -51,8 +51,8 @@ public class ProfilePage extends PageBase {
 		this.initializeComponents();
 	}	
 
+	@SuppressWarnings("serial")
 	private void initializeComponents() {
-
 		Label lbUserNameHeader = new Label("lbUserNameHeader", viewingUser.getName());
 		add(lbUserNameHeader);
 		
@@ -113,7 +113,9 @@ public class ProfilePage extends PageBase {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-				item.add(new Label("msg", message.getMsg()));
+				Label lbMessage = new Label("msg", messageBusiness.toExibition(message));
+				lbMessage.setEscapeModelStrings(false);
+				item.add(lbMessage);
 			}
 		};
 		add(listView);
@@ -143,7 +145,6 @@ public class ProfilePage extends PageBase {
 			}
 		};
 		add(listViewFollowers);
-		
 	}
 
 	public static Link<Void> link(String id, final User user) {

@@ -64,8 +64,8 @@ public class PrincipalPage extends PageBase {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-				String msg_ = messageBusiness.toExibition(message);
-				Label lbMsg = new Label("msg", msg_);
+				String messageText = messageBusiness.toExibition(message);
+				Label lbMsg = new Label("msg", messageText);
 				lbMsg.setEscapeModelStrings(false);
 				item.add(lbMsg);
 				Link link = ProfilePage.link("lkUser", message.getUser());
