@@ -19,7 +19,6 @@ import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
 import br.com.fa7.twitter.util.GoogleURLShortener;
-import br.com.fa7.twitter.util.Util;
 
 public class PrincipalPage extends PageBase {
 	
@@ -47,21 +46,21 @@ public class PrincipalPage extends PageBase {
 		taMsg.setModel(new PropertyModel(this,"msg"));
 		form.add(taMsg);
 		
-		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
+		List<Message> loggedUserMessages = messageBusiness.loadByUser(loggedUser);
 		
 		// lista de mensagens de quem ele segue
-		Set<User> following = loggedUser.getFollowing();
-		for (User user : following) {
-			listMessage.addAll(messageBusiness.loadByUser(user));
+		Set<User> followingList = loggedUser.getFollowing();
+		for (User followingUser : followingList) {
+			loggedUserMessages.addAll(messageBusiness.loadByUser(followingUser));
 		}		
 		
 		Label lbUserName = new Label("lbUserName", loggedUser.getName());
 		add(lbUserName);		
 
-		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
+		Label lbSize = new Label("lbSize", String.valueOf(loggedUserMessages.size()));
 		add(lbSize);
 		
-		ListView<Message> listView = new ListView<Message>("lvMsg", listMessage) {
+		ListView<Message> listView = new ListView<Message>("lvMsg", loggedUserMessages) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
