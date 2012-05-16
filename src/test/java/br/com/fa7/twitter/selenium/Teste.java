@@ -15,39 +15,59 @@ import br.com.fa7.twitter.Jetty;
 
 public class Teste {
 
-	private static WebDriver driver;	
+	private static WebDriver driver;
+	private static Login login;
 	
 	@BeforeClass
 	public static void setUp() {
 		Jetty.start();
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get("http://127.0.0.1:9999");		
+		driver.get("http://127.0.0.1:9999");	
+		
+		login = new Login(driver);
 	
 	}
 	
 	@AfterClass
 	public static void setDown(){
+		
 		for (String handle : driver.getWindowHandles()) {
+			
 		    driver.switchTo().window(handle).close();
+		    
 		}
 		Jetty.stop();
 	}
 
 	@Test
+	public void loginError() throws InterruptedException{		
+
+		login.setLogin("tassio");
+		
+		login.setSenha("1234").submit();
+		
+        Thread.sleep(1000);
+                
+        String textPage = login.getTextPage();
+        
+		Assert.assertTrue("Login ou senha incorretos", textPage.contains("O login ou a senha inserido está incorreto."));
+	}
+
+	
+	@Test
 	public void loginSucesso() throws InterruptedException{		
 
-		WebElement queryLogin = driver.findElement(By.name("login"));
-		queryLogin.sendKeys("tassio");
-		Thread.sleep(1000);
-        WebElement querySenha = driver.findElement(By.name("senha"));
-        querySenha.sendKeys("123");
+		login.setLogin("tassio");
+		
+		login.setSenha("123").submit();
+		
         Thread.sleep(1000);
-        querySenha.submit(); 
-        Thread.sleep(1000);
+        
+        //login.sair();
+        
 		Assert.assertTrue(true);
 	}
-	
 	
 	@Test
 	public void enviarMsg() throws InterruptedException{		
@@ -66,14 +86,11 @@ public class Teste {
 		driver.get("http://127.0.0.1:9999/user/tassio");
 		Thread.sleep(1000);
 		
-		driver.findElement(By.id("lkHome")).click();
-		Thread.sleep(1000);
+		login.click("lkHome");
 		
-		driver.findElement(By.id("lkFindUser")).click();
-		Thread.sleep(1000);
-		
-		driver.findElement(By.id("lkUserMessage")).click();
-		Thread.sleep(1000);
+		login.click("lkFindUser");
+
+		login.click("lkUserMessage");
 		
 		Assert.assertTrue(true);
 	}
@@ -82,12 +99,9 @@ public class Teste {
 	@Test
 	public void buscarPessoa() throws InterruptedException{		
 		
-		driver.findElement(By.id("lkFindUser")).click();
-		Thread.sleep(1000);
+		login.click("lkFindUser");		
 		
-		WebElement queryBuscar = driver.findElement(By.id("buscar"));
-        queryBuscar.sendKeys("lu");
-        queryBuscar.submit();
+		login.buscar("lu");
 		
 		Assert.assertTrue(true);
 	}
