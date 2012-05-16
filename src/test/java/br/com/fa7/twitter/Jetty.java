@@ -8,11 +8,18 @@ import org.eclipse.jetty.server.ssl.SslSocketConnector;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class Start {
+public class Jetty {
     public static void main(String[] args) throws Exception {
-        int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
+        start();
+        System.in.read();
+        stop();
+    }
 
-        Server server = new Server();
+    private static Server server;
+	public static void start() {
+		int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
+
+        server = new Server();
         SocketConnector connector = new SocketConnector();
 
         // Set some timeout options to make debugging easier.
@@ -64,13 +71,21 @@ public class Start {
         try {
             System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
             server.start();
-            System.in.read();
-            System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
-            server.stop();
-            server.join();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
         }
-    }
+	}
+
+	public static void stop() {
+        System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
+        try {
+	        server.stop();
+	        server.join();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.exit(1);
+	    }
+	}
+
 }

@@ -11,7 +11,6 @@ public class GoogleURLShortener implements URLShortener {
 
 	@Override
 	public String shorten(String longUrl) {
-		System.out.println("vai encurtar "+longUrl);
 		URL simpleURL = null;
 		HttpsURLConnection url = null;
 		BufferedInputStream bStream = null;

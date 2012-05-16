@@ -77,7 +77,7 @@ public class MessageBusiness {
 			preparedMessage.append(HTML_LINK.replace("&", userNameWithoutAt));			
 			//Parte final da mensagem que não será alterada
 			preparedMessage.append(messageText.substring(matcher.end()));
-			return messageText = addHTMLLinkAtUsers(preparedMessage.toString());
+			return addHTMLLinkAtUsers(preparedMessage.toString());
 		}
 		return messageText;
 	}

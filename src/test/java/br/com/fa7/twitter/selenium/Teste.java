@@ -11,13 +11,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import br.com.fa7.twitter.Jetty;
+
 public class Teste {
 
 	private static WebDriver driver;	
 	
 	@BeforeClass
 	public static void setUp() {
-		
+		Jetty.start();
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.get("http://127.0.0.1:9999");		
@@ -29,7 +31,7 @@ public class Teste {
 		for (String handle : driver.getWindowHandles()) {
 		    driver.switchTo().window(handle).close();
 		}
-
+		Jetty.stop();
 	}
 
 	@Test
