@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public abstract class Page {
 
-	protected static WebDriver driver;
+	protected WebDriver driver;
 
 	public Page(WebDriver driver) {
 		this.driver = driver;
@@ -14,11 +14,11 @@ public abstract class Page {
 	
 	public abstract void loadPage();
 
-	public static WebElement findLinkText(String name){
+	public WebElement findLinkText(String name){
 		return driver.findElement(By.linkText(name));
 	}
 	
-	public static WebElement findElementById(String id){
+	public WebElement findElementById(String id){
 		return driver.findElement(By.id(id));
 	}
 	
