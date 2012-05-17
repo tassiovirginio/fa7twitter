@@ -21,7 +21,7 @@ public class TestSuite {
 	
 	@BeforeClass
 	public static void setUp() {
-		driver = DriverRegister.registerNew();
+		driver = DriverRegister.registerNew();	
 		logar();
 	}
 	
@@ -34,9 +34,6 @@ public class TestSuite {
 	
 	@AfterClass
 	public static void tearDown(){
-//		for (String handle : driver.getWindowHandles()) {
-//		    driver.switchTo().window(handle).close();
-//		}
 		driver.close();
 	}
 }
