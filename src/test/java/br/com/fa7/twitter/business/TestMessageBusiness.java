@@ -69,28 +69,28 @@ public class TestMessageBusiness {
 	public void testCriarLinkParaPaginaDoUsuarioNaMensagem() {
 		Message message = new Message("Olá @oneuser", user);
 		String messageReadyToShow = messageBusiness.toExibition(message);
-		Assert.assertEquals("Olá <a href=\"http://localhost:9999/user/oneuser/\">@oneuser</a>", messageReadyToShow);
+		Assert.assertEquals("Olá <a href=\"/user/oneuser/\">@oneuser</a>", messageReadyToShow);
 	}
 	
 	@Test
 	public void testCriarLinkParaUsuarioComNumero() {
 		Message message = new Message("Olá @user1", user);
 		String messagereadyToShow = messageBusiness.toExibition(message);
-		Assert.assertEquals("Olá <a href=\"http://localhost:9999/user/user1/\">@user1</a>", messagereadyToShow);
+		Assert.assertEquals("Olá <a href=\"/user/user1/\">@user1</a>", messagereadyToShow);
 	}
 	
 	@Test
 	public void testCriarLinkParaUsuarioSemAlterarEspacosDaMensagem() {
 		Message message = new Message("Olá @user ", user);
 		String messagereadyToShow = messageBusiness.toExibition(message);
-		Assert.assertEquals("Olá <a href=\"http://localhost:9999/user/user/\">@user</a> ", messagereadyToShow);
+		Assert.assertEquals("Olá <a href=\"/user/user/\">@user</a> ", messagereadyToShow);
 	}
 	
 	@Test
 	public void testCriarLinkParaTodosOsUsuarioNaMensagem() {
 		Message message = new Message("Olá @oneuser , @otheruser ", user);
 		String messagereadyToShow = messageBusiness.toExibition(message);
-		Assert.assertEquals("Olá <a href=\"http://localhost:9999/user/oneuser/\">@oneuser</a> , <a href=\"http://localhost:9999/user/otheruser/\">@otheruser</a> ", messagereadyToShow);
+		Assert.assertEquals("Olá <a href=\"/user/oneuser/\">@oneuser</a> , <a href=\"/user/otheruser/\">@otheruser</a> ", messagereadyToShow);
 	}
 	
 	@Test
@@ -111,7 +111,7 @@ public class TestMessageBusiness {
 	public void testCriarLinkParaUsuarioInvalidosAteOndeForValido() {
 		Message message = new Message("Olá @usêr ", user);
 		String messagereadyToShow = messageBusiness.toExibition(message);
-		Assert.assertEquals("Olá <a href=\"http://localhost:9999/user/us/\">@us</a>êr ", messagereadyToShow);
+		Assert.assertEquals("Olá <a href=\"/user/us/\">@us</a>êr ", messagereadyToShow);
 	}
 	
 	@Test
