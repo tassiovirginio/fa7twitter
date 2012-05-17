@@ -6,9 +6,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import br.com.fa7.twitter.Jetty;
@@ -16,17 +14,23 @@ import br.com.fa7.twitter.Jetty;
 public class Teste {
 
 	private static WebDriver driver;
-	private static Login login;
+	private static LoginPage login;
+	private static PrincipalPage principalPage;
+	private static BuscarPage buscarPage;
 	
 	@BeforeClass
 	public static void setUp() {
+		
 		Jetty.start();
+		
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.get("http://127.0.0.1:9999");	
 		
-		login = new Login(driver);
-	
+		login = new LoginPage(driver);
+		principalPage = new PrincipalPage(driver);
+		buscarPage = new BuscarPage(driver);
+		
 	}
 	
 	@AfterClass
@@ -37,9 +41,34 @@ public class Teste {
 		    driver.switchTo().window(handle).close();
 		    
 		}
+		
 		Jetty.stop();
 	}
 
+	@Test
+	public void loginEmpty() throws InterruptedException{		
+
+		login.setSenha("1234").submit();
+		
+        Thread.sleep(1000);
+                
+        String textPage = login.getTextPage();
+        
+		Assert.assertTrue("Campo login vazio.", textPage.contains("Campo 'login' é obrigatório."));
+	}
+
+	@Test
+	public void senhaEmpty() throws InterruptedException{		
+
+		login.setLogin("tassio").submit();
+		
+        Thread.sleep(1000);
+                
+        String textPage = login.getTextPage();
+        
+		Assert.assertTrue("Campo senha vazio.", textPage.contains("Campo 'senha' é obrigatório."));
+	}
+	
 	@Test
 	public void loginError() throws InterruptedException{		
 
@@ -51,9 +80,8 @@ public class Teste {
                 
         String textPage = login.getTextPage();
         
-		Assert.assertTrue("Login ou senha incorretos", textPage.contains("O login ou a senha inserido está incorreto."));
+		Assert.assertTrue("Login ou senha incorretos.", textPage.contains("O login ou a senha inserido está incorreto."));
 	}
-
 	
 	@Test
 	public void loginSucesso() throws InterruptedException{		
@@ -70,12 +98,9 @@ public class Teste {
 	}
 	
 	@Test
-	public void enviarMsg() throws InterruptedException{		
+	public void enviarMsg() {		
 
-		WebElement queryMsg = driver.findElement(By.name("taMsg"));
-		queryMsg.sendKeys("Teste");
-		Thread.sleep(1000);
-		queryMsg.submit();
+		principalPage.sendMessage("Teste");
 		
 		Assert.assertTrue(true);
 	}
@@ -99,9 +124,9 @@ public class Teste {
 	@Test
 	public void buscarPessoa() throws InterruptedException{		
 		
-		login.click("lkFindUser");		
+		buscarPage.click("lkFindUser");
 		
-		login.buscar("lu");
+		buscarPage.buscar("lu");
 		
 		Assert.assertTrue(true);
 	}
