@@ -23,6 +23,7 @@ public class Teste {
 		driver = DriverRegister.getDriver();
 		login = new LoginPage(driver);
 		principalPage = new PrincipalPage(driver);
+		profilePage = new ProfilePage(driver);
 		buscarPage = new BuscarPage(driver);
 	}
 	
@@ -86,9 +87,9 @@ public class Teste {
 	public void navegarNoMenu() throws InterruptedException {
 		profilePage.loadPage("tassio");
 		Thread.sleep(1000);
-		login.click("lkHome");
-		login.click("lkFindUser");
-		login.click("lkUserMessage");
+		profilePage.click("lkHome");
+		profilePage.click("lkFindUser");
+		profilePage.click("lkUserMessage");
 		Assert.assertTrue(true);
 	}
 
