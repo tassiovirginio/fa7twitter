@@ -7,6 +7,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import br.com.fa7.twitter.selenium.components.DriverRegister;
+
 public class BuscarPage extends Page {
 
 	public BuscarPage(WebDriver driver) {
@@ -36,7 +38,7 @@ public class BuscarPage extends Page {
 			}
 		}
 
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		DriverRegister.setDriverAsDefault();
 		return resultCount;
 	}
 	

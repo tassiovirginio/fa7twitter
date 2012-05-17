@@ -37,9 +37,13 @@ public class DriverRegister {
 
 	public static WebDriver registerNew() {
 		WebDriver driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.get("http://127.0.0.1:9999");
 		register(driver);
+		setDriverAsDefault();
 		return driver;
+	}
+	
+	public static void setDriverAsDefault(){
+		getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 }

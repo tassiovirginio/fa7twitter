@@ -1,10 +1,12 @@
 <wicket:extend>
 	<BR><BR><BR><BR>
 <TABLE style="width: 30%;">
-<TBODY>
+<THEAD>
 	<TR>
 		<TH>Principal</TH>
 	</TR>
+</THEAD>
+<TBODY>
 	<TR>
 		<TD>
 			Enviar Mensagem:<br>
@@ -17,14 +19,16 @@
 </TBODY>
 </TABLE>
 <br>
-<TABLE style="width: 30%;">
-<TBODY>
+<TABLE id="mensagens" style="width: 30%;">
+<THEAD>
 	<TR>
 		<TH>
 			<span wicket:id="lbUserName"/> tem 
 			<span wicket:id="lbSize">0</span> mensagens:
 		</TH>
 	</TR>
+</THEAD>
+<TBODY>
 	<TR>
 		<TD height="100px">
 		<div style="width:400px;height:250px;overflow: auto;">

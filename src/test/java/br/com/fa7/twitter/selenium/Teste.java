@@ -29,6 +29,7 @@ public class Teste {
 		principalPage = new PrincipalPage(driver);
 		profilePage = new ProfilePage(driver);
 		buscarPage = new BuscarPage(driver);
+		login.logarComoTassio();
 	}
 	
 	@AfterClass
@@ -41,17 +42,17 @@ public class Teste {
 
 	@Test
 	public void loginEmpty() throws InterruptedException {
-		login.loadPage();
+		login.sair();
 		login.setSenha("1234").submit();
 		Thread.sleep(1000);
 		String textPage = login.getTextPage();
 		Assert.assertTrue("Campo login vazio.",
-				textPage.contains("Campo 'login' é obrigatório."));
+		textPage.contains("Campo 'login' é obrigatório."));
 	}
 
 	@Test
 	public void senhaEmpty() throws InterruptedException {
-		login.loadPage();
+		login.sair();
 		login.setLogin("tassio").submit();
 		Thread.sleep(1000);
 		String textPage = login.getTextPage();
@@ -61,10 +62,10 @@ public class Teste {
 
 	@Test
 	public void loginError() throws InterruptedException {
-		login.loadPage();
+		login.sair();
 		login.setLogin("tassio");
 		login.setSenha("1234").submit();
-		Thread.sleep(1000);
+		Thread.sleep(500);
 		String textPage = login.getTextPage();
 		Assert.assertTrue("Login ou senha incorretos.", textPage
 				.contains("O login ou a senha inserido está incorreto."));
@@ -72,29 +73,37 @@ public class Teste {
 
 	@Test
 	public void loginSucesso() throws InterruptedException {
+		login.sair();
 		login.loadPage();
 		login.setLogin("tassio");
 		login.setSenha("123").submit();
-		Thread.sleep(1000);
-		// login.sair();
-		Assert.assertTrue(true);
+		Thread.sleep(500);
+		Assert.assertEquals("http://127.0.0.1:9999/", getCurrentUrlSemParametros());
 	}
 
 	@Test
 	public void enviarMsg() {
 		principalPage.loadPage();
+		Assert.assertEquals(3, principalPage.quantidadeDeMensagensEncontradas());
 		principalPage.sendMessage("Teste");
+		Assert.assertEquals(4, principalPage.quantidadeDeMensagensEncontradas());
 		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void navegarNoMenu() throws InterruptedException {
 		profilePage.loadPage("tassio");
-		Thread.sleep(1000);
-		profilePage.click("lkHome");
-		profilePage.click("lkFindUser");
 		profilePage.click("lkUserMessage");
-		Assert.assertTrue(true);
+		Assert.assertEquals("http://127.0.0.1:9999/user/tassio", getCurrentUrlSemParametros());
+		profilePage.click("lkHome");
+		Assert.assertEquals("http://127.0.0.1:9999/", getCurrentUrlSemParametros());
+		profilePage.click("lkFindUser");
+		Assert.assertEquals("http://127.0.0.1:9999/find", getCurrentUrlSemParametros());
+	}
+	
+	private String getCurrentUrlSemParametros() {
+		String currentUrl = driver.getCurrentUrl();
+		return currentUrl.substring(0, currentUrl.indexOf('?'));
 	}
 
 	@Test
