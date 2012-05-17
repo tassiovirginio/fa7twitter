@@ -8,6 +8,10 @@ import org.openqa.selenium.WebDriver;
 
 import br.com.fa7.twitter.Jetty;
 import br.com.fa7.twitter.selenium.components.DriverRegister;
+import br.com.fa7.twitter.selenium.pages.BuscarPage;
+import br.com.fa7.twitter.selenium.pages.LoginPage;
+import br.com.fa7.twitter.selenium.pages.PrincipalPage;
+import br.com.fa7.twitter.selenium.pages.ProfilePage;
 
 public class Teste {
 
@@ -94,11 +98,19 @@ public class Teste {
 	}
 
 	@Test
-	public void buscarPessoa() throws InterruptedException {
+	public void buscarUmUsuario() throws InterruptedException {
 		buscarPage.loadPage();
 		buscarPage.click("lkFindUser");
 		buscarPage.buscar("lu");
-		Assert.assertTrue(true);
+		Assert.assertEquals(1, buscarPage.quantidadeDeUsuariosEncontrados());
+	}
+	
+	@Test
+	public void buscarDoisUsuario() throws InterruptedException {
+		buscarPage.loadPage();
+		buscarPage.click("lkFindUser");
+		buscarPage.buscar("l");
+		Assert.assertEquals(2, buscarPage.quantidadeDeUsuariosEncontrados());
 	}
 
 }

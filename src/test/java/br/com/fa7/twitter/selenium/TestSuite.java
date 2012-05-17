@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 
 import br.com.fa7.twitter.Jetty;
 import br.com.fa7.twitter.selenium.components.DriverRegister;
+import br.com.fa7.twitter.selenium.pages.LoginPage;
 
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
