@@ -23,7 +23,7 @@ public class TestSuite {
 	public static void setUp() {
 		Jetty.start();
 		driver = DriverRegister.registerNew();	
-		logar();
+		//logar();
 	}
 	
 	private static void logar() {
