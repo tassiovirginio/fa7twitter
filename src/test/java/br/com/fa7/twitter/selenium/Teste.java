@@ -14,6 +14,7 @@ public class Teste {
 	private static WebDriver driver;
 	private static LoginPage login;
 	private static PrincipalPage principalPage;
+	private static ProfilePage profilePage;
 	private static BuscarPage buscarPage;
 
 	@BeforeClass
@@ -35,6 +36,7 @@ public class Teste {
 
 	@Test
 	public void loginEmpty() throws InterruptedException {
+		login.loadPage();
 		login.setSenha("1234").submit();
 		Thread.sleep(1000);
 		String textPage = login.getTextPage();
@@ -44,6 +46,7 @@ public class Teste {
 
 	@Test
 	public void senhaEmpty() throws InterruptedException {
+		login.loadPage();
 		login.setLogin("tassio").submit();
 		Thread.sleep(1000);
 		String textPage = login.getTextPage();
@@ -53,6 +56,7 @@ public class Teste {
 
 	@Test
 	public void loginError() throws InterruptedException {
+		login.loadPage();
 		login.setLogin("tassio");
 		login.setSenha("1234").submit();
 		Thread.sleep(1000);
@@ -63,6 +67,7 @@ public class Teste {
 
 	@Test
 	public void loginSucesso() throws InterruptedException {
+		login.loadPage();
 		login.setLogin("tassio");
 		login.setSenha("123").submit();
 		Thread.sleep(1000);
@@ -72,13 +77,14 @@ public class Teste {
 
 	@Test
 	public void enviarMsg() {
+		principalPage.loadPage();
 		principalPage.sendMessage("Teste");
 		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void navegarNoMenu() throws InterruptedException {
-		driver.get("http://127.0.0.1:9999/user/tassio");
+		profilePage.loadPage("tassio");
 		Thread.sleep(1000);
 		login.click("lkHome");
 		login.click("lkFindUser");
@@ -88,6 +94,7 @@ public class Teste {
 
 	@Test
 	public void buscarPessoa() throws InterruptedException {
+		buscarPage.loadPage();
 		buscarPage.click("lkFindUser");
 		buscarPage.buscar("lu");
 		Assert.assertTrue(true);
