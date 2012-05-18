@@ -40,27 +40,22 @@ public class FuncionalTestContext {
 		return driverRegister.getDriver();
 	}
 	
+	public static void setDriverAsDefault(){
+		driverRegister.setDriverAsDefault();
+	}
+	
 	public static void inititialize() {
-		System.out.println("Invocação do contexto de teste. Em uso:" + inUseCount);
 		if (inUseCount == 0){
-			System.out.println("iniciando contexto de teste");
-			inUseCount++;
 			startServer();
 			startDriver();
 		}
+		inUseCount++;
 	}
 	
 	public static void done() {
-		System.out.println("Conclusão do contexto de teste. Em uso:" + inUseCount );
 		if (--inUseCount == 0) {
-			System.out.println("encerrando contexto de teste");
 			shutDownDriver();
 			shutDownServer();
 		}
 	}
-	
-	public static void setDriverAsDefault(){
-		driverRegister.setDriverAsDefault();
-	}
-
 }
