@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.fa7.twitter.selenium.pages.BuscarPage;
 import br.com.fa7.twitter.selenium.pages.LoginPage;
 import br.com.fa7.twitter.selenium.pages.PrincipalPage;
 import br.com.fa7.twitter.selenium.pages.ProfilePage;
@@ -14,14 +13,12 @@ public class Teste extends FuncionalTestBase {
 	private static LoginPage login;
 	private static PrincipalPage principalPage;
 	private static ProfilePage profilePage;
-	private static BuscarPage buscarPage;
 
 	@BeforeClass
 	public static void setUp() {
 		login = new LoginPage(driver);
 		principalPage = new PrincipalPage(driver);
 		profilePage = new ProfilePage(driver);
-		buscarPage = new BuscarPage(driver);
 		login.logarComoTassio();
 	}
 
@@ -48,22 +45,6 @@ public class Teste extends FuncionalTestBase {
 	private String getCurrentUrlSemParametros() {
 		String currentUrl = driver.getCurrentUrl();
 		return currentUrl.substring(0, currentUrl.indexOf('?'));
-	}
-
-	@Test
-	public void buscarUmUsuario() throws InterruptedException {
-		buscarPage.loadPage();
-		buscarPage.click("lkFindUser");
-		buscarPage.buscar("lu");
-		Assert.assertEquals(1, buscarPage.quantidadeDeUsuariosEncontrados());
-	}
-	
-	@Test
-	public void buscarDoisUsuario() throws InterruptedException {
-		buscarPage.loadPage();
-		buscarPage.click("lkFindUser");
-		buscarPage.buscar("l");
-		Assert.assertEquals(2, buscarPage.quantidadeDeUsuariosEncontrados());
 	}
 
 }

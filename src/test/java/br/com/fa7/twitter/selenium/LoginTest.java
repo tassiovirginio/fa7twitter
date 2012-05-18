@@ -1,17 +1,15 @@
 package br.com.fa7.twitter.selenium;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 
-import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 import br.com.fa7.twitter.selenium.pages.LoginPage;
 import br.com.fa7.twitter.selenium.pages.PrincipalPage;
 
-public class LoginTest extends FuncionalTestBase{
+public class LoginTest extends FuncionalTestBase {
 	
 	private static LoginPage login;
 	private static PrincipalPage principalPage;
@@ -21,11 +19,6 @@ public class LoginTest extends FuncionalTestBase{
 		login = new LoginPage(driver);
 		principalPage = new PrincipalPage(driver);
 		tryLogoff();
-	}
-	
-	@AfterClass
-	public static void tearDonw() {
-		FuncionalTestContext.done();
 	}
 	
 	@Before

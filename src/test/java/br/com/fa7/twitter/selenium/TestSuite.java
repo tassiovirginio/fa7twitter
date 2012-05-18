@@ -11,7 +11,8 @@ import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
 		LoginTest.class,
-		Teste.class,
+		FindTest.class,
+		Teste.class
   }
 )
 public class TestSuite { 
