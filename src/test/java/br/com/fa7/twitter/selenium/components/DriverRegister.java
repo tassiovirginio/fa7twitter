@@ -35,7 +35,7 @@ public class DriverRegister {
 		getInstance().registredInstance = Instance;
 	}
 
-	public static WebDriver registerNew() {
+	private static WebDriver registerNew() {
 		WebDriver driver = new FirefoxDriver();
 		driver.get("http://127.0.0.1:9999");
 		register(driver);

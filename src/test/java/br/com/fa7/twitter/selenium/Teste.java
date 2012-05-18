@@ -41,47 +41,6 @@ public class Teste {
 	}
 
 	@Test
-	public void loginEmpty() throws InterruptedException {
-		login.sair();
-		login.setSenha("1234").submit();
-		Thread.sleep(1000);
-		String textPage = login.getTextPage();
-		Assert.assertTrue("Campo login vazio.",
-		textPage.contains("Campo 'login' é obrigatório."));
-	}
-
-	@Test
-	public void senhaEmpty() throws InterruptedException {
-		login.sair();
-		login.setLogin("tassio").submit();
-		Thread.sleep(1000);
-		String textPage = login.getTextPage();
-		Assert.assertTrue("Campo senha vazio.",
-				textPage.contains("Campo 'senha' é obrigatório."));
-	}
-
-	@Test
-	public void loginError() throws InterruptedException {
-		login.sair();
-		login.setLogin("tassio");
-		login.setSenha("1234").submit();
-		Thread.sleep(500);
-		String textPage = login.getTextPage();
-		Assert.assertTrue("Login ou senha incorretos.", textPage
-				.contains("O login ou a senha inserido está incorreto."));
-	}
-
-	@Test
-	public void loginSucesso() throws InterruptedException {
-		login.sair();
-		login.loadPage();
-		login.setLogin("tassio");
-		login.setSenha("123").submit();
-		Thread.sleep(500);
-		Assert.assertEquals("http://127.0.0.1:9999/", getCurrentUrlSemParametros());
-	}
-
-	@Test
 	public void enviarMsg() {
 		principalPage.loadPage();
 		Assert.assertEquals(3, principalPage.quantidadeDeMensagensEncontradas());

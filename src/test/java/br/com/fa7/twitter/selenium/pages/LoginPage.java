@@ -28,10 +28,6 @@ public class LoginPage extends Page {
 		return findElementAndSendKeys("senha", senha);
 	}
 	
-	public void sair(){
-		findLinkText("Sair").click();
-	}
-	
 	public boolean isLogado() {
 		driver.manage().timeouts().setScriptTimeout(2, TimeUnit.SECONDS);
 		boolean encontroulinkSair = (findLinkText("Sair") != null);

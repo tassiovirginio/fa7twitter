@@ -44,4 +44,9 @@ public class PrincipalPage extends Page {
 		DriverRegister.setDriverAsDefault();
 		return resultCount;
 	}
+
+	public void sair() {
+		loadPage();
+		findLinkText("Sair").click();
+	}
 }

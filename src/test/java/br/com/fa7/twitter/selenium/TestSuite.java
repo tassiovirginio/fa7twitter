@@ -13,6 +13,7 @@ import br.com.fa7.twitter.selenium.pages.LoginPage;
 
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
+		LoginTest.class,
 		Teste.class,
   }
 )
@@ -23,7 +24,7 @@ public class TestSuite {
 	@BeforeClass
 	public static void setUp() {
 		Jetty.start();
-		driver = DriverRegister.registerNew();	
+		driver = DriverRegister.getDriver();	
 		//logar();
 	}
 	
