@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import br.com.fa7.twitter.selenium.components.DriverRegister;
+import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 
 
 
@@ -31,7 +31,7 @@ public class LoginPage extends Page {
 	public boolean isLogado() {
 		driver.manage().timeouts().setScriptTimeout(2, TimeUnit.SECONDS);
 		boolean encontroulinkSair = (findLinkText("Sair") != null);
-		DriverRegister.setDriverAsDefault();
+		FuncionalTestContext.setDriverAsDefault();
 		return encontroulinkSair;
 	}
 	

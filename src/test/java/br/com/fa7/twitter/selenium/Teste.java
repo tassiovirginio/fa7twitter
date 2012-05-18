@@ -6,8 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
-import br.com.fa7.twitter.Jetty;
-import br.com.fa7.twitter.selenium.components.DriverRegister;
+import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 import br.com.fa7.twitter.selenium.pages.BuscarPage;
 import br.com.fa7.twitter.selenium.pages.LoginPage;
 import br.com.fa7.twitter.selenium.pages.PrincipalPage;
@@ -23,8 +22,8 @@ public class Teste {
 
 	@BeforeClass
 	public static void setUp() {
-		Jetty.start();
-		driver = DriverRegister.getDriver();
+		FuncionalTestContext.inititialize();
+		driver = FuncionalTestContext.getDriver();
 		login = new LoginPage(driver);
 		principalPage = new PrincipalPage(driver);
 		profilePage = new ProfilePage(driver);
@@ -34,10 +33,10 @@ public class Teste {
 	
 	@AfterClass
 	public static void setDown(){
-		for (String handle : driver.getWindowHandles()) {
-		    driver.switchTo().window(handle).close();
-		}
-		Jetty.stop();
+//		for (String handle : driver.getWindowHandles()) {
+//		    driver.switchTo().window(handle).close();
+//		}
+		FuncionalTestContext.done();
 	}
 
 	@Test

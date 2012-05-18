@@ -1,5 +1,6 @@
 package br.com.fa7.twitter.selenium;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -7,7 +8,7 @@ import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
-import br.com.fa7.twitter.selenium.components.DriverRegister;
+import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 import br.com.fa7.twitter.selenium.pages.LoginPage;
 import br.com.fa7.twitter.selenium.pages.PrincipalPage;
 
@@ -19,10 +20,16 @@ public class LoginTest {
 	
 	@BeforeClass
 	public static void initialize() {
-		driver = DriverRegister.getDriver();
+		FuncionalTestContext.inititialize();
+		driver = FuncionalTestContext.getDriver();
 		login = new LoginPage(driver);
 		principalPage = new PrincipalPage(driver);
 		tryLogoff();
+	}
+	
+	@AfterClass
+	public static void tearDonw() {
+		FuncionalTestContext.done();
 	}
 	
 	@Before

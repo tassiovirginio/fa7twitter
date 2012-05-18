@@ -7,35 +7,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverRegister {
 	
-	private static DriverRegister instance;
-	
 	private WebDriver registredInstance;
 	
-	public static DriverRegister getInstance(){
-		if (instance == null) {
-			build();
-		}
-		return instance;
-	}
-	
-	private synchronized static void build() {
-		if (instance == null) {
-			instance = new DriverRegister();
-		}
-	}
-	
-	public static WebDriver getDriver(){
-		if (getInstance().registredInstance == null) {
+	public WebDriver getDriver(){
+		if (this.registredInstance == null) {
 			registerNew();
 		}
-		return getInstance().registredInstance;
+		return this.registredInstance;
 	}
 	
-	public static void register(WebDriver Instance) {
-		getInstance().registredInstance = Instance;
+	public void register(WebDriver Instance) {
+		this.registredInstance = Instance;
 	}
 
-	private static WebDriver registerNew() {
+	public WebDriver registerNew() {
 		WebDriver driver = new FirefoxDriver();
 		driver.get("http://127.0.0.1:9999");
 		register(driver);
@@ -43,7 +28,8 @@ public class DriverRegister {
 		return driver;
 	}
 	
-	public static void setDriverAsDefault(){
-		getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	public void setDriverAsDefault(){
+		this.registredInstance
+			.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 }

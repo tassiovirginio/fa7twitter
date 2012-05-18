@@ -7,7 +7,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import br.com.fa7.twitter.selenium.components.DriverRegister;
+import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 
 public class BuscarPage extends Page {
 
@@ -38,7 +38,7 @@ public class BuscarPage extends Page {
 			}
 		}
 
-		DriverRegister.setDriverAsDefault();
+		FuncionalTestContext.setDriverAsDefault();
 		return resultCount;
 	}
 	
