@@ -11,7 +11,7 @@ import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 import br.com.fa7.twitter.selenium.pages.LoginPage;
 import br.com.fa7.twitter.selenium.pages.PrincipalPage;
 
-public class LoginTest extends TestBase{
+public class LoginTest extends FuncionalTestBase{
 	
 	private static LoginPage login;
 	private static PrincipalPage principalPage;

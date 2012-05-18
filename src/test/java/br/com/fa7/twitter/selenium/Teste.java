@@ -9,7 +9,7 @@ import br.com.fa7.twitter.selenium.pages.LoginPage;
 import br.com.fa7.twitter.selenium.pages.PrincipalPage;
 import br.com.fa7.twitter.selenium.pages.ProfilePage;
 
-public class Teste extends TestBase {
+public class Teste extends FuncionalTestBase {
 
 	private static LoginPage login;
 	private static PrincipalPage principalPage;

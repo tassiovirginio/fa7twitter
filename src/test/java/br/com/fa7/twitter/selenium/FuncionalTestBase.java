@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 
-public class TestBase {
+public class FuncionalTestBase {
 
 	protected static WebDriver driver;
 	
