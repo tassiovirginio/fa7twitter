@@ -47,6 +47,20 @@ public class PrincipalPage extends Page {
 
 	public void sair() {
 		loadPage();
-		findLinkText("Sair").click();
+		if (isLogado()) {
+			findLinkText("Sair").click();
+		}
 	}
+	
+	public boolean isLogado() {
+		driver.manage().timeouts().setScriptTimeout(2, TimeUnit.SECONDS);
+		boolean encontroulinkSair = false;
+		try {
+			encontroulinkSair = (findLinkText("Sair") != null);	
+		} catch (NoSuchElementException expcted) { }
+		
+		FuncionalTestContext.setDriverAsDefault();
+		return encontroulinkSair;
+	}
+	
 }

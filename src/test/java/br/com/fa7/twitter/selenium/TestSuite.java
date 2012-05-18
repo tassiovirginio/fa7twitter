@@ -12,7 +12,8 @@ import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 @SuiteClasses(value={
 		LoginTest.class,
 		FindTest.class,
-		Teste.class
+		PrincipalTest.class,
+		ApplicationTest.class
   }
 )
 public class TestSuite { 
