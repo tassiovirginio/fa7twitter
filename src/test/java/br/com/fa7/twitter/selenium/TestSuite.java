@@ -2,20 +2,17 @@ package br.com.fa7.twitter.selenium;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
 
 import br.com.fa7.twitter.selenium.components.FuncionalTestContext;
 
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-		LoginTest.class,
-		FindTest.class,
-		PrincipalTest.class,
-		ApplicationTest.class
-  }
-)
+//@RunWith(value=Suite.class)
+//@SuiteClasses(value={
+//		LoginTest.class,
+//		FindTest.class,
+//		PrincipalTest.class,
+//		ApplicationTest.class
+//  }
+//)
 public class TestSuite { 
 	
 	@BeforeClass
