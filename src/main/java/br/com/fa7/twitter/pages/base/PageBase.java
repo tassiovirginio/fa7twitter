@@ -4,9 +4,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import br.com.fa7.twitter.business.UserBusiness;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.FindUserPage;
 import br.com.fa7.twitter.pages.LoginPage;
@@ -18,9 +16,6 @@ public class PageBase extends WebPage {
 	
 	protected User loggedUser;
 	
-	@SpringBean
-	private UserBusiness userBusiness;
-
 	@SuppressWarnings({ "rawtypes", "serial" })
 	public PageBase() {
 		

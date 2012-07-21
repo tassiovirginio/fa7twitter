@@ -311,6 +311,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit-dep</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<!-- JETTY DEPENDENCIES FOR TESTING -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
@@ -335,6 +342,31 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
+
+	<dependency>
+		<groupId>com.google.api.client</groupId>
+		<artifactId>google-api-client</artifactId>
+		<version>1.2.1-alpha</version>
+		<exclusions>
+			<exclusion>
+				<artifactId>jsr305</artifactId>
+				<groupId>com.google.code.findbugs</groupId>
+			</exclusion>
+		</exclusions>
+	</dependency>
+	
+	<dependency>
+    	<groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>2.21.0</version>
+    </dependency> 
+
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.1.2</version>
+	</dependency>
+
 	</dependencies>
 
 </project>

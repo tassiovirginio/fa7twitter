@@ -12,6 +12,8 @@ import br.com.fa7.twitter.entities.User;
 
 @Component
 public class MessageDAO extends HibernateDAOGenerico<Message, Long> {
+	
+	@SuppressWarnings("unchecked")
 	public List<Message> findAllFromUserViaHQL(User user){
 		Session s = getSession();
 		Query q = s.createQuery("FROM Message WHERE user = ? order by id desc");

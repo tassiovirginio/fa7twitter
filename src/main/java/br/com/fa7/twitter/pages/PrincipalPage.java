@@ -18,6 +18,7 @@ import br.com.fa7.twitter.business.MessageBusiness;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
 import br.com.fa7.twitter.pages.base.PageBase;
+import br.com.fa7.twitter.util.GoogleURLShortener;
 
 public class PrincipalPage extends PageBase {
 	
@@ -29,17 +30,14 @@ public class PrincipalPage extends PageBase {
 	private String msg;
 	
 	public PrincipalPage() {
+		
 		if (loggedUser == null) {
 			throw new RestartResponseAtInterceptPageException(LoginPage.class);
 		}
 		Form form = new Form("form"){
-			
 			protected void onSubmit() {
-				
-				Message message = new Message(msg, loggedUser);
-				messageBusiness.save(message);
+				messageBusiness.postMessage(loggedUser, msg, new GoogleURLShortener());
 				setResponsePage(new PrincipalPage());
-				
 			};
 		};
 		add(form);
@@ -48,35 +46,34 @@ public class PrincipalPage extends PageBase {
 		taMsg.setModel(new PropertyModel(this,"msg"));
 		form.add(taMsg);
 		
-		List<Message> listMessage = messageBusiness.loadByUser(loggedUser);
+		List<Message> loggedUserMessages = messageBusiness.loadByUser(loggedUser);
 		
 		// lista de mensagens de quem ele segue
-		Set<User> following = loggedUser.getFollowing();
-		for (User user : following) {
-			listMessage.addAll(messageBusiness.loadByUser(user));
+		Set<User> followingList = loggedUser.getFollowing();
+		for (User followingUser : followingList) {
+			loggedUserMessages.addAll(messageBusiness.loadByUser(followingUser));
 		}		
 		
 		Label lbUserName = new Label("lbUserName", loggedUser.getName());
 		add(lbUserName);		
 
-		Label lbSize = new Label("lbSize", String.valueOf(listMessage.size()));
+		Label lbSize = new Label("lbSize", String.valueOf(loggedUserMessages.size()));
 		add(lbSize);
 		
-		ListView<Message> listView = new ListView<Message>("lvMsg", listMessage) {
+		ListView<Message> listView = new ListView<Message>("lvMsg", loggedUserMessages) {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-				item.add(new Label("msg", message.getMsg()));
-				
+				String messageText = messageBusiness.toExibition(message);
+				Label lbMsg = new Label("msg", messageText);
+				lbMsg.setEscapeModelStrings(false);
+				item.add(lbMsg);
 				Link link = ProfilePage.link("lkUser", message.getUser());
 				link.add(new Label("login", "@" + message.getUser().getLogin()));
 				item.add(link);
-				
 			}
 		};
-		
 		add(listView);
-		
 	}
 
 	public static Link<Void> link(String id) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -37,6 +38,9 @@ public class ProfilePage extends PageBase {
 	public ProfilePage(PageParameters parameters) {
 		String donoDaPagina = parameters.get("login").toString();
 		this.viewingUser = userBusiness.findByLogin(donoDaPagina);
+		if (viewingUser == null) {
+			throw new RestartResponseAtInterceptPageException(ErrorPage.class);
+		}
 		isPaginaPessoal = (viewingUser.equals(loggedUser));
 		this.initializeComponents();
 	}
@@ -47,8 +51,8 @@ public class ProfilePage extends PageBase {
 		this.initializeComponents();
 	}	
 
+	@SuppressWarnings("serial")
 	private void initializeComponents() {
-
 		Label lbUserNameHeader = new Label("lbUserNameHeader", viewingUser.getName());
 		add(lbUserNameHeader);
 		
@@ -109,7 +113,9 @@ public class ProfilePage extends PageBase {
 			@Override
 			protected void populateItem(ListItem<Message> item) {
 				final Message message = (Message)item.getModelObject();
-				item.add(new Label("msg", message.getMsg()));
+				Label lbMessage = new Label("msg", messageBusiness.toExibition(message));
+				lbMessage.setEscapeModelStrings(false);
+				item.add(lbMessage);
 			}
 		};
 		add(listView);
@@ -139,7 +145,6 @@ public class ProfilePage extends PageBase {
 			}
 		};
 		add(listViewFollowers);
-		
 	}
 
 	public static Link<Void> link(String id, final User user) {

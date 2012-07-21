@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import br.com.fa7.twitter.business.exception.BusinessException;
 import br.com.fa7.twitter.entities.Message;
 import br.com.fa7.twitter.entities.User;
+import br.com.fa7.twitter.util.FakeUrlShortener;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext.xml"})
@@ -87,8 +88,7 @@ public class TestUserBusiness {
 		User loggedUser = new User("NomeUsuarioLogado", "login", "password", "email@dominio.com");
 		userBusiness.newUser(loggedUser);
 		
-		Message message = new Message("Mensagem do usuario logado", loggedUser);
-		messageBusiness.save(message);
+		messageBusiness.postMessage(loggedUser, "Mensagem do usuario logado", new FakeUrlShortener());
 		
 		userBusiness.follow(loggedUser, createUserFollowing("following"));
 		List<Message> messages = messageBusiness.loadByUser(loggedUser);
@@ -100,8 +100,7 @@ public class TestUserBusiness {
 		User loggedUser = new User("NomeUsuarioLogado", "login", "password", "email@dominio.com");
 		userBusiness.newUser(loggedUser);
 		
-		Message message = new Message("Mensagem do usuario logado", loggedUser);
-		messageBusiness.save(message);
+		messageBusiness.postMessage(loggedUser, "Mensagem do usuario logado", new FakeUrlShortener());
 		
 		//Primeiro Following
 		userBusiness.follow(loggedUser, createUserFollowing("following"));
@@ -114,8 +113,7 @@ public class TestUserBusiness {
 	private User createUserFollowing(String login) throws BusinessException{
 		User userFollowing = new User("NomeUsuarioSeguido", login, "password", login + "@dominio.com");
 		userBusiness.newUser(userFollowing);
-		Message messageFollowing = new Message("Messagem usuario seguido", userFollowing);
-		messageBusiness.save(messageFollowing);
+		messageBusiness.postMessage(userFollowing, "Messagem usuario seguido", new FakeUrlShortener());
 		messageBusiness.loadByUser(userFollowing);
 		return userFollowing;
 	}
